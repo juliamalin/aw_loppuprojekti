@@ -18,7 +18,7 @@ import net.projekti.serverapplication.task.Task;
 
 
 @RestController
-@RequestMapping("taskswithcreators")
+@RequestMapping("tasks/creators")
 
 public class TaskswithCreatorController {
 	@Autowired
