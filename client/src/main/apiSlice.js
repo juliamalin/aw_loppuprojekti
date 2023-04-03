@@ -27,14 +27,17 @@ export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka 
     }),
     getProfileWithTasksById: builder.query({
       query: () => '/creators/owntasks/1'
-    })
+    }),
+    getTasksAndCreator: builder.query({
+      query: () => '/tasks/creators'
+    }),
   }),
 });
 
 export const { 
 useGetTasksQuery, useCreateTaskMutation,
 
-useGetProfilesQuery, useGetProfileByIdQuery, useGetProfileWithTasksByIdQuery } // tähän profiilien exportit
+useGetProfilesQuery, useGetProfileByIdQuery, useGetProfileWithTasksByIdQuery, useGetTasksAndCreatorQuery } // tähän profiilien exportit
 = apiSlice;
 
 
