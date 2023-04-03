@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import { store } from './main/store';
 import { Provider } from "react-redux";
@@ -13,7 +12,7 @@ function App() {
         <Navbar />
         <div className='taskit'>
           <p>Taskit</p>
-        </div>  
+        </div>
         <div className='kartta'>
           <p>kartta</p>
         </div>
@@ -21,3 +20,5 @@ function App() {
     </Provider>
   );
 }
+
+export default App
