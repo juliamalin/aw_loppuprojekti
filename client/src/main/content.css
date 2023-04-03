@@ -1,0 +1,38 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #a0faee;
+}
+
+.navbar__left {
+  flex: 1;
+}
+
+.navbar__title {
+  font-size: 24px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+
+.navbar__right {
+  display: flex;
+}
+
+.navbar__button {
+  background-color: #f7f7f7;
+  border: none;
+  padding: 10px 20px;
+  margin-left: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.navbar__button:hover {
+  background-color: #aaa;
+}
+
+  

@@ -5,7 +5,7 @@ export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka 
   baseQuery: fetchBaseQuery(), //  määritellään oletusmuotoilu käytettäväksi jokaisessa queryssa
   endpoints: (builder) => ({
 
-
+// TASKIT
     getTasks: builder.query({ // määritellään buildereille molemmat endpointit
       query: () => '/tasks',
     }),
@@ -18,16 +18,23 @@ export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka 
     }),
 
 
+ // PROFIILIT
     getProfiles: builder.query({
       query: () => '/profiles',
     }),
+    getProfileById: builder.query({
+      query: () => '/profiles/1',
+    }),
+    getProfileWithTasksById: builder.query({
+      query: () => '/creators/owntasks/1'
+    })
   }),
 });
 
 export const { 
 useGetTasksQuery, useCreateTaskMutation,
 
-useGetProfilesQuery } // tähän profiilien exportit
+useGetProfilesQuery, useGetProfileByIdQuery, useGetProfileWithTasksByIdQuery } // tähän profiilien exportit
 = apiSlice;
 
 

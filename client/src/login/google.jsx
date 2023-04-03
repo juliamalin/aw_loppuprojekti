@@ -12,6 +12,7 @@ export function GoogleLogin() {
 
   React.useEffect(() => {
     /* global google */
+    
     google.accounts.id.initialize({
       client_id: "1051092928864-nkgf2cp4biii83l9qmc4ubq351d4e62j.apps.googleusercontent.com",
       callback: handleCallBackResponse
@@ -29,3 +30,4 @@ export function GoogleLogin() {
       </div>
     )
 }
+
