@@ -21,13 +21,16 @@ export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka 
     getProfiles: builder.query({
       query: () => '/profiles',
     }),
+    getUser: builder.query({
+      query: () => '/login',
+    }),
   }),
 });
 
 export const { 
 useGetTasksQuery, useCreateTaskMutation,
 
-useGetProfilesQuery } // tähän profiilien exportit
+useGetProfilesQuery, useGetUserQuery } // tähän profiilien exportit
 = apiSlice;
 
 

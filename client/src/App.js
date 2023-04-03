@@ -5,6 +5,7 @@ import Navbar, { Header } from './main/headerfooter'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { TaskContainer } from './features/tasks/taskContainer';
 import {GoogleLogin} from './login/google';
+import { Login } from './login/login';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <p>kartta</p>
         </div>
         <GoogleLogin />
+        <Login />
       </div>
     </Provider>
   );
