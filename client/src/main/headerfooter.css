@@ -1,0 +1,19 @@
+.navbar-nav {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .navbar-nav li {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  
+  .navbar-nav.ml-auto {
+    margin-left: auto;
+  }
+
+  .navbar-nav.mr-auto {
+    margin-left: 30%;
+  }
+
+  
