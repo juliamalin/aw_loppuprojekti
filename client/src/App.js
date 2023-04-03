@@ -1,9 +1,9 @@
-import logo from './logo.svg';
 import './App.css';
 import { store } from './main/store';
 import { Provider } from "react-redux";
 import Navbar, { Header } from './main/headerfooter'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {GoogleLogin} from './login/google';
 
 
 function App() {
@@ -17,7 +17,10 @@ function App() {
         <div className='kartta'>
           <p>kartta</p>
         </div>
+        <GoogleLogin />
       </div>
     </Provider>
   );
 }
+
+export default App;
