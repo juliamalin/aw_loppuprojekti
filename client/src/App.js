@@ -3,8 +3,7 @@ import { store } from './main/store';
 import { Provider } from "react-redux";
 import Navbar, { Header } from './main/headerfooter'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Profile } from './features/profiles/ProfilePage';
-
+import { TaskContainer } from './features/tasks/taskContainer';
 
 
 function App() {
@@ -14,7 +13,8 @@ function App() {
         <Navbar />
         <div className='taskit'>
           <p>Taskit</p>
-        </div>
+          <TaskContainer/>
+        </div>  
         <div className='kartta'>
           <p>kartta</p>
         </div>
