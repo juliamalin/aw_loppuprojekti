@@ -1,4 +1,4 @@
-import { useCreateTaskMutation, useGetProfilesQuery, useGetTasksQuery } from "../../main/apiSlice";
+import { useCreateTaskMutation, useGetProfilesQuery } from "../../main/apiSlice";
 
 
 export function Profile() {

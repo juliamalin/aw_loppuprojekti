@@ -1,11 +1,17 @@
+import { useGetTasksAndCreatorQuery } from "../../main/apiSlice";
+import { TimeAgo } from './timeAgo'
+
+
+
 
 let TaskExcerpt = ({task}) => {
+
     return (
         <article className="task-excerpt">
         <h3>{task.title}</h3>
         <div>
-        {task.id}
-        {task.time}
+        by {task.profile.username}
+        <TimeAgo timestamp={task.created} />
         </div>
         <p className="button muted-button">
         View Task
@@ -15,16 +21,16 @@ let TaskExcerpt = ({task}) => {
 }
 
 export const TaskContainer = () =>{
-    const tasks=[
-            { id: '1', time: '10:42',title: 'First Task!', content: 'Pese ikkunat' },
-            { id: '2', time: '10:43', title: 'Second Task', content: 'Vie koirat ulos' }
-          ]
-    
+    const { 
+        data:tasks=[], 
+        isLoading 
+    } = useGetTasksAndCreatorQuery();
 
-    let content = tasks.map(task=> <TaskExcerpt key={task.id} task={task}/>)
+
+    let content = tasks.map(task=> <TaskExcerpt key={task.id} task={task} />)
 
     return (
-        <section className="tasks-list">
+        <section className="task-list">
             {content}
         </section>
     )
@@ -32,3 +38,6 @@ export const TaskContainer = () =>{
 }
 
 //        <p className="task-content">{task.content.substring(0,100)}</p>
+//        <TimeAgo timestamp={date}/>
+//     let date = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(task.created)
+
