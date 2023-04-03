@@ -13,6 +13,22 @@ let TaskExcerpt = ({task}) => {
         </article>
     )
 }
+/*
+
+const [createTask] = useCreateTaskMutation();
+
+const newTask = {
+    title: "imurointi", 
+    description: "imuroi mun koti", 
+    status: "available", 
+    location: "Mannerheimintie 3", 
+    latitude: 30, 
+    longitude: 30, 
+    creatorId: 1
+  }
+
+  <button onClick={() => createTask(newTask).unwrap().then(response => console.log(response))}>POST</button>
+  */
 
 export const TaskContainer = () =>{
     const tasks=[
