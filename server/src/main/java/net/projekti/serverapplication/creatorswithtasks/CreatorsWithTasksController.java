@@ -17,7 +17,7 @@ import net.projekti.serverapplication.task.RequestInfo;
 
 
 @RestController
-@RequestMapping("creatorswithtasks")
+@RequestMapping("creators/owntasks")
 
 public class CreatorsWithTasksController {
 	@Autowired
