@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import Navbar, { Header } from './main/headerfooter'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { TaskContainer } from './features/tasks/taskContainer';
+import {GoogleLogin} from './login/google';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <div className='kartta'>
           <p>kartta</p>
         </div>
+        <GoogleLogin />
       </div>
     </Provider>
   );
