@@ -1,19 +1,34 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-export const api = createApi({ // Määritellään uusi api-muuttuja, joka käyttää createApi-funktiota
+export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka käyttää createApi-funktiota
   reducerPath: 'api', // määritellään missä kohdassa storea reduceri tälle apille sijoitetaan
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://www.LOL.com' }), //  määritellään oletusmuotoilu käytettäväksi jokaisessa queryssa
+  baseQuery: fetchBaseQuery(), //  määritellään oletusmuotoilu käytettäväksi jokaisessa queryssa
   endpoints: (builder) => ({
+
+
     getTasks: builder.query({ // määritellään buildereille molemmat endpointit
-      query: () => '/books/tasks',
+      query: () => '/tasks',
     }),
+    createTask: builder.mutation({
+      query: (task) => ({
+        url: '/tasks',
+        method: 'POST',
+        body: task
+      })
+    }),
+
+
     getProfiles: builder.query({
-      query: () => '/books/profiles',
+      query: () => '/profiles',
     }),
   }),
 });
 
-export const { useGetTasksQuery, useGetProfilesQuery } = api;
+export const { 
+useGetTasksQuery, useCreateTaskMutation,
+
+useGetProfilesQuery } // tähän profiilien exportit
+= apiSlice;
 
 
 // käsittelee task ja profile taulukoita
