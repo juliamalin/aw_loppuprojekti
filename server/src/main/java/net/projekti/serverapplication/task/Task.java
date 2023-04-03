@@ -19,7 +19,7 @@ public class Task {
 	private Double longitude;
 	private Double payment;
 	
-	@Column(name="created_at")
+	@Column(name="created_at", nullable=true, insertable=false, updatable=false)
 	private LocalDateTime created; 
 	
 	@Column(name="available_from")

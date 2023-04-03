@@ -3,6 +3,8 @@ import { store } from './main/store';
 import { Provider } from "react-redux";
 import Navbar, { Header } from './main/headerfooter'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Profile } from './features/profiles/ProfilePage';
+
 
 
 function App() {
@@ -21,4 +23,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
