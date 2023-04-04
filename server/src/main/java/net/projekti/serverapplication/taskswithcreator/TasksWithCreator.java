@@ -37,7 +37,7 @@ public class TasksWithCreator {
 	private LocalDateTime availableTo;
 	
 	@Column(name="duration")
-	private LocalDateTime duration;
+	private Integer durationinminutes;
 	
 	@Column(name="performer_id")
 	private Integer performerId;
@@ -135,12 +135,12 @@ public class TasksWithCreator {
 		this.availableTo = availableTo;
 	}
 
-	public LocalDateTime getDuration() {
-		return duration;
+	public Integer getDurationinminutes() {
+		return durationinminutes;
 	}
 
-	public void setDuration(LocalDateTime duration) {
-		this.duration = duration;
+	public void setDurationinminutes(Integer durationinminutes) {
+		this.durationinminutes = durationinminutes;
 	}
 
 	public Integer getPerformerId() {
@@ -157,5 +157,6 @@ public class TasksWithCreator {
 
 	public void setProfile(Profile profile) {
 		this.profile = profile;
-	}	
+	}
+
 }
