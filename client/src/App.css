@@ -157,14 +157,18 @@
   background-color: #3367D6;
 }
 
-/* JULIA
-.table-div {
+
+.task-list {
   overflow-y: auto;
-  max-height: 300px;
+  max-height: 500px;
   width: 100%;
   border-radius: 10px;
   border: 1px solid black;
   padding: 0;
   margin: 20px;
 }
-*/
+
+.plus-button {
+padding: -100px;
+
+}

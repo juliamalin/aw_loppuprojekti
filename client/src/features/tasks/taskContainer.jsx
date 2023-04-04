@@ -5,6 +5,12 @@ import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import FormDialog from "./createTask";
 import DraggableDialog from "./viewTask";
+import '../../App.css';
+
+
+
+
+
 
 
 
@@ -46,11 +52,16 @@ export const TaskContainer = () => {
     let content = tasks.map(task => <TaskExcerpt key={task.id} task={task} />)
 
     return (
-        <section className="task-list">
+        
+        <section>
+            <div className="task-list">
             {content}
-
-            <FormDialog />
+            </div>
+            <div className="plus-button">
+            <FormDialog/>
+            </div>
         </section>
+       
     )
 
 }
