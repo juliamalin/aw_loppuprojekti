@@ -12,13 +12,14 @@ import { Main } from './main/content';
 function App() {
 
   return (
-    
-      <div className="App">
-        <Navbar />
-        <Main/>
-        {/*<GoogleLogin />*/}
-      </div>
-    
+
+    <div className="App">
+      <Navbar />
+      <Main />
+
+      {/*<GoogleLogin />*/}
+    </div>
+
   );
 }
 

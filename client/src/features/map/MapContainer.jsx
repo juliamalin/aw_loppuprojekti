@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, useRef } from "react";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
+import { useGetTasksQuery } from "../../main/apiSlice";
 
 
 
@@ -13,7 +14,7 @@ const getUserLocation = () => {
             console.log("User at: ", userLocation)
         })
     } else {
-
+        console.log("Broswer has no geolocation :(")
     }
 
 }
@@ -22,13 +23,18 @@ const getUserLocation = () => {
 
 export const MapContainer = () => {
     const { isLoaded, loadError } = useLoadScript({ googleMapsApiKey: "AIzaSyBWdAmavWXVzoZlEhuGBlyek4EfhS7i78A" })
-    const [markers, setMarkers] = React.useState([{ lat: 60.19, lng: 24.94 }])
+    const { data: tasks = [] } = useGetTasksQuery()
+    const markers = tasks.map(task => ({ lat: task.latitude, lng: task.longitude }))
+
+    console.log(tasks.map(task => ({ lat: task.lat, lng: task.lng })))
+    console.log(tasks)
     const userLocation = getUserLocation()
+
+
     const options = {
-        disableDefaultUI: false,
+        disableDefaultUI: true,
         zoomControl: true
     }
-
 
     const center = useMemo(() => userLocation || { lat: 60.19, lng: 24.94 })
 
@@ -37,7 +43,7 @@ export const MapContainer = () => {
             lat: event.latLng.lat(),
             lng: event.latLng.lng(),
         }
-        setMarkers([...markers, newMarker])
+        //setMarkers([...markers, newMarker])
     }
 
 
