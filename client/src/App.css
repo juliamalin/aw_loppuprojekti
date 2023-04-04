@@ -54,13 +54,13 @@
 /* Task container */
 
 .task-excerpt {
-  padding: 0.25rem 0.25rem;
+  padding: 0.8rem 0.25rem;
   border: 1px solid rgb(177, 174, 174);
   border-radius: 7px;
 }
 
 .task-list .task-excerpt+.task-excerpt {
-  margin-top: 0.5rem;
+  margin-top: 0.9rem;
 }
 
 .task-excerpt h3 {
