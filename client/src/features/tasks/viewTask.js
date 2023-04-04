@@ -6,7 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Paper from '@mui/material/Paper';
-import Draggable from 'react-draggable';
+// import Draggable from 'react-draggable';
 
 function ViewTask(props) {
   return (

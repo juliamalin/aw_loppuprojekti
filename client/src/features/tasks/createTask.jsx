@@ -14,6 +14,7 @@ import { Grid } from '@mui/material';
 import { DateTimePicker } from '@mui/x-date-pickers';
 import { useCreateTaskMutation } from '../../main/apiSlice';
 
+
 export default function FormDialog() {
     const [open, setOpen] = React.useState(false);
     const [selectedStartDate, setSelectedStartDate] = React.useState(null);
@@ -29,10 +30,10 @@ export default function FormDialog() {
         const title = document.getElementById('title')?.value;
         const description = document.getElementById('description')?.value;
         const location = document.getElementById('location')?.value;
-        const available_from = document.getElementById('startDateTime')?.value;
-        const available_to = document.getElementById('endDateTime')?.value;
+        const availableFrom = selectedStartDate;
+        const availableTo = selectedEndDate;
         const payment = document.getElementById('payment')?.value;
-        const duration = document.getElementById('duration')?.value;
+        const durationinminutes = document.getElementById('duration')?.value;
 
         updateTask({
             title: title,
@@ -41,31 +42,31 @@ export default function FormDialog() {
             latitude: 60.1,
             longitude: 24.9,
             location: location,
-            available_from: available_from,
-            available_to: available_to,
+            availableFrom: availableFrom,
+            availableTo: availableTo,
             payment: payment,
-            duration: duration,
-            creatorId: 5
-          });
-          setOpen(false);
-          return {
+            durationinminutes: durationinminutes,
+            creatorId: 1
+        });
+        setOpen(false);
+        return {
             title: title,
             description: description,
             status: "available",
             latitude: 60.1,
             longitude: 24.9,
             location: location,
-            available_from: available_from,
-            available_to: available_to,
+            availableFrom: availableFrom,
+            availableTo: availableTo,
             payment: payment,
-            duration: duration,
-            creatorId: 5
-          }
-        };
+            durationinminutes: durationinminutes,
+            creatorId: 1
+        }
+    };
 
-        const updateTask = (newValue) => {
-            setTask({ ...task, ...newValue });
-        };
+    const updateTask = (newValue) => {
+        setTask({ ...task, ...newValue });
+    };
 
     const handleStartDateChange = (date) => {
         setSelectedStartDate(date);
@@ -74,18 +75,18 @@ export default function FormDialog() {
     const handleEndDateChange = (date) => {
         setSelectedEndDate(date);
     };
-/*
-    const newTask = {
-        title: "imurointi",
-        description: "imuroi mun koti",
-        status: "available",
-        location: "Mannerheimintie 3",
-        available_from: "",
-        available_to: "",
-        payment: 30,
-        creatorId: 1
-    }
-*/
+    /*
+        const newTask = {
+            title: "imurointi",
+            description: "imuroi mun koti",
+            status: "available",
+            location: "Mannerheimintie 3",
+            available_from: "",
+            available_to: "",
+            payment: 30,
+            creatorId: 1
+        }
+    */
     return (
         <div>
             <Fab color="secondary" aria-label="add" onClick={handleClickOpen}>
@@ -116,7 +117,7 @@ export default function FormDialog() {
                         variant="outlined"
                         multiline
                         rows={4}
-                        outlined
+
                     />
                     <TextField
 
@@ -188,7 +189,7 @@ export default function FormDialog() {
                     <Button onClick={handleClose}>Cancel</Button>
                     <Button onClick={() => {
                         createTask(handleClose()).unwrap().then(response => console.log(response));
-                        
+
                     }}>Create</Button>
                 </DialogActions>
             </Dialog>

@@ -17,7 +17,7 @@ let TaskExcerpt = ({task}) => {
         by {task.profile.username}
         <TimeAgo timestamp={task.created}/>
         <p>{task.status}</p>
-        <DraggableDialog task={task}/>
+        {/* <DraggableDialog task={task}/> */}
         </div>
         </article>
     )
