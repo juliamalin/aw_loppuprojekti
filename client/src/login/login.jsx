@@ -1,6 +1,6 @@
 import React from 'react';
 import {Default} from '../utils/default';
-import { useGetUserQuery } from '../main/apiSlice';
+import { useGetUserQuery, useLoginUserMutation, useCreateUserMutation, useLogoutUserMutation } from '../main/apiSlice';
 
 export function Login(props){
     let [user,changeUser] = React.useState(Default.user);
@@ -8,14 +8,56 @@ export function Login(props){
     let [role,changeRoleState] = React.useState(props.role);
     let [error,changeError] = React.useState("");
 
-    let { data:main, isLoading} = useGetUserQuery();
-    if (isLoading) {
-        return <div>Loading...</div>;
+    console.log(user);
+
+    const {data:u, isLoading} = useGetUserQuery();
+    const [ loginUser ] = useLoginUserMutation();
+    const [ logoutUser ] = useLogoutUserMutation();
+    const [ createUser] = useCreateUserMutation();
+
+    if (isLoading) return <div>Loading...</div>
+
+    const changeUsername = ev => changeUser(Object.assign({}, user, {username:ev.target.value}));
+    const changePassword = ev => changeUser(Object.assign({}, user, {password:ev.target.value}));
+
+    function logout() {
+        logoutUser();
+        changeUser(Default.user)
     }
-    else {
-        console.log(main)
-        return <div>{main}</div>
+
+    function login() {
+        loginUser(user).unwrap()
+            .then((payload) => console.log('Ok', changeUser(payload)))
+            .catch((err) => alert('Bad credentials', err))
     }
+
+    function createU() {
+        let u = {username: user.username, password: user.password, role: 'user'};
+        createUser(u).unwrap()
+            .then((payload) => console.log('Ok', payload))
+    }
+
+    return <div>
+        {user.id == 0 &&
+        <div>
+          <input value={user.username} onChange={changeUsername} placeholder='Username' />
+          <input value={user.password} onChange={changePassword} type='password' placeholder='Password' />
+        </div>
+        }
+        
+        { user.role &&
+        <div>
+          <p>{user.username}</p>
+          <button onClick={() => logout()}>Kirjaudu ulos</button>
+        </div>
+        } {user.id == 0 &&
+        <div>
+          <button onClick={() => login()}>Kirjaudu sisään</button>
+          <button onClick={() => createU()}>Luo käyttäjä</button>
+        </div>
+        }
+    </div>
+    
 
     /*React.useEffect(function(){
         console.log("Use effect", role);

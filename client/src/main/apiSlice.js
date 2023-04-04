@@ -40,6 +40,9 @@ export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka 
     getTasksAndCreator: builder.query({
       query: () => '/tasks/creators',
     }),
+    getTasksAndCreator: builder.query({
+      query: () => '/tasks/creators',
+    }),
 
     // PROFIILIT
     getProfiles: builder.query({
@@ -79,6 +82,32 @@ export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka 
     getProfileWithTasksById: builder.query({
       query: (profileId) => `/creators/owntasks/${profileId}`,
       providesTags: (result, error, arg) => [{ type: 'Task', id: arg }],
+    }),
+
+
+    // USER/LOGIN
+    getUser: builder.query({
+      query: () => '/login',
+    }),
+    createUser: builder.mutation({
+      query: (user) => ({
+        url: '/login',
+        method: 'POST',
+        body: user
+      })
+    }),
+    loginUser: builder.mutation({
+      query: (user) => ({
+        url: '/login',
+        method: 'PUT',
+        body: user
+      })
+    }),
+    logoutUser: builder.mutation({
+      query: () => ({
+        url: '/login',
+        method: 'DELETE'
+      })
     })
   }),
 })
@@ -100,7 +129,12 @@ export const {
   useDeleteProfileMutation,
 
   useGetProfileByIdQuery,
-  useGetProfileWithTasksByIdQuery } // tähän profiilien exportit
+  useGetProfileWithTasksByIdQuery, // tähän profiilien exportit
+  useGetUserQuery,
+  useCreateUserMutation,
+  useLoginUserMutation,
+  useLogoutUserMutation //tässä login
+}
   = apiSlice;
 
 

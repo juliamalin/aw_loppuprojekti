@@ -48,7 +48,7 @@ public class LoginController {
 	BCryptPasswordEncoder encoder;
 	
 	@PostMapping
-	@Secured("admin")  // Remove this for first few users....
+	//@Secured("admin")  // Remove this for first few users....
 	public User createUser(@RequestBody User user) {
 		System.out.println("Luodaan " + user.getUsername());
 		String pw = encoder.encode(user.getPassword());
@@ -75,8 +75,8 @@ public class LoginController {
 			sc.setAuthentication(auth);
 			HttpSession session = req.getSession(true);		
 			session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, sc);
-			UserPrincipal up=(UserPrincipal)auth.getPrincipal();
-			userRet=up.getUser();
+			UserPrincipal up = (UserPrincipal)auth.getPrincipal();
+			userRet = up.getUser();
 			userRet.setPassword(""); // Do not show the crypted password
 			System.out.println("put "+auth.isAuthenticated()+","+auth.getName()+","+auth.getPrincipal()+","+
 					auth.getAuthorities().stream().map(x -> x.getAuthority()).collect(Collectors.joining(":")));

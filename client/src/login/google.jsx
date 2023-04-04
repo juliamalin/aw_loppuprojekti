@@ -1,13 +1,22 @@
 import React from 'react';
 import jwt_decode from "jwt-decode";
+import { useState } from 'react';
 
 export function GoogleLogin() {
+  const [ user, setUser ] = useState({});
+
+  function signOut() {
+    setUser({});
+    document.getElementById("signInDiv").hidden = false;
+  }
 
   //Saa kirjautuessaan käyttäjän tiedot, VAIN TESTIYMPÄRISTÖSSÄ LISÄTYT EMAILIT TOIMII
   function handleCallBackResponse(response) {
     console.log("Encoded JWT ID token: " + response.credential);
     let userObject = jwt_decode(response.credential);
     console.log(userObject);
+    setUser(userObject);
+    document.getElementById("signInDiv").hidden = true;
   }
 
   React.useEffect(() => {
@@ -27,6 +36,15 @@ export function GoogleLogin() {
     return (
       <div>
         <div id="signInDiv"></div>
+        {Object.keys(user).length != 0 &&
+          <button onClick={() => signOut()} >Kirjaudu ulos</button>
+        }
+        {user &&
+        <div>
+          <img src={user.picture}></img>
+          <h3>{user.name}</h3>
+        </div>
+        }
       </div>
     )
 }
