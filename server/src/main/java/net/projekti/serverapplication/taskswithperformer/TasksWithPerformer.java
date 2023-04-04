@@ -36,7 +36,7 @@ public class TasksWithPerformer {
 	private LocalDateTime availableTo;
 	
 	@Column(name="duration")
-	private LocalDateTime duration;
+	private Integer durationinminutes;
 	
 	@Column(name="creator_id")
 	private Integer creatorId;
@@ -134,12 +134,12 @@ public class TasksWithPerformer {
 		this.availableTo = availableTo;
 	}
 
-	public LocalDateTime getDuration() {
-		return duration;
+	public Integer getDurationinminutes() {
+		return durationinminutes;
 	}
 
-	public void setDuration(LocalDateTime duration) {
-		this.duration = duration;
+	public void setDurationinminutes(Integer durationinminutes) {
+		this.durationinminutes = durationinminutes;
 	}
 
 	public Integer getCreatorId() {
