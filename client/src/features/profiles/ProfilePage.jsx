@@ -14,6 +14,7 @@ export function Profile() {
     return <div>Loading...</div>;
   }
 
+  {/*}
   const taskList = profileTask.tasks.map(task => ({
     id: task.id,
     title: task.title,
@@ -21,13 +22,13 @@ export function Profile() {
     status: task.status,
     location: task.location,
     payment: task.payment
-    
-  }));
+
+  })); */}
 
   return (
     <div>
       <img alt="Profiilikuva" src="../images/EcceHomo.png" />
-      <h2>{profileTask.username}</h2>
+      <h2>{profile.username}</h2>
       
 
     </div>

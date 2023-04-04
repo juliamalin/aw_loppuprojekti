@@ -16,6 +16,7 @@ export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka 
         body: task
       })
     }),
+    
 
 
  // PROFIILIT
@@ -23,10 +24,10 @@ export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka 
       query: () => '/profiles',
     }),
     getProfileById: builder.query({
-      query: () => '/profiles/1',
+      query: () => '/profiles/1', // 1 on vaan että homma pyörii
     }),
     getProfileWithTasksById: builder.query({
-      query: () => '/creators/owntasks/1'
+      query: () => '/creators/owntasks/1' // 1 on vaan että homma pyörii
     })
   }),
 });
