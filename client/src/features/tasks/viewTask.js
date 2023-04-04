@@ -7,6 +7,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Paper from '@mui/material/Paper';
 import Draggable from 'react-draggable';
+import { Typography } from '@mui/material';
+
 
 function ViewTask(props) {
   return (
@@ -41,21 +43,29 @@ export default function DraggableDialog({task}) {
       <Dialog
         open={open}
         onClose={handleClose}
+        PaperComponent={ViewTask}
         aria-labelledby="draggable-dialog-title"
-        ViewTask={ViewTask}
       >
-        <DialogTitle 
-        tyle={{ cursor: 'move' }} 
-        id="draggable-dialog-title">
+        <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
           {task.title}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            <p>Description: {task.description}</p>
-            <p>Location: {task.location}</p>
-            <p>Payment: {task.payment} e</p>
-            <p>Between: {task.availableFrom} to {task.availableTo}</p>
-            <p>Duration:{task.duration}</p>
+        <DialogContentText>
+            <Typography variant="body1">
+              Description: {task.description}
+            </Typography>
+            <Typography variant="body1">
+              Location: {task.location}
+            </Typography>
+            <Typography variant="body1">
+              Payment: {task.payment} e
+            </Typography>
+            <Typography variant="body1">
+              Between: {task.availableFrom} to {task.availableTo}
+            </Typography>
+            <Typography variant="body1">
+              Duration:{task.duration}
+            </Typography>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
