@@ -13,6 +13,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { Grid } from '@mui/material';
 import { DateTimePicker } from '@mui/x-date-pickers';
 import { useCreateTaskMutation } from '../../main/apiSlice';
+import { AddMarkerMap } from '../map/AddMarkerMap';
 
 
 export default function FormDialog() {
@@ -21,6 +22,8 @@ export default function FormDialog() {
     const [selectedEndDate, setSelectedEndDate] = React.useState(null);
     const [createTask] = useCreateTaskMutation();
     const [task, setTask] = React.useState({});
+
+    const [marker, setMarker] = React.useState({})
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -53,8 +56,8 @@ export default function FormDialog() {
             title: title,
             description: description,
             status: "available",
-            latitude: 60.1,
-            longitude: 24.9,
+            latitude: marker.lat,
+            longitude: marker.lng,
             location: location,
             availableFrom: availableFrom,
             availableTo: availableTo,
@@ -87,6 +90,13 @@ export default function FormDialog() {
             creatorId: 1
         }
     */
+
+    const onCreateButtonClicked = () => {
+
+        createTask(handleClose()).unwrap().then(response => console.log(response));
+
+    }
+
     return (
         <div>
             <Fab color="secondary" aria-label="add" onClick={handleClickOpen}>
@@ -127,6 +137,10 @@ export default function FormDialog() {
                         type="location"
                         fullWidth
                         variant="standard"
+                    />
+                    <AddMarkerMap
+                        marker={marker}
+                        setMarker={setMarker}
                     />
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
@@ -187,10 +201,7 @@ export default function FormDialog() {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={() => {
-                        createTask(handleClose()).unwrap().then(response => console.log(response));
-
-                    }}>Create</Button>
+                    <Button onClick={onCreateButtonClicked}>Create</Button>
                 </DialogActions>
             </Dialog>
         </div>

@@ -13,12 +13,12 @@ const findUser = new Promise((resolve, reject) => {
 })
 
 
-export const AddMarkerMap = () => {
+export const AddMarkerMap = ({ marker, setMarker }) => {
     const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey: "AIzaSyBWdAmavWXVzoZlEhuGBlyek4EfhS7i78A",
         libraries: libraries,
     })
-    const [marker, setMarker] = React.useState({})
+    // const [marker, setMarker] = React.useState({})
     const [selectedPlace, setSelectedPlace] = React.useState(null);
     const autocompleteRef = useRef(null);
 
@@ -90,7 +90,7 @@ export const AddMarkerMap = () => {
         <div className="marker-map">
             <GoogleMap
                 options={options}
-                zoom={10}
+                zoom={16}
                 center={center}
                 mapContainerClassName="map-container"
             >
