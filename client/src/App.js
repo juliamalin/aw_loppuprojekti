@@ -6,7 +6,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { TaskContainer } from './features/tasks/taskContainer';
 import { Profile } from './features/profiles/ProfilePage';
 import { Main } from './main/content';
-// import {GoogleLogin} from './login/google';
+import {GoogleLogin} from './login/google';
+import { Login } from './login/login';
 
 
 function App() {
@@ -16,7 +17,8 @@ function App() {
       <div className="App">
         <Navbar />
         <Main/>
-        {/*<GoogleLogin />*/}
+        <GoogleLogin />
+        <Login />
       </div>
     
   );
