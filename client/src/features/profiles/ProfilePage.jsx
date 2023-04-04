@@ -15,21 +15,20 @@ export function Profile() {
   console.log(profile)
   console.log(profileTask)
 
-  {/*}
-  const taskList = profileTask.tasks.map(task => ({
-    id: task.id,
-    title: task.title,
-    description: task.description,
-    status: task.status,
-    location: task.location,
-    payment: task.payment
+  // const taskList = profileTask.tasks.map(task => ({
+  //   id: task.id,
+  //   title: task.title,
+  //   description: task.description,
+  //   status: task.status,
+  //   location: task.location,
+  //   payment: task.payment
 
-  })); */}
+  // }));
 
   return (
     <div>
       <img alt="Profiilikuva" src="../images/EcceHomo.png" />
-      <h2>{profileTask.username}</h2>
+      {/* <h2>{profileTask.username}</h2> */}
 
 
     </div>
