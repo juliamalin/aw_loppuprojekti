@@ -1,10 +1,10 @@
-import { useGetTasksAndCreatorQuery } from "../../main/apiSlice";
+import { useGetTasksAndCreatorQuery, useCreateTaskMutation } from "../../main/apiSlice";
 import { TimeAgo } from './timeAgo'
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import FormDialog from "./createTask";
-
+import DraggableDialog from "./viewTask";
 
 
 
@@ -17,41 +17,39 @@ let TaskExcerpt = ({ task }) => {
                 by {task.profile.username}
                 <TimeAgo timestamp={task.created} />
                 <p>{task.status}</p>
-                {/* <DraggableDialog task={task}/> */}
+                <DraggableDialog task={task} />
             </div>
         </article>
     )
 }
 //kommentti
-/*
 
-const [createTask] = useCreateTaskMutation();
 
 const newTask = {
-    title: "imurointi", 
-    description: "imuroi mun koti", 
-    status: "available", 
-    location: "Mannerheimintie 3", 
-    latitude: 30, 
-    longitude: 30, 
+    title: "imurointi",
+    description: "imuroi mun koti",
+    status: "available",
+    location: "Mannerheimintie 3",
+    latitude: 30,
+    longitude: 30,
     creatorId: 1
-  }
+}
 
 
-export const TaskContainer = () =>{
-    const { 
-        data:tasks=[], 
-        isLoading 
+export const TaskContainer = () => {
+    const {
+        data: tasks = [],
+        isLoading
     } = useGetTasksAndCreatorQuery();
 
 
-    let content = tasks.map(task=> <TaskExcerpt key={task.id} task={task} />)
+    let content = tasks.map(task => <TaskExcerpt key={task.id} task={task} />)
 
     return (
         <section className="task-list">
             {content}
-            
-            <FormDialog/>
+
+            <FormDialog />
         </section>
     )
 
