@@ -1,5 +1,9 @@
 import { useGetTasksAndCreatorQuery } from "../../main/apiSlice";
 import { TimeAgo } from './timeAgo'
+import Box from '@mui/material/Box';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
+import FormDialog from "./createTask";
 
 
 
@@ -19,22 +23,7 @@ let TaskExcerpt = ({task}) => {
         </article>
     )
 }
-/*
 
-const [createTask] = useCreateTaskMutation();
-
-const newTask = {
-    title: "imurointi", 
-    description: "imuroi mun koti", 
-    status: "available", 
-    location: "Mannerheimintie 3", 
-    latitude: 30, 
-    longitude: 30, 
-    creatorId: 1
-  }
-
-  <button onClick={() => createTask(newTask).unwrap().then(response => console.log(response))}>POST</button>
-  */
 
 export const TaskContainer = () =>{
     const { 
@@ -48,6 +37,8 @@ export const TaskContainer = () =>{
     return (
         <section className="task-list">
             {content}
+            
+            <FormDialog/>
         </section>
     )
 
