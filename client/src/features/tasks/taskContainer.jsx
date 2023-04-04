@@ -8,20 +8,34 @@ import FormDialog from "./createTask";
 
 
 
-let TaskExcerpt = ({task}) => {
+let TaskExcerpt = ({ task }) => {
 
     return (
         <article className="task-excerpt">
-        <h3>{task.title}</h3>
-        <div>
-        by {task.profile.username}
-        <TimeAgo timestamp={task.created}/>
-        <p>{task.status}</p>
-        {/* <DraggableDialog task={task}/> */}
-        </div>
+            <h3>{task.title}</h3>
+            <div>
+                by {task.profile.username}
+                <TimeAgo timestamp={task.created} />
+                <p>{task.status}</p>
+                {/* <DraggableDialog task={task}/> */}
+            </div>
         </article>
     )
 }
+//kommentti
+/*
+
+const [createTask] = useCreateTaskMutation();
+
+const newTask = {
+    title: "imurointi", 
+    description: "imuroi mun koti", 
+    status: "available", 
+    location: "Mannerheimintie 3", 
+    latitude: 30, 
+    longitude: 30, 
+    creatorId: 1
+  }
 
 
 export const TaskContainer = () =>{
