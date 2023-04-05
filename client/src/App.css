@@ -95,7 +95,10 @@
 
 .map-container {
   width: 100%;
-  padding-top: 100%;
+  height: calc(50vw - 200px);
+  border-radius: 10px;
+  border: 1px solid black;
+  margin-top: 20px;
 }
 
 
@@ -123,6 +126,9 @@
 .marker-map-container {
   position: relative;
   width: 100%;
+  max-height: 200px;
+  
+  
 }
 
 
@@ -130,7 +136,11 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 30%;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+
 }
 
 .marker-map-current-location-btn {
@@ -161,15 +171,36 @@
 
 .task-list {
   overflow-y: auto;
-  max-height: 500px;
+  height: 50vw;
   width: 100%;
   border-radius: 10px;
   border: 1px solid black;
   padding: 0;
   margin: 20px;
+  height: calc(50vw - 200px);
+  position: relative;
 }
 
-.plus-button {
-padding: -100px;
-
+.createtask {
+  position: absolute;
+  left: 0;
 }
+
+.task-excerpt {
+  display: flex;
+  align-items: left;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+.task-info {
+  display: flex;
+  align-items: left;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
+
+
+
+
+

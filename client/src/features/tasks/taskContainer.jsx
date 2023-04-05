@@ -19,11 +19,11 @@ let TaskExcerpt = ({ task }) => {
     return (
         <article className="task-excerpt">
             <h3>{task.title}</h3>
-            <div>
+            <div className="task-info">
                 by {task.profile.username}
                 <TimeAgo timestamp={task.created} />
                 <p>{task.status}</p>
-                <DraggableDialog task={task} />
+                <DraggableDialog task={task} className="viewtask" />
             </div>
         </article>
     )

@@ -14,6 +14,7 @@ import { Grid } from '@mui/material';
 import { DateTimePicker } from '@mui/x-date-pickers';
 import { useCreateTaskMutation } from '../../main/apiSlice';
 import { AddMarkerMap } from '../map/AddMarkerMap';
+import '../../App.css';
 
 
 export default function FormDialog() {
@@ -42,14 +43,14 @@ export default function FormDialog() {
             title: title,
             description: description,
             status: "available",
-            latitude: 60.1,
-            longitude: 24.9,
+            latitude: marker.lat,
+            longitude: marker.lng,
             location: location,
             availableFrom: availableFrom,
             availableTo: availableTo,
             payment: payment,
             durationinminutes: durationinminutes,
-            creatorId: 1
+            creatorId: 1 // pitää laittaa se mikä käyttäjä käytössä
         });
         setOpen(false);
         return {
@@ -78,18 +79,7 @@ export default function FormDialog() {
     const handleEndDateChange = (date) => {
         setSelectedEndDate(date);
     };
-    /*
-        const newTask = {
-            title: "imurointi",
-            description: "imuroi mun koti",
-            status: "available",
-            location: "Mannerheimintie 3",
-            available_from: "",
-            available_to: "",
-            payment: 30,
-            creatorId: 1
-        }
-    */
+  
 
     const onCreateButtonClicked = () => {
 
@@ -105,33 +95,34 @@ export default function FormDialog() {
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Create a task!</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>
-                        Write a title that describes shortly your task!
-                    </DialogContentText>
+                   
                     <TextField
                         autoFocus
                         margin="dense"
                         id="title"
-                        label="Title"
+                        label="Write a title that describes shortly your task."
                         type="title"
                         fullWidth
                         variant="standard"
+                        className='taskTitle'
                     />
+                   
                     <TextField
 
-                        margin="dense"
+                        margin="normal"
                         id="description"
-                        label="Description"
+                        label="Describe the task in detail."
                         type="description"
                         fullWidth
                         variant="outlined"
                         multiline
                         rows={4}
+                        className='taskDescription'
 
                     />
                     <TextField
 
-                        margin="dense"
+                        margin="normal"
                         id="location"
                         label="Location"
                         type="location"
@@ -141,13 +132,14 @@ export default function FormDialog() {
                     <AddMarkerMap
                         marker={marker}
                         setMarker={setMarker}
+                        
                     />
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <DateTimePicker
                                     format="dd/MM/yyyy HH:mm"
-                                    margin="dense"
+                                    margin="normal"
                                     id="startDateTime"
                                     label="Starting date and time"
                                     value={selectedStartDate}
@@ -162,7 +154,7 @@ export default function FormDialog() {
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <DateTimePicker
                                     format="dd/MM/yyyy HH:mm"
-                                    margin="dense"
+                                    margin="normal"
                                     id="endDateTime"
                                     label="Ending date and time"
                                     value={selectedEndDate}
@@ -173,29 +165,35 @@ export default function FormDialog() {
                                 />
                             </LocalizationProvider>
                         </Grid>
-                        <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
                                 <TextField
+                                sx={{
+                                    width: 247
+                                }}
                                     margin="dense"
                                     id="duration"
-                                    label="Duration"
-                                    type="duration"
+                                    label="Duration in minutes"
+                                    type="number"
                                     fullWidth
                                     variant="outlined"
+                                    inputProps={{ pattern: "[0-9]*" }}
                                 />
                             </Grid>
 
                             <Grid item xs={12} sm={6}>
                                 <TextField
+                                 sx={{
+                                    width: 247
+                                }}
                                     margin="dense"
                                     id="payment"
-                                    label="Payment"
+                                    label="Payment (€)"
                                     type="number"
                                     fullWidth
                                     variant="outlined"
-                                    inputProps={{ pattern: "[0-100]*" }}
+                                    inputProps={{ pattern: "[0-9]*" }}
                                 />
-                            </Grid>
+                            
                         </Grid>
                     </Grid>
                 </DialogContent>
