@@ -1,11 +1,12 @@
 import React from 'react';
 import './content.css';
-import { Profile } from '../features/profiles/ProfilePage';
+import { ProfilePage } from '../features/profiles/ProfilePage';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { TaskPage } from '../features/tasks/TaskPage';
 import { TaskContainer } from '../features/tasks/taskContainer';
 import { StyledEngineProvider } from '@mui/material/styles';
+import { EditProfile } from '../features/profiles/EditProfile';
 
 
 
@@ -30,7 +31,8 @@ export function Main() {
   return <main>
     <Routes>
       <Route path="/" element={<TaskPage />} />
-      <Route path="/profile" element={<Profile />} />
+      <Route path="/profile" element={<ProfilePage />} />
+      <Route path="/profile/edit/:profileId" element={<EditProfile />} />
     </Routes>
   </main>
 }
