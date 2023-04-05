@@ -40,9 +40,6 @@ export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka 
     getTasksAndCreator: builder.query({
       query: () => '/tasks/creators',
     }),
-    getTasksAndCreator: builder.query({
-      query: () => '/tasks/creators',
-    }),
 
     // PROFIILIT
     getProfiles: builder.query({
