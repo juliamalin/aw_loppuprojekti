@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { TaskPage } from '../features/tasks/TaskPage';
 import { TaskContainer } from '../features/tasks/taskContainer';
 import { StyledEngineProvider } from '@mui/material/styles';
+import { Login } from '../login/login';
 
 
 
@@ -19,7 +20,7 @@ export function Navbar() {
     <div className="navbar__right">
       <Link to="/" className='navbar__button'>Tasks</Link>
       <Link to="/profile" className='navbar__button'>Profile</Link>
-      <Link to="/" className='navbar__button'>Log in</Link>
+      <Link to="/login" className='navbar__button'>Log in</Link>
       <Link to="/" className='navbar__button'>Sign up</Link>
     </div>
   </nav>
@@ -31,6 +32,7 @@ export function Main() {
     <Routes>
       <Route path="/" element={<TaskPage />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/login" element={<Login />} />
     </Routes>
   </main>
 }

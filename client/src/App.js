@@ -17,8 +17,6 @@ function App() {
     <div className="App">
       <Navbar />
       <Main />
-      <GoogleLogin />
-      <Login />
     </div>
 
   );
