@@ -79,7 +79,7 @@ export default function FormDialog() {
     const handleEndDateChange = (date) => {
         setSelectedEndDate(date);
     };
-  
+
 
     const onCreateButtonClicked = () => {
 
@@ -95,7 +95,7 @@ export default function FormDialog() {
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Create a task!</DialogTitle>
                 <DialogContent>
-                   
+
                     <TextField
                         autoFocus
                         margin="dense"
@@ -106,7 +106,7 @@ export default function FormDialog() {
                         variant="standard"
                         className='taskTitle'
                     />
-                   
+
                     <TextField
 
                         margin="normal"
@@ -132,7 +132,7 @@ export default function FormDialog() {
                     <AddMarkerMap
                         marker={marker}
                         setMarker={setMarker}
-                        
+
                     />
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
@@ -165,35 +165,35 @@ export default function FormDialog() {
                                 />
                             </LocalizationProvider>
                         </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
+                        <Grid item xs={12} sm={6}>
+                            <TextField
                                 sx={{
                                     width: 247
                                 }}
-                                    margin="dense"
-                                    id="duration"
-                                    label="Duration in minutes"
-                                    type="number"
-                                    fullWidth
-                                    variant="outlined"
-                                    inputProps={{ pattern: "[0-9]*" }}
-                                />
-                            </Grid>
+                                margin="dense"
+                                id="duration"
+                                label="Duration in minutes"
+                                type="number"
+                                fullWidth
+                                variant="outlined"
+                                inputProps={{ pattern: "[0-9]*" }}
+                            />
+                        </Grid>
 
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                 sx={{
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                sx={{
                                     width: 247
                                 }}
-                                    margin="dense"
-                                    id="payment"
-                                    label="Payment (€)"
-                                    type="number"
-                                    fullWidth
-                                    variant="outlined"
-                                    inputProps={{ pattern: "[0-9]*" }}
-                                />
-                            
+                                margin="dense"
+                                id="payment"
+                                label="Payment (€)"
+                                type="number"
+                                fullWidth
+                                variant="outlined"
+                                inputProps={{ pattern: "[0-9]*" }}
+                            />
+
                         </Grid>
                     </Grid>
                 </DialogContent>

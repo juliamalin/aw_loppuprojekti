@@ -127,8 +127,10 @@
   position: relative;
   width: 100%;
   max-height: 200px;
-  
-  
+}
+
+.pac-container {
+  z-index: 9999;
 }
 
 
@@ -192,6 +194,7 @@
   margin-left: 40px;
   margin-right: 40px;
 }
+
 .task-info {
   display: flex;
   align-items: left;

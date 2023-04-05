@@ -11,10 +11,10 @@ const getUserLocation = () => {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             }
-            console.log("User at: ", userLocation)
+            // console.log("User at: ", userLocation)
         })
     } else {
-        console.log("Broswer has no geolocation :(")
+        // console.log("Broswer has no geolocation :(")
     }
 
 }
@@ -26,8 +26,6 @@ export const MapContainer = () => {
     const { data: tasks = [] } = useGetTasksQuery()
     const markers = tasks.map(task => ({ lat: task.latitude, lng: task.longitude }))
 
-    console.log(tasks.map(task => ({ lat: task.lat, lng: task.lng })))
-    console.log(tasks)
     const userLocation = getUserLocation()
 
 
