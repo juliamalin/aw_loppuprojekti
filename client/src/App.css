@@ -191,8 +191,8 @@
 .task-excerpt {
   display: flex;
   align-items: left;
-  margin-left: 40px;
-  margin-right: 40px;
+  margin-left: 1%;
+  margin-right: 5%;
 }
 
 .task-info {
@@ -221,4 +221,22 @@
   height: 100%;
   max-width: 100%;
   object-fit: cover;
+}
+
+.task-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dialog-container {
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  right: 10%;
+
+}
+
+.dialog-container p {
+  margin-right: 20px;
 }
