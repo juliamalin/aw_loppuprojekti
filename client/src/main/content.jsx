@@ -7,6 +7,7 @@ import { TaskPage } from '../features/tasks/TaskPage';
 import { TaskContainer } from '../features/tasks/taskContainer';
 import { StyledEngineProvider } from '@mui/material/styles';
 import { EditProfile } from '../features/profiles/EditProfile';
+import { Login } from '../login/login';
 
 
 
@@ -20,7 +21,7 @@ export function Navbar() {
     <div className="navbar__right">
       <Link to="/" className='navbar__button'>Tasks</Link>
       <Link to="/profile" className='navbar__button'>Profile</Link>
-      <Link to="/" className='navbar__button'>Log in</Link>
+      <Link to="/login" className='navbar__button'>Log in</Link>
       <Link to="/" className='navbar__button'>Sign up</Link>
     </div>
   </nav>
@@ -33,6 +34,7 @@ export function Main() {
       <Route path="/" element={<TaskPage />} />
       <Route path="/profile" element={<ProfilePage />} />
       <Route path="/profile/edit/:profileId" element={<EditProfile />} />
+      <Route path="/login" element={<Login />} />
     </Routes>
   </main>
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import {Default} from '../utils/default';
 import { useGetUserQuery, useLoginUserMutation, useCreateUserMutation, useLogoutUserMutation } from '../main/apiSlice';
+import { GoogleLogin } from './google';
 
 export function Login(props){
     let [user,changeUser] = React.useState(Default.user);
@@ -54,6 +55,7 @@ export function Login(props){
         <div>
           <button onClick={() => login()}>Kirjaudu sisään</button>
           <button onClick={() => createU()}>Luo käyttäjä</button>
+          <GoogleLogin />
         </div>
         }
     </div>
@@ -68,35 +70,10 @@ export function Login(props){
         })
     },[role])
 
-    const changeUsername = ev => changeUser(Object.assign({}, user, {username:ev.target.value}));
-    const changePassword = ev => changeUser(Object.assign({}, user, {password:ev.target.value}));
-
     function changeRole(r){
         changeRoleState(r);
         if (props.login) props.login(r);
     }
-
-    function tryLogin(){
-        HTTP.put("/login", user).then(u => {
-            console.log("Response", u);
-            changeRole(u.role)            
-        }).catch(x => {
-            console.log(x);
-            changeError(x.message);
-            setTimeout(() => changeError(""),3000);
-        })
-    }
-
-    function logOut(){
-        HTTP.delete("/login").then(x => {
-            console.log("Logout", x);
-            changeRole("none");
-            changeUser(Default.user);
-            changeMinimized(true);
-        }).catch(x => {
-            console.log("Logout err", x);
-        })
-    }*/
 
     /*return <div className="login-component">
         {
