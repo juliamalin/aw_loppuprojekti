@@ -7,7 +7,17 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Paper from '@mui/material/Paper';
 import Draggable from 'react-draggable';
-import { Typography } from '@mui/material';
+import { Alert, Typography } from '@mui/material';
+import { useUpdateTaskMutation,useGetProfileByIdQuery} from '../../main/apiSlice';
+import { useDispatch} from 'react-redux'
+import { useState } from 'react'
+import { id } from 'date-fns/locale';
+import { TaskOutlined } from '@mui/icons-material';
+import * as ReactDOM from "react-dom";
+import { useNavigate } from 'react-router-dom';
+import { TaskAlert } from './TaskAlert'
+import Popup from './Popup'; // assuming Popup is a component that renders the notification pop-up
+//import { AlertTitle } from '@material-ui/lab';
 
 
 function ViewTask(props) {
@@ -21,8 +31,12 @@ function ViewTask(props) {
   );
 }
 
-export default function DraggableDialog({ task }) {
-  const [open, setOpen] = React.useState(false);
+export default function DraggableDialog({task}) {
+  const [open, setOpen] = React.useState(false)
+  const [status, setStatus] = useState(task.status)
+  const [alert, setAlert] = useState(null);
+
+  const [changeStatus,{isLoading}] = useUpdateTaskMutation()
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -31,6 +45,43 @@ export default function DraggableDialog({ task }) {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const navigate = useNavigate()
+
+  const onTakeTask = async () => {
+    setStatus('Taken by somebody')
+     await changeStatus({
+      id:task.id, 
+      status, 
+      title:task.title, 
+      description:task.description, 
+      latitude:task.latitude, 
+      longitude:task.longitude, 
+      location:task.location,
+      availableFrom:task.availableFrom, 
+      availableTo:task.availableTo,
+      payment:task.payment,
+      durationinminutes:task.durationinminutes,
+      creatorId:1,
+      performerId: task.performerId })
+      handleClose();
+      };
+
+  /*const raisePopup = () => {
+    return (
+      <div className="popup">
+        <div className="popup-content">
+        <Alert severity="success">
+        Your task has been taken!
+        </Alert>
+          <button>Close</button>
+        </div>
+      </div>
+    );
+  };*/
+    //sivun päivitys???
+    //creatorid???
+
 
   return (
     <div>
@@ -47,7 +98,6 @@ export default function DraggableDialog({ task }) {
         aria-labelledby="draggable-dialog-title"
       >
         <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
-          {task.title}
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -69,12 +119,15 @@ export default function DraggableDialog({ task }) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
+          <Button variant="contained" onClick={onTakeTask}>Take Task</Button>
           <Button autoFocus onClick={handleClose}>
-            Cancel
+            Go Back
           </Button>
-          <Button onClick={handleClose}>Subscribe</Button>
         </DialogActions>
+        <TaskAlert task={task}/>
       </Dialog>
     </div>
   );
 }
+
+//          <Button variant="contained" onClick={onTakeTask} onClick={}>Take Task

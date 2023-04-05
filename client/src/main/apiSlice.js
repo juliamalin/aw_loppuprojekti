@@ -14,6 +14,10 @@ export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka 
         ...result.map(({ id }) => ({ type: 'Task', id }))
       ],
     }),
+    getTaskById: builder.query({
+      query: (taskId) => `/tasks/${taskId}`,
+      providesTags: (result, error, arg) => [{ type: 'Task', id:arg }],
+    }),
     createTask: builder.mutation({
       query: (task) => ({
         url: '/tasks',
@@ -114,6 +118,7 @@ export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka 
 export const {
   //Taskit
   useGetTasksQuery,
+  useGetTaskByIdQuery,
   useCreateTaskMutation,
   useUpdateTaskMutation,
   useDeleteTaskMutation,
