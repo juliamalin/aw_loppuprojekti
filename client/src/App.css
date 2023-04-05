@@ -59,6 +59,10 @@
   border-radius: 7px;
 }
 
+.task-excerpt:hover {
+  box-shadow: 0 0 15px rgba(118, 212, 155, 255);
+}
+
 .task-list .task-excerpt+.task-excerpt {
   margin-top: 0.9rem;
 }
