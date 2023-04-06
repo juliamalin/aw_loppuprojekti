@@ -1,30 +1,18 @@
+import React from "react";
 import { TaskContainer } from "./taskContainer";
 import {  useGetPerformerWithTasksByIdQuery} from "../../main/apiSlice";
 import { TimeAgo } from './timeAgo'
 import DraggableDialog from "./viewTask";
 import LinearProgress from '@mui/material/LinearProgress';
 import Stack from '@mui/material/Stack';
-
-
-
-let TaskExcerpt = ({ task }) => {
-
-    return (
-        <article className="task-excerpt">
-            <h3>{task.title}</h3>
-            <div className="task-info">
-                by {task.profile.username}
-                <TimeAgo timestamp={task.created} />
-                <Stack sx={{ width: '100%', color: 'grey.500' }} spacing={2}>
-
-                {/*<LinearProgress color="success">*/}
-                </Stack>
-
-               <DraggableDialog task={task} className="viewtask" />
-            </div>
-        </article>
-    )
-}
+import { Row } from './taskTable'
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import Table from '@mui/material/Table';
+import Paper from '@mui/material/Paper';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
 
 export const MyTasks = ({profileId=1}) => {
     const {
@@ -33,20 +21,30 @@ export const MyTasks = ({profileId=1}) => {
     } =  useGetPerformerWithTasksByIdQuery(profileId);
     
 
-    //console.log(tasks) 
-    let content = tasks.map((task)=> <TaskExcerpt key={task.id} task={task} />)
-    //console.log(content) 
+    console.log(tasks) 
     
     return (
-        <section>
-            <div className="task-list">
-            {content}
-            </div>
-            <div className="plus-button">
-            </div>
-        </section>
-       
-    )
+            <TableContainer component={Paper}>
+              <Table aria-label="collapsible table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell />
+                    <TableCell>Task</TableCell>
+                    <TableCell align="left">Creator</TableCell>
+                    <TableCell align="left">Status</TableCell>
+                    <TableCell align="left">Location</TableCell>
+                    <TableCell align="left">Payment</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                    {tasks.map ((task)=> (
+                    <Row key={task.id} task={task} />
+                    ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          );
 
 }
 
+//TableCell align="left">Description</TableCell>
