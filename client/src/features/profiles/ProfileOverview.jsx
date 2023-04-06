@@ -1,13 +1,17 @@
 import { Rating } from "@mui/material"
 import { useGetProfileByIdQuery } from "../../main/apiSlice"
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { useSelector } from "react-redux"
 
 
 export const ProfileOverview = () => {
-    const { data: profile } = useGetProfileByIdQuery(1)
+    const { profileId } = useParams()
+    const { data: profile, isLoading } = useGetProfileByIdQuery(profileId)
     let user = useSelector(state => state.userReducer.user) || {};
     console.log(profile)
+    if (isLoading) {
+        return <div>Loading...</div>
+    }
     return (
         <div className="row bg-image" style={{ backgroundImage: "url('https://i.pinimg.com/originals/70/0e/6a/700e6a06e2dc3c5174178ba09a8b094d.jpg')" }}>
 
@@ -28,7 +32,7 @@ export const ProfileOverview = () => {
 
             </div>
         </div>
-        
+
 
 
     )

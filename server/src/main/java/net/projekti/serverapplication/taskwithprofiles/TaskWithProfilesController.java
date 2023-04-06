@@ -14,7 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 
 @RestController
-@RequestMapping("taskapi")
+@RequestMapping("tasksAPI")
 public class TaskWithProfilesController {
 	@Autowired
 	private TaskWithProfilesRepository repo;

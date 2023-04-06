@@ -19,22 +19,22 @@ export function Navbar() {
   return <nav className="navbar">
 
     <div className="navbar__left">
-      <a href="#" className="navbar__title">TaskRabbit</a>
+      <a href="/" className="navbar__title">TaskRabbit</a>
     </div>
     <div className="navbar__right">
       <Link to="/mytasks" className='navbar__button'>My Tasks</Link>
       <Link to="/" className='navbar__button'>Tasks</Link>
       {user.id &&
-      <Link to="/profile" className='navbar__button'>Profile</Link>
+        <Link to={`/profile/${user.id}`} className='navbar__button'>Profile</Link>
       }
       {!user.id &&
-      <div className='navbar__right'>
-      <Link to="/login" className='navbar__button'>Log in</Link>
-      <Link to="/" className='navbar__button'>Sign up</Link>
-      </div>
+        <div className='navbar__right'>
+          <Link to="/login" className='navbar__button'>Log in</Link>
+          <Link to="/" className='navbar__button'>Sign up</Link>
+        </div>
       }
-      {user.id && 
-      <Link to="/login" className='navbar__button'>Log Out</Link>
+      {user.id &&
+        <Link to="/login" className='navbar__button'>Log Out</Link>
       }
     </div>
   </nav>
@@ -46,7 +46,7 @@ export function Main() {
     <Routes>
       <Route path="/mytasks" element={<MyTasks />} />
       <Route path="/" element={<TaskPage />} />
-      <Route path="/profile" element={<ProfilePage />} />
+      <Route path="/profile/:profileId" element={<ProfilePage />} />
       <Route path="/profile/edit/:profileId" element={<EditProfile />} />
       <Route path="/login" element={<Login />} />
     </Routes>

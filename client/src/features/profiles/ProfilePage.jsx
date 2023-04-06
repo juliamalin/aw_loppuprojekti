@@ -1,23 +1,18 @@
-import { useGetProfileByIdQuery } from "../../main/apiSlice";
+import { useParams } from "react-router-dom";
 import { TaskContainer } from "../tasks/taskContainer";
 import { ProfileOverview } from "./ProfileOverview";
 import { ProfileReviewContainer } from "./ProfileReviewContainer";
 
 
 export function ProfilePage() {
-  const { data: profile, isLoading } = useGetProfileByIdQuery(1); //Using profile id 1 for testing
-
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  const { profileId } = useParams()
 
   return (
     <div>
       <ProfileOverview />
       <div className="row">
         <div className="col-6">
-          <TaskContainer />
+          <TaskContainer profileId={profileId} />
         </div>
         <div className="col-6">
           <ProfileReviewContainer />
