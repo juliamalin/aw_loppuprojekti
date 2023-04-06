@@ -1,13 +1,13 @@
 import { Rating } from "@mui/material"
 import { useGetProfileByIdQuery } from "../../main/apiSlice"
-import { Link, useParams } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { useSelector } from "react-redux"
 
 
 export const ProfileOverview = () => {
-    const { profileId } = useParams()
-    const { data: profile, isLoading } = useGetProfileByIdQuery(profileId)
     let user = useSelector(state => state.userReducer.user) || {};
+    const { data: profile, isLoading } = useGetProfileByIdQuery(user.id)
+
     console.log(profile)
     if (isLoading) {
         return <div>Loading...</div>
@@ -24,7 +24,7 @@ export const ProfileOverview = () => {
                         <h2 className="text-center">{user.username}</h2>
                         <Rating name="size-large" defaultValue={4} size="large" readOnly />
                     </div>
-                    <Link className="button muted-button" to={`/profile/edit/${profile.id}`}>Edit Profile</Link>
+                    <Link className="button muted-button" to={`/profile/edit`}>Edit Profile</Link>
                 </div>
 
 

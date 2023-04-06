@@ -19,7 +19,7 @@ import '../../App.css';
 
 
 export default function FormDialog() {
-    let user = useSelector(state => state.userReducer.user) || {};
+    const user = useSelector(state => state.userReducer.user) || {};
     const [open, setOpen] = React.useState(false);
     const [selectedStartDate, setSelectedStartDate] = React.useState(null);
     const [selectedEndDate, setSelectedEndDate] = React.useState(null);

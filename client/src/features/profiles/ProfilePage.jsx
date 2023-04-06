@@ -1,18 +1,17 @@
-import { useParams } from "react-router-dom";
 import { TaskContainer } from "../tasks/taskContainer";
 import { ProfileOverview } from "./ProfileOverview";
 import { ProfileReviewContainer } from "./ProfileReviewContainer";
-
+import { useSelector } from "react-redux";
 
 export function ProfilePage() {
-  const { profileId } = useParams()
+  let user = useSelector(state => state.userReducer.user) || {};
 
   return (
     <div>
       <ProfileOverview />
       <div className="row">
         <div className="col-6">
-          <TaskContainer profileId={profileId} />
+          <TaskContainer profileId={user.id} />
         </div>
         <div className="col-6">
           <ProfileReviewContainer />
