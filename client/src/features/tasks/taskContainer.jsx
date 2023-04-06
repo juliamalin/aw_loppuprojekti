@@ -11,11 +11,6 @@ import '../../App.css';
 
 
 
-
-
-
-
-
 const TaskExcerpt = ({ task }) => {
     const [open, setOpen] = React.useState(false)
 
@@ -34,18 +29,7 @@ const TaskExcerpt = ({ task }) => {
         </article>
     )
 }
-//kommentti
 
-
-const newTask = {
-    title: "imurointi",
-    description: "imuroi mun koti",
-    status: "available",
-    location: "Mannerheimintie 3",
-    latitude: 30,
-    longitude: 30,
-    creatorId: 1
-}
 
 
 export const TaskContainer = ({ profileId, area }) => {
