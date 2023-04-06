@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {Default} from '../utils/default';
 import { useGetUserQuery, useLoginUserMutation, useCreateUserMutation, useLogoutUserMutation } from '../main/apiSlice';
 import { GoogleLogin } from './google';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from '../main/store';
+import { Link } from 'react-router-dom';
 
 export function Login(props){
-    let [user,changeUser] = React.useState(Default.user);
-    let [minimized,changeMinimized] = React.useState(true);
-    let [role,changeRoleState] = React.useState(props.role);
-    let [error,changeError] = React.useState("");
+    let user = useSelector(state => state.userReducer.user) || {};
+    let [username, changeUsername] = React.useState("");
+    let [password, changePassword] = React.useState("");
+    
+    const dispatch = useDispatch();
+    
 
     console.log(user);
 
@@ -18,18 +23,18 @@ export function Login(props){
 
     if (isLoading) return <div>Loading...</div>
 
-    const changeUsername = ev => changeUser(Object.assign({}, user, {username:ev.target.value}));
-    const changePassword = ev => changeUser(Object.assign({}, user, {password:ev.target.value}));
-
     function logout() {
         logoutUser();
-        changeUser(Default.user)
+        dispatch(setUser({}));
     }
 
     function login() {
-        loginUser(user).unwrap()
-            .then((payload) => console.log('Ok', changeUser(payload)))
+        let u = {username: username, password: password};
+        loginUser(u).unwrap()
+            .then((payload) => console.log('Ok', dispatch(setUser(payload))))
             .catch((err) => alert('Bad credentials', err))
+        dispatch(setUser(user));
+        
     }
 
     function createU() {
@@ -39,10 +44,10 @@ export function Login(props){
     }
 
     return <div>
-        {user.id == 0 &&
+        {user.id == null &&
         <div>
-          <input value={user.username} onChange={changeUsername} placeholder='Username' />
-          <input value={user.password} onChange={changePassword} type='password' placeholder='Password' />
+          <input value={user.username} onChange={ev => changeUsername(ev.target.value)} placeholder='Username' />
+          <input value={user.password} onChange={ev => changePassword(ev.target.value)} type='password' placeholder='Password' />
         </div>
         }
         
@@ -51,10 +56,10 @@ export function Login(props){
           <p>{user.username}</p>
           <button onClick={() => logout()}>Kirjaudu ulos</button>
         </div>
-        } {user.id == 0 &&
+        } {user.id == null &&
         <div>
-          <button onClick={() => login()}>Kirjaudu sisään</button>
-          <button onClick={() => createU()}>Luo käyttäjä</button>
+          <input type='button' value='Kirjaudu sisään' onClick={() => login()} />
+          <input type='button' value='Luo käyttäjä' onClick={() => createU()} />
           <GoogleLogin />
         </div>
         }
