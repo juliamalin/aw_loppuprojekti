@@ -15,6 +15,7 @@ export function GoogleLogin() {
     console.log("Encoded JWT ID token: " + response.credential);
     let userObject = jwt_decode(response.credential);
     console.log(userObject);
+    console.log(userObject.sub)
     setUser(userObject);
     document.getElementById("signInDiv").hidden = true;
   }

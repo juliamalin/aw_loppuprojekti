@@ -9,11 +9,13 @@ import { StyledEngineProvider } from '@mui/material/styles';
 import { EditProfile } from '../features/profiles/EditProfile';
 import { Login } from '../login/login';
 import { MyTasks } from '../features/tasks/MyTasks';
+import { useSelector } from 'react-redux';
 
 
 
 
 export function Navbar() {
+  let user = useSelector(state => state.userReducer.user) || {};
   return <nav className="navbar">
 
     <div className="navbar__left">
@@ -22,9 +24,18 @@ export function Navbar() {
     <div className="navbar__right">
       <Link to="/mytasks" className='navbar__button'>My Tasks</Link>
       <Link to="/" className='navbar__button'>Tasks</Link>
+      {user.id &&
       <Link to="/profile" className='navbar__button'>Profile</Link>
+      }
+      {!user.id &&
+      <div className='navbar__right'>
       <Link to="/login" className='navbar__button'>Log in</Link>
       <Link to="/" className='navbar__button'>Sign up</Link>
+      </div>
+      }
+      {user.id && 
+      <Link to="/login" className='navbar__button'>Log Out</Link>
+      }
     </div>
   </nav>
 }
