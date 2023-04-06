@@ -61,11 +61,11 @@ export const AddMarkerMap = ({ marker, setMarker }) => {
 
     const onCurrentLocationClicked = () => {
         findUser.then(location => {
-            console.log('Found user at location', location)
+            // console.log('Found user at location', location)
             setMarker(location)
             setSelectedPlace(null)
         }).catch(error => {
-            console.log("User location was not found")
+            // console.log("User location was not found")
         })
     }
 

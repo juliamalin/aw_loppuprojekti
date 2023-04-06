@@ -1,3 +1,4 @@
+import React from "react";
 import { useSelector } from "react-redux";
 import { useGetTasksAndCreatorQuery } from "../../main/apiSlice";
 import { TimeAgo } from './timeAgo'
@@ -15,16 +16,20 @@ import '../../App.css';
 
 
 
-let TaskExcerpt = ({ task }) => {
+const TaskExcerpt = ({ task }) => {
+    const [open, setOpen] = React.useState(false)
+
 
     return (
-        <article className="task-excerpt">
-            <h3>{task.title}</h3>
+        <article className="task-excerpt" onClick={() => setOpen(true)}>
+            <p>{task.title}</p>
             <div className="task-info">
                 by {task.profile.username}
                 <TimeAgo timestamp={task.created} />
-                <p>{task.status}</p>
-                <DraggableDialog task={task} className="viewtask" />
+                <div className="dialog-container">
+                    <p>{task.status}</p>
+                    <DraggableDialog task={task} open={open} setOpen={setOpen} />
+                </div>
             </div>
         </article>
     )
@@ -53,16 +58,16 @@ export const TaskContainer = () => {
     let content = tasks.map(task => <TaskExcerpt key={task.id} task={task} />)
 
     return (
-        
+
         <section>
             <div className="task-list">
-            {content}
+                {content}
             </div>
             <div className="plus-button">
-            <FormDialog/>
+                <FormDialog />
             </div>
         </section>
-       
+
     )
 
 }

@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo, useRef } from "react";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 import { useGetTasksQuery } from "../../main/apiSlice";
+import DraggableDialog from "../tasks/viewTask";
 
 
 
@@ -11,10 +12,10 @@ const getUserLocation = () => {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             }
-            console.log("User at: ", userLocation)
+            // console.log("User at: ", userLocation)
         })
     } else {
-        console.log("Broswer has no geolocation :(")
+        // console.log("Broswer has no geolocation :(")
     }
 
 }
@@ -22,12 +23,14 @@ const getUserLocation = () => {
 
 
 export const MapContainer = () => {
+    const [open, setOpen] = React.useState(false)
+    const [selectedTask, setSelectedTask] = React.useState({})
     const { isLoaded, loadError } = useLoadScript({ googleMapsApiKey: "AIzaSyBWdAmavWXVzoZlEhuGBlyek4EfhS7i78A" })
     const { data: tasks = [] } = useGetTasksQuery()
     const markers = tasks.map(task => ({ lat: task.latitude, lng: task.longitude }))
 
-    console.log(tasks.map(task => ({ lat: task.lat, lng: task.lng })))
-    console.log(tasks)
+
+
     const userLocation = getUserLocation()
 
 
@@ -46,7 +49,10 @@ export const MapContainer = () => {
         //setMarkers([...markers, newMarker])
     }
 
-
+    const onMarkerClick = (index) => {
+        setSelectedTask(tasks[index])
+        setOpen(true)
+    }
 
     if (!isLoaded) return <div>Loading...</div>
     return (<div>
@@ -57,7 +63,7 @@ export const MapContainer = () => {
             mapContainerClassName="map-container"
             onClick={addMarker}
         >
-            {markers.map((marker, index) => (<Marker key={index} position={marker} />))}
+            {markers.map((marker, index) => (<Marker key={index} position={marker} onClick={() => onMarkerClick(index)} />))}
             {userLocation ? <Marker icon={{
                 fillColor: `#4285F4`,
                 fillOpacity: 1,
@@ -67,7 +73,7 @@ export const MapContainer = () => {
                 strokeWeight: 2,
             }} /> : ""}
         </GoogleMap>
-
+        <DraggableDialog task={selectedTask} open={open} setOpen={setOpen} />
     </div>)
 
 }

@@ -59,6 +59,10 @@
   border-radius: 7px;
 }
 
+.task-excerpt:hover {
+  box-shadow: 0 0 15px rgba(118, 212, 155, 255);
+}
+
 .task-list .task-excerpt+.task-excerpt {
   margin-top: 0.9rem;
 }
@@ -127,8 +131,10 @@
   position: relative;
   width: 100%;
   max-height: 200px;
-  
-  
+}
+
+.pac-container {
+  z-index: 9999;
 }
 
 
@@ -189,9 +195,10 @@
 .task-excerpt {
   display: flex;
   align-items: left;
-  margin-left: 40px;
-  margin-right: 40px;
+  margin-left: 1%;
+  margin-right: 5%;
 }
+
 .task-info {
   display: flex;
   align-items: left;
@@ -218,4 +225,22 @@
   height: 100%;
   max-width: 100%;
   object-fit: cover;
+}
+
+.task-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dialog-container {
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  right: 10%;
+
+}
+
+.dialog-container p {
+  margin-right: 20px;
 }
