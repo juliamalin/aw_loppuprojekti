@@ -46,7 +46,7 @@ export default function DraggableDialog({ task, open, setOpen }) {
     setStatus('Taken by somebody')
     await changeStatus({
       id: task.id,
-      status,
+      status: 'unavailable',
       title: task.title,
       description: task.description,
       latitude: task.latitude,

@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { useGetTasksAndCreatorQuery } from "../../main/apiSlice";
+import { useGetCreatedTasksQuery, useGetTasksDoneQuery, useGetTasksQuery } from "../../main/apiSlice";
 import { TimeAgo } from './timeAgo'
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
@@ -19,7 +19,7 @@ const TaskExcerpt = ({ task }) => {
         <article className="task-excerpt" onClick={() => setOpen(true)}>
             <p>{task.title}</p>
             <div className="task-info">
-                by {task.profile.username}
+                by {task.creator.username}
                 <TimeAgo timestamp={task.created} />
                 <div className="dialog-container">
                     <p>{task.status}</p>
@@ -32,11 +32,14 @@ const TaskExcerpt = ({ task }) => {
 
 
 
-export const TaskContainer = () => {
+export const TaskContainer = ({ profileId, area }) => {
+
+
+
     const {
         data: tasks = [],
         isLoading
-    } = useGetTasksAndCreatorQuery();
+    } = useGetTasksQuery()
 
 
     let content = tasks.map(task => <TaskExcerpt key={task.id} task={task} />)

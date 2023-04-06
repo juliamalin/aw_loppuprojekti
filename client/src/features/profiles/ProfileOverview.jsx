@@ -5,9 +5,13 @@ import { useSelector } from "react-redux"
 
 
 export const ProfileOverview = () => {
-    const { data: profile } = useGetProfileByIdQuery(1)
     let user = useSelector(state => state.userReducer.user) || {};
+    const { data: profile, isLoading } = useGetProfileByIdQuery(user.id)
+
     console.log(profile)
+    if (isLoading) {
+        return <div>Loading...</div>
+    }
     return (
         <div className="row bg-image" style={{ backgroundImage: "url('https://i.pinimg.com/originals/70/0e/6a/700e6a06e2dc3c5174178ba09a8b094d.jpg')" }}>
 
@@ -20,7 +24,7 @@ export const ProfileOverview = () => {
                         <h2 className="text-center">{user.username}</h2>
                         <Rating name="size-large" defaultValue={4} size="large" readOnly />
                     </div>
-                    <Link className="button muted-button" to={`/profile/edit/${profile.id}`}>Edit Profile</Link>
+                    <Link className="button muted-button" to={`/profile/edit`}>Edit Profile</Link>
                 </div>
 
 
@@ -28,7 +32,7 @@ export const ProfileOverview = () => {
 
             </div>
         </div>
-        
+
 
 
     )

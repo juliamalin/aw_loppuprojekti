@@ -3,21 +3,52 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka käyttää createApi-funktiota
   reducerPath: 'api', // määritellään missä kohdassa storea reduceri tälle apille sijoitetaan
   baseQuery: fetchBaseQuery(), //  määritellään oletusmuotoilu käytettäväksi jokaisessa queryssa
-  tagTypes: ['Task', 'Profile'],
+  tagTypes: ['Task', 'Profile', 'Review'],
   endpoints: (builder) => ({
 
     // TASKIT
+
+    //Tehdään haut tasksAPI:in (saadaan taskeihin molemmat profiilit mukaan)
     getTasks: builder.query({ // määritellään buildereille molemmat endpointit
-      query: () => '/tasks',
+      query: () => '/tasksAPI',
       providesTags: (result = [], error, arg) => [
         'Task',
         ...result.map(({ id }) => ({ type: 'Task', id }))
       ],
     }),
     getTaskById: builder.query({
-      query: (taskId) => `/tasks/${taskId}`,
-      providesTags: (result, error, arg) => [{ type: 'Task', id:arg }],
+      query: (taskId) => `/tasksAPI/${taskId}`,
+      providesTags: (result, error, arg) => [{ type: 'Task', id: arg }],
     }),
+
+    getCreatedTasks: builder.query({
+      query: (profileId) => `/tasksAPI/profile/${profileId}/created`,
+      providesTags: (result, error, arg) => [{ type: 'Task', id: arg }],
+    }),
+
+    getPerformerTasks: builder.query({
+      query: (profileId) => `/tasksAPI/profile/${profileId}/performer`,
+      providesTags: (result, error, arg) => [{ type: 'Task', id: arg }],
+    }),
+
+    getTasksInProgress: builder.query({
+      query: (profileId) => `/tasksAPI/profile/${profileId}/inProgress`,
+      providesTags: (result, error, arg) => [{ type: 'Task', id: arg }],
+    }),
+
+    getTasksDone: builder.query({
+      query: (profileId) => `/tasksAPI/profile/${profileId}/done`,
+      providesTags: (result, error, arg) => [{ type: 'Task', id: arg }],
+    }),
+
+    getTasksInArea: builder.query({
+      query: ({ minLat, maxLat, minLong, maxLong }) => `/tasksAPI/inArea?minLat=${minLat}&maxLat=${maxLat}&minLong=${minLong}&maxLong=${maxLong}`,
+      providesTags: (result, error, arg) => [{ type: 'Task', id: arg }],
+    }),
+
+
+
+    //Lisäykset, muokkaukset ja poistot tasks-osoitteeseen (ei tarvita profiilitietoja näissä, id:t riittää)
     createTask: builder.mutation({
       query: (task) => ({
         url: '/tasks',
@@ -40,9 +71,6 @@ export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka 
         method: "DELETE"
       }),
       invalidatesTags: ['Task']
-    }),
-    getTasksAndCreator: builder.query({
-      query: () => '/tasks/creators',
     }),
 
     // PROFIILIT
@@ -77,16 +105,13 @@ export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka 
       invalidatesTags: ['Profile']
     }),
     getProfileById: builder.query({
-      query: (profileId) => `/profiles/${profileId}`,
-      providesTags: (result, error, arg) => [{ type: 'Task', id: arg }],
+      query: (profileId) => `/profiles/${profileId}`
     }),
     getProfileWithTasksById: builder.query({
-      query: (profileId) => `/creators/owntasks/${profileId}`,
-      providesTags: (result, error, arg) => [{ type: 'Task', id: arg }],
+      query: (profileId) => `/creators/owntasks/${profileId}`
     }),
     getPerformerWithTasksById: builder.query({
-      query: (profileId) => `/performers/owntasks/${profileId}`,
-      providesTags: (result, error, arg) => [{ type: 'Task', id: arg }],
+      query: (profileId) => `/performers/owntasks/${profileId}`
     }),
 
 
@@ -117,7 +142,7 @@ export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka 
 
 
     // REVIEW
-    getReviews: builder.query ({
+    getReviews: builder.query({
       query: () => '/review',
       providesTags: (result = [], error, arg) => [
         'Review',
@@ -135,8 +160,13 @@ export const {
   useCreateTaskMutation,
   useUpdateTaskMutation,
   useDeleteTaskMutation,
-  useGetTasksAndCreatorQuery,
-  
+
+  useGetCreatedTasksQuery,
+  useGetPerformerTasksQuery,
+  useGetTasksDoneQuery,
+  useGetTasksInProgressQuery,
+  useGetTasksInAreaQuery,
+
   //Profiilit
   useGetProfilesQuery,
   useCreateProfileMutation,

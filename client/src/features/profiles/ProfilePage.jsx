@@ -1,23 +1,17 @@
-import { useGetProfileByIdQuery } from "../../main/apiSlice";
 import { TaskContainer } from "../tasks/taskContainer";
 import { ProfileOverview } from "./ProfileOverview";
 import { ProfileReviewContainer } from "./ProfileReviewContainer";
-
+import { useSelector } from "react-redux";
 
 export function ProfilePage() {
-  const { data: profile, isLoading } = useGetProfileByIdQuery(1); //Using profile id 1 for testing
-
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  let user = useSelector(state => state.userReducer.user) || {};
 
   return (
     <div>
       <ProfileOverview />
       <div className="row">
         <div className="col-6">
-          <TaskContainer />
+          <TaskContainer profileId={user.id} />
         </div>
         <div className="col-6">
           <ProfileReviewContainer />

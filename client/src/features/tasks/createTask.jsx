@@ -14,10 +14,12 @@ import { Grid } from '@mui/material';
 import { DateTimePicker } from '@mui/x-date-pickers';
 import { useCreateTaskMutation } from '../../main/apiSlice';
 import { AddMarkerMap } from '../map/AddMarkerMap';
+import { useSelector } from 'react-redux';
 import '../../App.css';
 
 
 export default function FormDialog() {
+    const user = useSelector(state => state.userReducer.user) || {};
     const [open, setOpen] = React.useState(false);
     const [selectedStartDate, setSelectedStartDate] = React.useState(null);
     const [selectedEndDate, setSelectedEndDate] = React.useState(null);
@@ -50,7 +52,7 @@ export default function FormDialog() {
             availableTo: availableTo,
             payment: payment,
             durationinminutes: durationinminutes,
-            creatorId: 1 // pitää laittaa se mikä käyttäjä käytössä
+            creatorId: user.id // pitää laittaa se mikä käyttäjä käytössä
         });
         setOpen(false);
         return {

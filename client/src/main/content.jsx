@@ -20,22 +20,23 @@ export function Navbar() {
   return <nav className="navbar">
 
     <div className="navbar__left">
-      <a href="#" className="navbar__title">TaskRabbit</a>
+      <Link to="/" className='navbar__button'><a href="/" className="navbar__title">TaskRabbit</a></Link>
     </div>
     <div className="navbar__right">
-      <Link to="/mytasks" className='navbar__button'>My Tasks</Link>
-      <Link to="/" className='navbar__button'>Tasks</Link>
-      {user.id &&
-      <Link to="/profile" className='navbar__button'>Profile</Link>
-      }
-      {!user.id &&
-      <div className='navbar__right'>
-      <Link to="/login" className='navbar__button'>Log in</Link>
-      <Link to="/" className='navbar__button'>Sign up</Link>
+
+      {user.id && <div className='navbar__right'>
+        <Link to="/mytasks" className='navbar__button'>My Tasks</Link>
+        <Link to={"/profile"} className='navbar__button'>Profile</Link>
       </div>
       }
-      {user.id && 
-      <Link to="/login" className='navbar__button'>Log Out</Link>
+      {!user.id &&
+        <div className='navbar__right'>
+          <Link to="/login" className='navbar__button'>Log in</Link>
+          <Link to="/" className='navbar__button'>Sign up</Link>
+        </div>
+      }
+      {user.id &&
+        <Link to="/login" className='navbar__button'>Log Out</Link>
       }
       <Link to="/ws" className='navbar__button'>Socket</Link>
     </div>
@@ -49,7 +50,7 @@ export function Main() {
       <Route path="/mytasks" element={<MyTasks />} />
       <Route path="/" element={<TaskPage />} />
       <Route path="/profile" element={<ProfilePage />} />
-      <Route path="/profile/edit/:profileId" element={<EditProfile />} />
+      <Route path="/profile/edit" element={<EditProfile />} />
       <Route path="/login" element={<Login />} />
       <Route path='/ws' element={<WebSocketClient />} />
     </Routes>
