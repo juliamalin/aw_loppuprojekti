@@ -36,7 +36,7 @@ public class CreatorsWithTasksController {
 		return p;
 	}
 	
-	@PostMapping
+	/*@PostMapping
 	CreatorsWithTasks create(@RequestBody CreatorsWithTasks p) {
 		repo.saveAndFlush(p);
 		return p;
@@ -55,6 +55,6 @@ public class CreatorsWithTasksController {
 				HttpStatus.NOT_FOUND,"Foo Not Found");
 		repo.deleteById(id);
 		return new RequestInfo("Deleted");
-	}
+	}*/
 	
 }

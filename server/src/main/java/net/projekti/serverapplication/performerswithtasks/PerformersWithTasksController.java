@@ -35,7 +35,7 @@ public class PerformersWithTasksController {
 		return p;
 	}
 	
-	@PostMapping
+	/*@PostMapping
 	PerformersWithTasks create(@RequestBody PerformersWithTasks p) {
 		repo.saveAndFlush(p);
 		return p;
@@ -54,6 +54,6 @@ public class PerformersWithTasksController {
 				HttpStatus.NOT_FOUND,"Foo Not Found");
 		repo.deleteById(id);
 		return new RequestInfo("Deleted");
-	}
+	}*/
 
 }

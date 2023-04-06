@@ -100,7 +100,6 @@ export default function DraggableDialog({task}) {
         <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
         </DialogTitle>
         <DialogContent>
-          <DialogContentText>
             <Typography variant="body1">
               Description: {task.description}
             </Typography>
@@ -116,13 +115,10 @@ export default function DraggableDialog({task}) {
             <Typography variant="body1">
               Duration:{task.duration}
             </Typography>
-          </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button variant="contained" onClick={onTakeTask}>Take Task</Button>
-          <Button autoFocus onClick={handleClose}>
-            Go Back
-          </Button>
+          <Button autoFocus onClick={handleClose}> Go Back </Button>
         </DialogActions>
         <TaskAlert task={task}/>
       </Dialog>
