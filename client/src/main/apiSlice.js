@@ -148,7 +148,15 @@ export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka 
         'Review',
         ...result.map(({ id }) => ({ type: 'Review', id }))
       ],
+    }),
+    getReviewsWithProfiles: builder.query({
+      query: () => '/reviewapi',
+      providesTags: (result = [], error, arg) => [
+        'Review',
+        ...result.map(({ id }) => ({ type: 'Review', id }))
+      ],
     })
+
   }),
 })
 
@@ -183,7 +191,8 @@ export const {
   useLogoutUserMutation, //tässä login
 
   //Reviewit
-  useGetReviewsQuery
+  useGetReviewsQuery,
+  useGetReviewsWithProfilesQuery,
 }
   = apiSlice;
 
