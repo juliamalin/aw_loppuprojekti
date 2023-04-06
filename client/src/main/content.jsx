@@ -10,6 +10,7 @@ import { EditProfile } from '../features/profiles/EditProfile';
 import { Login } from '../login/login';
 import { MyTasks } from '../features/tasks/MyTasks';
 import { useSelector } from 'react-redux';
+import { WebSocketClient } from '../websocket/socket';
 
 
 
@@ -36,6 +37,7 @@ export function Navbar() {
       {user.id && 
       <Link to="/login" className='navbar__button'>Log Out</Link>
       }
+      <Link to="/ws" className='navbar__button'>Socket</Link>
     </div>
   </nav>
 }
@@ -49,6 +51,7 @@ export function Main() {
       <Route path="/profile" element={<ProfilePage />} />
       <Route path="/profile/edit/:profileId" element={<EditProfile />} />
       <Route path="/login" element={<Login />} />
+      <Route path='/ws' element={<WebSocketClient />} />
     </Routes>
   </main>
 }
