@@ -62,9 +62,9 @@ public class TaskWithProfilesController {
 	public List<TaskWithProfiles> getTasksInArea(
 	        @RequestParam("minLat") Double minLat,
 	        @RequestParam("maxLat") Double maxLat,
-	        @RequestParam("minLong") Double minLong,
-	        @RequestParam("maxLong") Double maxLong) {
-        return repo.findByLatitudeBetweenAndLongitudeBetween(minLat, maxLat, minLong, maxLong);
+	        @RequestParam("minLng") Double minLng,
+	        @RequestParam("maxLng") Double maxLng) {
+        return repo.findByLatitudeBetweenAndLongitudeBetween(minLat, maxLat, minLng, maxLng);
     }
 	
 }

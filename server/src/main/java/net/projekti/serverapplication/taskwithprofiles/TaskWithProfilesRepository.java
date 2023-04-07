@@ -21,7 +21,7 @@ public interface TaskWithProfilesRepository extends JpaRepository<TaskWithProfil
 	List<TaskWithProfiles> findPerfomedTasksByStatus(@Param("id") int id, @Param("status") String status);
 	
 	
-	List<TaskWithProfiles> findByLatitudeBetweenAndLongitudeBetween(Double minLat, Double maxLat, Double minLong, Double maxLong);
+	List<TaskWithProfiles> findByLatitudeBetweenAndLongitudeBetween(Double minLat, Double maxLat, Double minLng, Double maxLng);
 	
 	
 }

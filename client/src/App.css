@@ -60,7 +60,7 @@
 }
 
 .task-excerpt:hover {
-  box-shadow: 0 0 15px rgba(118, 212, 155, 255);
+  box-shadow: 0 0 15px #845EC2;
 }
 
 .task-list .task-excerpt+.task-excerpt {

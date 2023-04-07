@@ -42,7 +42,7 @@ export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka 
     }),
 
     getTasksInArea: builder.query({
-      query: ({ minLat, maxLat, minLong, maxLong }) => `/tasksAPI/inArea?minLat=${minLat}&maxLat=${maxLat}&minLong=${minLong}&maxLong=${maxLong}`,
+      query: ({ minLat, maxLat, minLng, maxLng }) => `/tasksAPI/inArea?minLat=${minLat}&maxLat=${maxLat}&minLng=${minLng}&maxLng=${maxLng}`,
       providesTags: (result, error, arg) => [{ type: 'Task', id: arg }],
     }),
 
