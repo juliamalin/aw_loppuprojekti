@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { useGetCreatedTasksQuery, useGetTasksDoneQuery, useGetTasksQuery } from "../../main/apiSlice";
+import { useGetCreatedTasksQuery, useGetTasksDoneQuery, useGetTasksInAreaQuery, useGetTasksQuery } from "../../main/apiSlice";
 import { TimeAgo } from './timeAgo'
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
@@ -32,14 +32,14 @@ const TaskExcerpt = ({ task }) => {
 
 
 
-export const TaskContainer = ({ profileId, area }) => {
+export const TaskContainer = () => {
 
 
-
+    const bounds = useSelector(state => state.mapReducer.bounds)
     const {
         data: tasks = [],
         isLoading
-    } = useGetTasksQuery()
+    } = useGetTasksInAreaQuery(bounds)
 
 
     let content = tasks.map(task => <TaskExcerpt key={task.id} task={task} />)
