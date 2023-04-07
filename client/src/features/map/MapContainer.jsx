@@ -1,10 +1,11 @@
 import React, { useCallback, useMemo, useRef } from "react";
-import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
+import { GoogleMap, Marker, useLoadScript, Autocomplete } from "@react-google-maps/api";
 import { useGetTasksQuery } from "../../main/apiSlice";
 import DraggableDialog from "../tasks/viewTask";
 import { setBounds } from "../../main/mapSlice";
 import { useDispatch } from "react-redux";
 
+const libraries = ["places"]
 
 const getUserLocation = () => {
     if (navigator.geolocation) {
@@ -26,7 +27,16 @@ const getUserLocation = () => {
 export const MapContainer = () => {
     const [open, setOpen] = React.useState(false)
     const [selectedTask, setSelectedTask] = React.useState({})
-    const { isLoaded, loadError } = useLoadScript({ googleMapsApiKey: "AIzaSyBWdAmavWXVzoZlEhuGBlyek4EfhS7i78A" })
+    const { isLoaded, loadError } = useLoadScript({
+        googleMapsApiKey: "AIzaSyBWdAmavWXVzoZlEhuGBlyek4EfhS7i78A",
+        libraries: libraries,
+    })
+
+    const [selectedPlace, setSelectedPlace] = React.useState(null)
+    const autoCompleteRef = useRef(null);
+
+
+
     const { data: tasks = [] } = useGetTasksQuery()
     const markers = tasks.map(task => ({ lat: task.latitude, lng: task.longitude }))
 
@@ -35,6 +45,11 @@ export const MapContainer = () => {
         mapRef.current = map;
     }, []);
     const userLocation = getUserLocation()
+    const center = useMemo(() => selectedPlace
+        ? { lat: selectedPlace.geometry.location.lat(), lng: selectedPlace.geometry.location.lng() }
+        : userLocation || { lat: 60.19, lng: 24.94 },
+        [selectedPlace, userLocation]);
+
 
     const dispatch = useDispatch()
 
@@ -42,8 +57,6 @@ export const MapContainer = () => {
         disableDefaultUI: true,
         zoomControl: true
     }
-
-    const center = useMemo(() => userLocation || { lat: 60.19, lng: 24.94 })
 
     const addMarker = (event) => {
         const newMarker = {
@@ -73,8 +86,37 @@ export const MapContainer = () => {
 
     }, [mapRef, dispatch]);
 
+    const autoCompleteOnLoad = (autocomplete) => {
+        console.log("autocomplete loaded:", autocomplete);
+    };
+
+    const autoCompleteOnPlaceChanged = () => {
+        console.log("Place changed");
+    };
+
+
+    const onPlaceSelect = useCallback((place) => {
+        setSelectedPlace(place);
+        const lat = place.geometry.location.lat();
+        const lng = place.geometry.location.lng();
+        mapRef.current.panTo({ lat, lng });
+    }, []);
+
     if (!isLoaded) return <div>Loading...</div>
     return (<div>
+        <div className="row d-flex">
+            <div className="col">
+                <Autocomplete
+                    onLoad={(autoComplete) => autoCompleteRef.current = autoComplete}
+                    onPlaceChanged={() => onPlaceSelect(autoCompleteRef.current.getPlace())}
+                >
+                    <input
+                        type="text"
+                        placeholder="Enter an address"
+                    />
+                </Autocomplete>
+            </div>
+        </div>
         <GoogleMap
             onLoad={onMapLoad}
             options={options}
