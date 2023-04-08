@@ -16,61 +16,70 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Stack from '@mui/material/Stack';
 import LinearProgress from '@mui/material/LinearProgress';
 import Tooltip from '@mui/material/Tooltip';
+import Button from '@mui/material/Button';
+import SendIcon from '@mui/icons-material/Send';
+import { useState } from 'react'
+import { useUpdateTaskMutation} from '../../main/apiSlice';
+import { AlertDialogSlide } from './slideAlert'
 
 
 export function Row({task}) {
-    //const { task } = props;
+    //const [status, setStatus] = useState(task.status)
+    //const [performerId, setPerformerid] = useState(task.status)
+    //console.log(status)
+
+    //const [changeStatus, { isLoading }] = useUpdateTaskMutation()
+    //vaihda oikea get-pyyntö
+
     const [open, setOpen] = React.useState(false);
   
     return (
       <React.Fragment>
-        <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-          <TableCell>
-            <IconButton
+        <TableRow style={{ position: 'relative'}}>
+          <TableCell  style={{ borderBottom: 'none' }}>
+            <IconButton 
               aria-label="expand row"
               size="small"
               onClick={() => setOpen(!open)}
+              style={{ color: 'violet' }}
             >
               {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
           </TableCell>
-          <TableCell component="th" scope="row">
+          <TableCell class="lowercell" component="th" scope="row">
             {task.title}
           </TableCell>
-          <TableCell align="left">{task.cretorId}</TableCell>
-          {/*<LinearProgress color="secondary" />*/}
-          <Tooltip align="left" title="This task is in progress!" followCursor>
-          <Box sx={{ bgcolor: 'lighblue', color:'black', p: 2 }}>
-            Unavailable
-          </Box>
-        </Tooltip>
-          <TableCell align="left">{task.location}</TableCell>
-          <TableCell align="left">{task.payment}</TableCell>
+          <TableCell class="lowercell" align="left">{task.cretorId}</TableCell>
+          <TableCell class="lowercell" align="left">{task.status}</TableCell>
+          <TableCell class="lowercell" align="left">{task.location}</TableCell>
+          <TableCell class="lowercell" align="left" >{task.payment}</TableCell>
+          <TableCell class="lowercell" align="left" style={{ borderBottom: '1px solid rgba(224, 224, 224, 1)'}} >
+            <AlertDialogSlide task={task}></AlertDialogSlide></TableCell> 
+
         </TableRow>
-        <TableRow>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableRow >
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0, paddingLeft: '115px' }} colSpan={6}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1 }}>
-                <Typography variant="h6" gutterBottom component="div">
-                  Details
+                <Typography class="lowertitle" variant="h6" gutterBottom component="div">
                 </Typography>
                 <Table size="small" aria-label="purchases">
                   <TableHead>
-                    <TableRow>
-                    <TableCell>Created</TableCell>
-                      <TableCell align="left">Start Date</TableCell>
-                      <TableCell align="left">End Date</TableCell>
-                      <TableCell align="left">Description</TableCell>
-                      <TableCell align="left">Duration (min)</TableCell>
+                    <TableRow style={{ backgroundColor: '#E5E5E5' }}>
+                    <TableCell class="lowertext">Created</TableCell>
+                      <TableCell class="lowertext" align="left">Start Date</TableCell>
+                      <TableCell class="lowertext" align="left">End Date</TableCell>
+                      <TableCell class="lowertext" align="left">Description</TableCell>
+                      <TableCell class="lowertext" align="left">Duration (min)</TableCell>
                     </TableRow>
                   </TableHead>
-                  <TableBody>
+                  <TableBody style={{ backgroundColor: '#f5e6fa' }}>
                       <TableRow key={task.created}>
-                        <TableCell component="th" scope="row">{task.created}</TableCell>
-                        <TableCell>{task.availableFrom}</TableCell>
-                        <TableCell align="left">{task.availableTo}</TableCell>
-                        <TableCell align="left">{task.description}</TableCell>
-                        <TableCell align="left">{task.durationinminutes}</TableCell>
+                        <TableCell class="lowercell" component="th" scope="row">{task.created}</TableCell>
+                        <TableCell class="lowercell" >{task.availableFrom}</TableCell>
+                        <TableCell class="lowercell" >{task.availableTo}</TableCell>
+                        <TableCell class="lowercell" >{task.description}</TableCell>
+                        <TableCell class="lowercell" >{task.durationinminutes}</TableCell>
                       </TableRow>
                   </TableBody>
                   </Table>
@@ -132,3 +141,9 @@ export function Row({task}) {
   ))}
 </TableBody>
 </Table>*/
+
+
+
+/*{<TableCell align="left" ><Button  variant="contained" onClick={()=>
+  makeChange()} endIcon={<SendIcon />}>
+    Mark as done</Button></TableCell> }*/
