@@ -10,6 +10,7 @@ import Rating from '@mui/material/Rating';
 import Box from '@mui/material/Box';
 import StarIcon from '@mui/icons-material/Star';
 import { useCreateReviewMutation } from '../../main/apiSlice';
+import { useSelector } from 'react-redux';
 
 const labels = {
   1: 'Rotten Rodent',
@@ -24,26 +25,21 @@ function getLabelText(value) {
 }
 
 export default function ReviewDialog() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [value, setValue] = useState(2);
   const [hover, setHover] = useState(-1);
   const [createReview] = useCreateReviewMutation();
   const [comment, setComment] = useState('');
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  const user = useSelector(state => state.userReducer.user) || {};
 
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const onSendClicked = () => {
     createReview({
       comment: comment,
       rating: value,
-      targetuser_id:,
-      performer_id 
+      // targetuser_id:,
+      performer_id: user.id
     }).unwrap().then(response => console.log(response));
     handleClose();
   };
@@ -52,11 +48,12 @@ export default function ReviewDialog() {
     setComment(event.target.value);
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open form dialog
-      </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Feedback</DialogTitle>
         <DialogContent>
