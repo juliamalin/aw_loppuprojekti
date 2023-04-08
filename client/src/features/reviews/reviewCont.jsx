@@ -1,4 +1,4 @@
-/*import React, { useState } from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -9,6 +9,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Rating from '@mui/material/Rating';
 import Box from '@mui/material/Box';
 import StarIcon from '@mui/icons-material/Star';
+import { useCreateReviewMutation } from '../../main/apiSlice';
+import { useSelector } from 'react-redux';
 
 const labels = {
   1: 'Rotten Rodent',
@@ -23,41 +25,35 @@ function getLabelText(value) {
 }
 
 export default function ReviewDialog() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [value, setValue] = useState(2);
   const [hover, setHover] = useState(-1);
+  const [createReview] = useCreateReviewMutation();
+  const [comment, setComment] = useState('');
 
-  // const [createReview] = useGetReviewsQuery();
-  // const [comment, setComment] = React.useState({});
-  // const [valuee, document.getElementById]
+  const user = useSelector(state => state.userReducer.user) || {};
 
-  const handleClickOpen = () => {
-    setOpen(true);
+
+  const onSendClicked = () => {
+    createReview({
+      comment: comment,
+      rating: value,
+      // targetuser_id:,
+      performer_id: user.id
+    }).unwrap().then(response => console.log(response));
+    handleClose();
+  };
+
+  const handleCommentChange = (event) => {
+    setComment(event.target.value);
   };
 
   const handleClose = () => {
-    updateReview({
-
-    })
-
-
     setOpen(false);
   };
 
-  const updateReview = (newValue) => {
-    setReview({ ...review, ...newValue });
-};
-
-  const onSendClicked = () => {
-    createReview(handleClose()).unwrap().then(response => console.log(response));
-
-}
-
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open form dialog
-      </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Feedback</DialogTitle>
         <DialogContent>
@@ -74,6 +70,8 @@ export default function ReviewDialog() {
             variant="standard"
             multiline
             rows={4}
+            value={comment}
+            onChange={handleCommentChange}
           />
           <Box
             sx={{

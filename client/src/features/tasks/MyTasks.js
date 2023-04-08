@@ -30,8 +30,10 @@ export const MyTasks = () => {
     const { data: user = [], isLoading: isLoadingUser} =   useGetUserQuery();
     //const user = useSelector(state => state.userReducer.user) || {};
 
-    const { data: createdTasks = [], isLoading: isLoadingCreatedTasks } = useGetCreatedTasksQuery(user.id);
-    const { data: performerTasks = [], isLoading: isLoadingPerformerTasks} = useGetTasksInProgressQuery(user.id);
+    
+
+    const { data: createdTasks = [], isLoading: isLoadingCreatedTasks } = useGetCreatedTasksQuery(user?.id);
+    const { data: performerTasks = [], isLoading: isLoadingPerformerTasks} = useGetTasksInProgressQuery(user?.id);
 
   console.log(user)
         //tulee päivittää tieto statuksen muutoksesta saman tien
