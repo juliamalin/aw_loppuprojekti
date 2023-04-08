@@ -149,12 +149,12 @@ export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka 
         ...result.map(({ id }) => ({ type: 'Review', id }))
       ],
     }),
-    getReviewsWithProfiles: builder.query({
-      query: () => '/reviewapi',
-      providesTags: (result = [], error, arg) => [
-        'Review',
-        ...result.map(({ id }) => ({ type: 'Review', id }))
-      ],
+    createReview: builder.mutation({
+      query: (review) => ({
+        url: '/review',
+        method: 'POST',
+        body: review
+      })
     })
 
   }),
@@ -191,7 +191,7 @@ export const {
 
   //Reviewit
   useGetReviewsQuery,
-  useGetReviewsWithProfilesQuery,
+  useCreateReviewMutation,
 }
   = apiSlice;
 

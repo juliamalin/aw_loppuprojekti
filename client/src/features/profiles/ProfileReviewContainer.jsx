@@ -2,6 +2,7 @@ import React from "react";
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 import { useGetReviewsQuery } from "../../main/apiSlice";
+import ReviewDialog from "../reviews/reviewCont";
 
 
 const ReviewExcerpt = ({ review }) => {
@@ -33,7 +34,7 @@ export const ProfileReviewContainer = () => {
             <h2>Profile Reviews</h2>
             <div>
                 {content}
-                
+                <ReviewDialog/>
             </div>
         </div>
     )
