@@ -107,6 +107,9 @@ export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka 
     getProfileById: builder.query({
       query: (profileId) => `/profiles/${profileId}`
     }),
+    getProfileStatistics: builder.query({
+      query: (profileId) => `/tasksAPI/profile/${profileId}/statistics`
+    }),
     getProfileWithTasksById: builder.query({
       query: (profileId) => `/creators/owntasks/${profileId}`
     }),
@@ -185,6 +188,7 @@ export const {
   useGetProfileWithTasksByIdQuery, // tähän profiilien exportit
   useGetPerformerWithTasksByIdQuery,
   useGetUserQuery,
+  useGetProfileStatisticsQuery,
   useCreateUserMutation,
   useLoginUserMutation,
   useLogoutUserMutation, //tässä login
