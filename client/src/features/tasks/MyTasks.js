@@ -42,9 +42,6 @@ export const MyTasks = () => {
   const [activeButton, setActiveButton] = useState('created');
 
 
-  console.log(createdTasks) 
-  console.log(performerTasks) 
-
 
   const handlePerformedTasksClick = () => {
     setShowPerformedTasks(true);
@@ -80,7 +77,7 @@ export const MyTasks = () => {
               <TableCell class="cell" align="left">Creator</TableCell>
               <TableCell class="cell" align="left">Status</TableCell>
               <TableCell class="cell" align="left">Location</TableCell>
-              <TableCell class="cell" align="left">Payment</TableCell>
+              <TableCell class="cell" align="left">Payment (€)</TableCell>
               <TableCell class="cell" align="left">Progress</TableCell>
             </TableRow>
           </TableHead>

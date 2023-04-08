@@ -50,7 +50,7 @@ export function Row({task}) {
             {task.title}
           </TableCell>
           <TableCell class="lowercell" align="left">{task.cretorId}</TableCell>
-          <TableCell class="lowercell" align="left">{task.status}</TableCell>
+          <TableCell class="lowercell" align="left">{task.status.charAt(0).toUpperCase() + task.status.slice(1)}</TableCell>
           <TableCell class="lowercell" align="left">{task.location}</TableCell>
           <TableCell class="lowercell" align="left" >{task.payment}</TableCell>
           <TableCell class="lowercell" align="left" style={{ borderBottom: '1px solid rgba(224, 224, 224, 1)'}} >
