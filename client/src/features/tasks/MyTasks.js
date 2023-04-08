@@ -37,9 +37,7 @@ export const MyTasks = () => {
   if (taskTypes.includes('inProgress')) tasks = tasksInProgress
   if (taskTypes.includes('created')) tasks = [...tasks, ...tasksCreated]
 
-  console.log(tasksInProgress)
-  console.log(tasksCreated)
-  console.log(tasks)
+
 
   return (<div className="row">
     <div className="col-8">
