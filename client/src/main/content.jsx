@@ -16,7 +16,7 @@ import { WebSocketClient } from '../websocket/socket';
 
 
 export function Navbar() {
-  let user = useSelector(state => state.userReducer.user) || {};
+  const user = useSelector(state => state.userReducer.user) || {};
   return <nav className="navbar">
 
     <div className="navbar__left">

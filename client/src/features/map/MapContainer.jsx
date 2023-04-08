@@ -4,7 +4,7 @@ import { useGetTasksQuery } from "../../main/apiSlice";
 import DraggableDialog from "../tasks/viewTask";
 import { setBounds } from "../../main/mapSlice";
 import { useDispatch } from "react-redux";
-
+import { MarkerIcons } from "./MarkerIcons";
 const libraries = ["places"]
 
 const getUserLocation = () => {
@@ -58,14 +58,6 @@ export const MapContainer = () => {
         zoomControl: true
     }
 
-    const addMarker = (event) => {
-        const newMarker = {
-            lat: event.latLng.lat(),
-            lng: event.latLng.lng(),
-        }
-        //setMarkers([...markers, newMarker])
-    }
-
     const onMarkerClick = (index) => {
         setSelectedTask(tasks[index])
         setOpen(true)
@@ -86,13 +78,7 @@ export const MapContainer = () => {
 
     }, [mapRef, dispatch]);
 
-    const autoCompleteOnLoad = (autocomplete) => {
-        console.log("autocomplete loaded:", autocomplete);
-    };
 
-    const autoCompleteOnPlaceChanged = () => {
-        console.log("Place changed");
-    };
 
 
     const onPlaceSelect = useCallback((place) => {
@@ -123,18 +109,9 @@ export const MapContainer = () => {
             zoom={10}
             center={center}
             mapContainerClassName="map-container"
-            onClick={addMarker}
             onBoundsChanged={onBoundsChanged}
         >
-            {markers.map((marker, index) => (<Marker key={index} position={marker} onClick={() => onMarkerClick(index)} />))}
-            {userLocation ? <Marker icon={{
-                fillColor: `#4285F4`,
-                fillOpacity: 1,
-                path: window.google.maps.SymbolPath.CIRCLE,
-                scale: 8,
-                strokeColor: `rgb(255,255,255)`,
-                strokeWeight: 2,
-            }} /> : ""}
+            {markers.map((marker, index) => (<Marker key={index} position={marker} onClick={() => onMarkerClick(index)} icon={MarkerIcons.color3} />))}
         </GoogleMap>
         <DraggableDialog task={selectedTask} open={open} setOpen={setOpen} />
     </div>)

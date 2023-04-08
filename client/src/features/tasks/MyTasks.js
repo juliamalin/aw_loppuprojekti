@@ -18,9 +18,11 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import './mytasksstyles.css';
 import { useState } from 'react'
 import { useSelector } from "react-redux";
-//import { MyTasksMap } from "../map/MyTasksMap";
 
-
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import { MyTasksMap } from "../map/MyTasksMap";
+import { right } from "@popperjs/core";
 
 
 
@@ -58,12 +60,17 @@ export const MyTasks = () => {
 
 
   return (
-    <div>
+    <div >
       <h1 className="my-tasks-heading" style={{ marginBottom: '20px',marginLeft: '10px' }}>My Tasks</h1>
+      <div>
       <ButtonGroup class="buttongroup" color="secondary" style={{ marginBottom: '20px',marginLeft: '10px' }}>
         <Button variant={activeButton === 'created' ? 'contained' : 'outlined'} onClick={handleCreatedTasksClick}>Created tasks</Button>
         <Button variant={activeButton === 'performed' ? 'contained' : 'outlined'} onClick={handlePerformedTasksClick}>Performed tasks</Button>
       </ButtonGroup>
+      </div>
+
+
+      <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gridColumnGap: '20px', gridRowGap: '20px'}} >
       <TableContainer class="txtb" component={Paper}>
         <Table  aria-label="collapsible table">
           <TableHead>
@@ -89,6 +96,10 @@ export const MyTasks = () => {
           </TableBody>
         </Table>
       </TableContainer>
+      <div style={{ position: 'fixed', right: '0', top: '120px', bottom:'0.5px', width: '35%',margin: '0 15px 50px 20px' }}  className="col-4">
+      <MyTasksMap />
+    </div>
+    </div>
     </div>
   );
 };
