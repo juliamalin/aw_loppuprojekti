@@ -1,29 +1,23 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addNotification } from "../main/store";
 
-export function WebSocketClient() {
-    let [ connection, setConnection ] = React.useState(null);
+export function WebSocketClient(){
+    let msgs = useSelector((state) => state.userReducer.notifications) || [];
+    let socket = useSelector((state) => state.userReducer.socket);
+    let dispatch = useDispatch();
 
-    React.useEffect(function() {
-        console.log("WebSocket UseEffect");
-        let con = new WebSocket("ws://localhost:8080/my/uri");
-        con.onopen = () => {
-            console.log("Connection open");
-            con.send("Moikka");
+    React.useEffect(() => {
+        socket.onmessage = ev => {
+            console.log(ev.data)
+            dispatch(addNotification(ev.data));
         }
-        con.onmessage = (ev) => console.log(ev.data);
-        con.onclose=() => {
-            con.close();
-            setConnection(null);
-        }
-        con.onerror=() => setConnection(null);
-        return () => {
-            console.log("Closing");
-            con.close();
-        }
-    }, [connection])
-    
+    }, [])
 
-    return <div>
-        <h2>Moi</h2>
+    let rows = msgs.map(m => <p>{m}</p>)
+
+    return <div className="web-socket">
+        <h2>WebSocket client</h2>
+        {rows}
     </div>
 }

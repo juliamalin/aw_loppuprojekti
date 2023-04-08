@@ -1,17 +1,21 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit';
 import { apiSlice } from './apiSlice';
 
-const initialState = {user: {}};
+const initialState = {user: {}, notifications: [], socket: null};
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
     setUser: (state, action) => {state.user = action.payload},
+    addNotification: (state, action) => {state.notifications.push(action.payload)},
+    setSocket: (state, action) => {state.socket = action.payload},
   }
 })
 
-export const { setUser } = userSlice.actions
+
+
+export const { setUser, addNotification, setSocket } = userSlice.actions
 
 export const store = configureStore({ // Määritellään uusi store-muuttuja, joka käyttää configureStore-funktiota Redux Toolkitista
   reducer: {
