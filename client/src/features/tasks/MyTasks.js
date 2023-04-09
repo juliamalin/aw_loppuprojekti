@@ -1,6 +1,6 @@
 import React from "react";
 import { TaskContainer } from "./taskContainer";
-import {    useGetCreatedTasksQuery,   useGetTasksInProgressQuery, useGetUserQuery } from "../../main/apiSlice";
+import {    useGetCreatedTasksQuery,   useGetPerformerTasksQuery, useGetUserQuery } from "../../main/apiSlice";
 import { TimeAgo } from './timeAgo'
 import DraggableDialog from "./viewTask";
 import LinearProgress from '@mui/material/LinearProgress';
@@ -29,19 +29,16 @@ import { right } from "@popperjs/core";
 export const MyTasks = () => {
     const { data: user = [], isLoading: isLoadingUser} =   useGetUserQuery();
     //const user = useSelector(state => state.userReducer.user) || {};
+    console.log(user.id)
 
     const { data: createdTasks = [], isLoading: isLoadingCreatedTasks } = useGetCreatedTasksQuery(user.id);
-    const { data: performerTasks = [], isLoading: isLoadingPerformerTasks} = useGetTasksInProgressQuery(user.id);
+    const { data: performerTasks = [], isLoading: isLoadingPerformerTasks} = useGetPerformerTasksQuery(user.id);
 
-  console.log(user)
-        //tulee päivittää tieto statuksen muutoksesta saman tien
-
-
-  const [showPerformedTasks, setShowPerformedTasks] = useState(true);
+  const [showPerformedTasks, setShowPerformedTasks] = useState(false);
   const [showCreatedTasks, setShowCreatedTasks] = useState(false);
   const [activeButton, setActiveButton] = useState('created');
 
-
+  console.log(createdTasks)
 
   const handlePerformedTasksClick = () => {
     setShowPerformedTasks(true);
@@ -85,11 +82,11 @@ export const MyTasks = () => {
             {showPerformedTasks &&
               performerTasks
                 .filter((task) => task.performer.id === user.id)
-                .map((task) => <Row key={task.id} task={task} />)}
+                .map((task) => <Row key={task.id} task={task} user={user.id} />)}
             {showCreatedTasks &&
               createdTasks
                 .filter((task) => task.creator.id === user.id)
-                .map((task) => <Row key={task.id} task={task} />)}
+                .map((task) => <Row key={task.id} task={task} user={user.id} />)}
           </TableBody>
         </Table>
       </TableContainer>

@@ -6,7 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
-import { useUpdateTaskMutation} from '../../main/apiSlice';
+import { useUpdateTaskMutation,useGetTasksInProgressQuery,useGetPerformerTasksQuery } from '../../main/apiSlice';
 import { useState } from 'react'
 
 
@@ -14,46 +14,44 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export function AlertDialogSlide({task}) {
-  const [open, setOpen] = React.useState(false);
-  const [status, setStatus] = useState(task.status)
-
-  const [changeStatus, { isLoading }] = useUpdateTaskMutation()
-      //vaihda oikea get-pyyntö
-      //poistaa taskin kun status päivittynyt??? (ja kun sivua päivittää)
-
+export function AlertDialogSlide({task},{user}) {
+  const [open, setOpen] = React.useState(false)
+  const [status, setStatus] = useState('done')
+  const [mutate, { isLoading }] = useUpdateTaskMutation()
+  const { data, isLoading: isTasksLoading, refetch: refetchPerformerTasks } = useGetPerformerTasksQuery(3)
+  //const { created, isLoading: isCreatedLoading, refetch: refetchCreatedTasks  } = useGetCreatedTasksQuery(3)
+  console.log({user})
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-  const handleClose2 = () => {
-    setOpen(false);
-
-  };
+  
 
   const makeChange = async () => {
     setStatus('Done')
-    await changeStatus({
-      id: task.id,
-      status: 'done',
-      title: task.title,
-      description: task.description,
-      latitude: task.latitude,
-      longitude: task.longitude,
-      location: task.location,
-      availableFrom: task.availableFrom,
-      availableTo: task.availableTo,
-      payment: task.payment,
-      durationinminutes: task.durationinminutes,
-      creatorId: 1,
-      performerId: task.performerId
-    })
+    await mutate({...task, status: 'Done', creatorId: task.creator.id, performerId: task.performer.id})
+    refetchPerformerTasks();
+  };
+
+  const Cancel = async () => {
+    setStatus('In progress')
+    await mutate({...task, status: 'In progress', creatorId: task.creator.id, performerId: task.performer.id})
+    refetchPerformerTasks();
   };
 
   const handleClose1 = () => {
     setOpen(false);
     makeChange();
+  };
+
+  const handleClose2 = () => {
+    setOpen(false);
+  };
+
+  const handleClose3 = () => {
+    setOpen(false);
+    Cancel();
   };
 
   return (
@@ -70,10 +68,34 @@ export function AlertDialogSlide({task}) {
       >
         <DialogTitle>{"Do you want to mark task completed?"}</DialogTitle>
         <DialogActions>
+          <Button onClick={handleClose1} disabled={isLoading}>Agree</Button>
           <Button onClick={handleClose2}>Disagree</Button>
-          <Button onClick={handleClose1}>Agree</Button>
+          <Button onClick={handleClose3} disabled={isLoading}>Cancel</Button>
         </DialogActions>
       </Dialog>
     </div>
   );
 }
+
+
+
+
+  /*const makeChange = async () => {
+    setStatus('Done')
+    task.status = 'Done';
+    await mutate({
+      id: task.id,
+      status: 'done',
+      title: task.title,
+      description: task.description,
+      latitude: task.latitude,
+      longitude: task.longitude,
+      location: task.location,
+      availableFrom: task.availableFrom,
+      availableTo: task.availableTo,
+      payment: task.payment,
+      durationinminutes: task.durationinminutes,
+      creatorId: task.creatorId,
+      performerId: task.performerId
+    })
+  };*/
