@@ -1,6 +1,6 @@
 import React from "react";
 import { TaskContainer } from "./taskContainer";
-import { useGetCreatedTasksQuery, useGetPerformerTasksQuery, useGetUserQuery } from "../../main/apiSlice";
+import { useGetCreatedTasksQuery, useGetTasksInProgressQuery } from "../../main/apiSlice";
 import { TimeAgo } from './timeAgo'
 import DraggableDialog from "./viewTask";
 import LinearProgress from '@mui/material/LinearProgress';

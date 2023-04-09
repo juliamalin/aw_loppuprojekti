@@ -22,15 +22,19 @@
 }
 
 .navbar__button {
-  background-color: #f7f7f7;
+  background-color: #845EC2;
   border: none;
   padding: 10px 20px;
   margin-left: 10px;
   font-size: 16px;
   cursor: pointer;
   border-radius: 5px;
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
 }
 
 .navbar__button:hover {
-  background-color: #aaa;
+  background-color: #00C2A8;
+  color: black
 }
