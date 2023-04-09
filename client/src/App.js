@@ -13,20 +13,11 @@ import { addNotification } from './main/store';
 
 
 function App() {
-  let dispatch = useDispatch();
 
   React.useEffect(function() {
     console.log("WebSocket useEffect");
     let con = new WebSocket("ws://localhost:8080/my/uri");
-    dispatch(setSocket(con));
-    /*con.onopen=() => console.log("Opened connection");
-    con.onclose=() => {
-        con.close();
-    }
-    con.onmessage = ev => {
-       console.log(ev.data)
-       dispatch(addNotification(ev.data));
-    }*/
+    con.onopen = () => console.log("WebSocket open");
 }, []);
 
   return (

@@ -1,7 +1,7 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit';
 import { apiSlice } from './apiSlice';
 
-const initialState = {user: {}, notifications: [], socket: null};
+const initialState = {user: {}, notifications: []};
 
 export const userSlice = createSlice({
   name: 'user',
@@ -9,13 +9,13 @@ export const userSlice = createSlice({
   reducers: {
     setUser: (state, action) => {state.user = action.payload},
     addNotification: (state, action) => {state.notifications.push(action.payload)},
-    setSocket: (state, action) => {state.socket = action.payload},
+    
   }
 })
 
 
 
-export const { setUser, addNotification, setSocket } = userSlice.actions
+export const { setUser, addNotification } = userSlice.actions
 
 export const store = configureStore({ // Määritellään uusi store-muuttuja, joka käyttää configureStore-funktiota Redux Toolkitista
   reducer: {
