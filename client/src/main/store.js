@@ -1,5 +1,6 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit';
 import { apiSlice } from './apiSlice';
+import { mapSlice } from './mapSlice';
 
 const initialState = {user: {}, notifications: []};
 
@@ -21,14 +22,15 @@ export const store = configureStore({ // Määritellään uusi store-muuttuja, j
   reducer: {
     [apiSlice.reducerPath]: apiSlice.reducer, // määritellään, että apin reducer sijoitetaan storen api.reducerPath-kohtaan
     userReducer: userSlice.reducer,
+    mapReducer: mapSlice.reducer,
   },
-  
+
   // määritellään middleware-ketju, joka käyttää getDefaultMiddleware-funktiota 
   // Redux Toolkitista ja liittää siihen API:n middleware-kohdan
 
-  middleware: (getDefaultMiddleware) => 
+  middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),
 });
 
-// Redux Toolkit Query -paketin api-muuttuja sijoitetaan storeen 
+// Redux Toolkit Query -paketin api-muuttuja sijoitetaan storeen
 // ja liitetään siihen middleware-ketju, joka mahdollistaa API-kyselyjen tekemisen
