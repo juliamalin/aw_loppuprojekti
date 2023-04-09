@@ -10,22 +10,22 @@ import { GoogleLogin } from './login/google';
 import { Login } from './login/login';
 import React from 'react';
 import { addNotification } from './main/store';
+import WebSocketContext from './websocket/socket';
 
 
 function App() {
 
-  React.useEffect(function() {
-    console.log("WebSocket useEffect");
-    let con = new WebSocket("ws://localhost:8080/my/uri");
-    con.onopen = () => console.log("WebSocket open");
-}, []);
+  
+  const ws = new WebSocket('ws://localhost:8080/my/uri');
 
   return (
-
+    //Avaa websocketin koko sovelluksen auetessa
+    <WebSocketContext.Provider value={ws}>
     <div className="App">
       <Navbar />
-      <Main />
+      <Main/>
     </div>
+    </WebSocketContext.Provider>
 
   );
 }

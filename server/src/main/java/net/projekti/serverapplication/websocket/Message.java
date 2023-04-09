@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class Message {
 
-	@Autowired
+	/*@Autowired
 	WebSocketServer server;
 
 	String msg = "Moikka serveriltä!";
@@ -15,5 +15,5 @@ public class Message {
 	@Scheduled(fixedRate=5000)
 	public void koe() {
 		server.sendToAll(msg);
-	}
+	}*/
 }

@@ -5,14 +5,14 @@ import { GoogleLogin } from './google';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../main/store';
 import { Link } from 'react-router-dom';
+import WebSocketContext from '../websocket/socket';
 
 export function Login(props){
     let user = useSelector(state => state.userReducer.user) || {};
     let [username, changeUsername] = React.useState("");
     let [password, changePassword] = React.useState("");
-    
     const dispatch = useDispatch();
-    
+
 
     console.log(user);
 
@@ -34,11 +34,12 @@ export function Login(props){
             .then((payload) => console.log('Ok', dispatch(setUser(payload))))
             .catch((err) => alert('Bad credentials', err))
         dispatch(setUser(user));
+
         
     }
 
     function createU() {
-        let u = {username: user.username, password: user.password, role: 'user'};
+        let u = {username: username, password: password, role: 'user'};
         createUser(u).unwrap()
             .then((payload) => console.log('Ok', payload))
     }

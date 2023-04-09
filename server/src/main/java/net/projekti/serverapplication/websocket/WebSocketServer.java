@@ -23,6 +23,8 @@ public class WebSocketServer extends TextWebSocketHandler{
 		@Override
 		public void handleTextMessage(WebSocketSession session, TextMessage message) throws InterruptedException, IOException {
 			System.out.println("Got message:"+message.getPayload());
+			String msg = message.getPayload().toString();
+			sendToAll(msg);
 		}
 
 		@Override

@@ -32,13 +32,14 @@ function PaperComponent(props) {
   );
 }
 
-export default function DraggableDialog({ task, open, setOpen }) {
+export default function DraggableDialog({ task, open, setOpen}) {
   const [status, setStatus] = useState(task.status)
   const [alert, setAlert] = useState(null);
 
   const [changeStatus, { isLoading }] = useUpdateTaskMutation()
 
   const navigate = useNavigate()
+
 
 
 

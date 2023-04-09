@@ -13,7 +13,7 @@ import '../../App.css';
 
 
 
-const TaskExcerpt = ({ task }) => {
+const TaskExcerpt = ({ task}) => {
     const [open, setOpen] = React.useState(false)
 
 
@@ -34,7 +34,7 @@ const TaskExcerpt = ({ task }) => {
 
 
 
-export const TaskContainer = () => {
+export const TaskContainer = ({ws}) => {
 
     const [durationRange, setDurationRange] = React.useState('all')
     const [sortBy, setSortBy] = React.useState('all')
@@ -81,7 +81,7 @@ export const TaskContainer = () => {
     // if (sortBy === 'distance') //Implement later
     if (sortBy === 'price') sortedTasks.sort((a, b) => b.payment > a.payment ? 1 : -1)
 
-    let content = sortedTasks.map(task => <TaskExcerpt key={task.id} task={task} />)
+    let content = sortedTasks.map(task => <TaskExcerpt key={task.id} task={task} ws={ws} />)
 
     return (
 

@@ -10,7 +10,7 @@ import { EditProfile } from '../features/profiles/EditProfile';
 import { Login } from '../login/login';
 import { MyTasks } from '../features/tasks/MyTasks';
 import { useSelector } from 'react-redux';
-import { WebSocketClient } from '../websocket/socket';
+import { WebSocketClient } from '../websocket/socketPage';
 
 
 
@@ -43,8 +43,9 @@ export function Navbar() {
       }
       {user.id &&
         <Link to="/login" className='navbar__button'>Log Out</Link>
+      } {user.id &&
+      <Link to="/ws" className='navbar__button'>Notifications</Link>
       }
-      <Link to="/ws" className='navbar__button'>Socket</Link>
     </div>
   </nav>
 }
