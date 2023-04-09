@@ -8,16 +8,20 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { useUpdateTaskMutation,useGetTasksInProgressQuery,useGetPerformerTasksQuery } from '../../main/apiSlice';
 import { useState } from 'react'
+import ReviewDialog from '../reviews/reviewCont';
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+
+
 export function AlertDialogSlide({task},{user}) {
   const [open, setOpen] = React.useState(false)
   const [status, setStatus] = useState('done')
   const [mutate, { isLoading }] = useUpdateTaskMutation()
+  const [reviewVisible, setReviewVisible] = React.useState(false) // review aluksi piilossa. Review jutut pitää siirtää oikeaan nappiin kun sellainen tulee task in progressiin
   const { data, isLoading: isTasksLoading, refetch: refetchPerformerTasks } = useGetPerformerTasksQuery(3)
   //const { created, isLoading: isCreatedLoading, refetch: refetchCreatedTasks  } = useGetCreatedTasksQuery(3)
   console.log({user})
@@ -27,22 +31,23 @@ export function AlertDialogSlide({task},{user}) {
   };
 
   
-
+/*
   const makeChange = async () => {
     setStatus('Done')
     await mutate({...task, status: 'Done', creatorId: task.creator.id, performerId: task.performer.id})
     refetchPerformerTasks();
   };
-
+*/
   const Cancel = async () => {
     setStatus('In progress')
     await mutate({...task, status: 'In progress', creatorId: task.creator.id, performerId: task.performer.id})
     refetchPerformerTasks();
   };
 
-  const handleClose1 = () => {
+  const handleClose1 = async () => {
     setOpen(false);
-    makeChange();
+    await mutate({...task, status: 'done', creatorId: task.creator.id, performerId: task.performer.id});
+    setReviewVisible(true);
   };
 
   const handleClose2 = () => {
@@ -73,6 +78,7 @@ export function AlertDialogSlide({task},{user}) {
           <Button onClick={handleClose3} disabled={isLoading}>Cancel</Button>
         </DialogActions>
       </Dialog>
+      {reviewVisible && <ReviewDialog performerId={task.performer.id} creatorId={task.creator.id} taskId={task.id} />}  {/* tekee reviewistä näkyvän kun agree klikattu*/}
     </div>
   );
 }

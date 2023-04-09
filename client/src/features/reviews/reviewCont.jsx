@@ -12,6 +12,7 @@ import StarIcon from '@mui/icons-material/Star';
 import { useCreateReviewMutation } from '../../main/apiSlice';
 import { useSelector } from 'react-redux';
 
+
 const labels = {
   1: 'Rotten Rodent',
   2: 'Hasty Hopper',
@@ -24,22 +25,24 @@ function getLabelText(value) {
   return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`;
 }
 
-export default function ReviewDialog() {
+export default function ReviewDialog({performerId, creatorId, taskId}) {
   const [open, setOpen] = useState(true);
   const [value, setValue] = useState(2);
   const [hover, setHover] = useState(-1);
   const [createReview] = useCreateReviewMutation();
   const [comment, setComment] = useState('');
+  const [rating, setRating] = useState();
 
-  const user = useSelector(state => state.userReducer.user) || {};
+  // const user = useSelector(state => state.userReducer.user) || {};
 
 
   const onSendClicked = () => {
     createReview({
       comment: comment,
-      rating: value,
-      // targetuser_id:,
-      performer_id: user.id
+      value: rating,
+      targetuser_id: creatorId,
+      performer_id: performerId,
+      task_id: taskId
     }).unwrap().then(response => console.log(response));
     handleClose();
   };
@@ -86,7 +89,7 @@ export default function ReviewDialog() {
               precision={1}
               getLabelText={getLabelText}
               onChange={(event, newValue) => {
-                setValue(newValue);
+                setRating(newValue);
               }}
               onChangeActive={(event, newHover) => {
                 setHover(newHover);
