@@ -1,6 +1,6 @@
 import React from "react";
 import { TaskContainer } from "./taskContainer";
-import {    useGetCreatedTasksQuery,   useGetTasksInProgressQuery, useGetUserQuery } from "../../main/apiSlice";
+import { useGetCreatedTasksQuery, useGetTasksInProgressQuery } from "../../main/apiSlice";
 import { TimeAgo } from './timeAgo'
 import DraggableDialog from "./viewTask";
 import LinearProgress from '@mui/material/LinearProgress';
@@ -27,21 +27,18 @@ import { right } from "@popperjs/core";
 
 
 export const MyTasks = () => {
-    const { data: user = [], isLoading: isLoadingUser} =   useGetUserQuery();
-    //const user = useSelector(state => state.userReducer.user) || {};
+  // const { data: user = [], isLoading: isLoadingUser} =   useGetUserQuery();
+  const user = useSelector(state => state.userReducer.user);
 
-    
+  const { data: createdTasks = [], isLoading: isLoadingCreatedTasks } = useGetCreatedTasksQuery(user?.id);
+  const { data: performerTasks = [], isLoading: isLoadingPerformerTasks } = useGetTasksInProgressQuery(user?.id);
 
-    const { data: createdTasks = [], isLoading: isLoadingCreatedTasks } = useGetCreatedTasksQuery(user?.id);
-    const { data: performerTasks = [], isLoading: isLoadingPerformerTasks} = useGetTasksInProgressQuery(user?.id);
-
-  console.log(user)
-        //tulee päivittää tieto statuksen muutoksesta saman tien
+  //tulee päivittää tieto statuksen muutoksesta saman tien
 
 
   const [showPerformedTasks, setShowPerformedTasks] = useState(true);
   const [showCreatedTasks, setShowCreatedTasks] = useState(false);
-  const [activeButton, setActiveButton] = useState('created');
+  const [activeButton, setActiveButton] = useState('performed');
 
 
 
@@ -58,47 +55,46 @@ export const MyTasks = () => {
   };
 
 
+  if (isLoadingCreatedTasks || isLoadingPerformerTasks) return (<p>Login to see My Tasks</p>)
   return (
     <div >
-      <h1 className="my-tasks-heading" style={{ marginBottom: '20px',marginLeft: '10px' }}>My Tasks</h1>
+      <h1 className="my-tasks-heading" style={{ marginBottom: '20px', marginLeft: '10px' }}>My Tasks</h1>
       <div>
-      <ButtonGroup class="buttongroup" color="secondary" style={{ marginBottom: '20px',marginLeft: '10px' }}>
-        <Button variant={activeButton === 'created' ? 'contained' : 'outlined'} onClick={handleCreatedTasksClick}>Created tasks</Button>
-        <Button variant={activeButton === 'performed' ? 'contained' : 'outlined'} onClick={handlePerformedTasksClick}>Performed tasks</Button>
-      </ButtonGroup>
+        <ButtonGroup class="buttongroup" color="secondary" style={{ marginBottom: '20px', marginLeft: '10px' }}>
+          <Button variant={activeButton === 'created' ? 'contained' : 'outlined'} onClick={handleCreatedTasksClick}>Created Tasks</Button>
+          <Button variant={activeButton === 'performed' ? 'contained' : 'outlined'} onClick={handlePerformedTasksClick}>Tasks In Progress</Button>
+        </ButtonGroup>
       </div>
 
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gridColumnGap: '20px', gridRowGap: '20px'}} >
-      <TableContainer class="txtb" component={Paper}>
-        <Table  aria-label="collapsible table">
-          <TableHead>
-            <TableRow >
-              <TableCell class="cell" />
-              <TableCell class="cell" >Task</TableCell>
-              <TableCell class="cell" align="left">Creator</TableCell>
-              <TableCell class="cell" align="left">Status</TableCell>
-              <TableCell class="cell" align="left">Location</TableCell>
-              <TableCell class="cell" align="left">Payment (€)</TableCell>
-              <TableCell class="cell" align="left">Progress</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {showPerformedTasks &&
-              performerTasks
-                .filter((task) => task.performer.id === user.id)
-                .map((task) => <Row key={task.id} task={task} />)}
-            {showCreatedTasks &&
-              createdTasks
-                .filter((task) => task.creator.id === user.id)
-                .map((task) => <Row key={task.id} task={task} />)}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <div style={{ position: 'fixed', right: '0', top: '120px', bottom:'0.5px', width: '35%',margin: '0 15px 50px 20px' }}  className="col-4">
-      <MyTasksMap />
-    </div>
-    </div>
+      <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gridColumnGap: '20px', gridRowGap: '20px' }} >
+        <TableContainer class="txtb" component={Paper}>
+          <Table aria-label="collapsible table">
+            <TableHead>
+              <TableRow >
+                <TableCell class="cell" />
+                <TableCell class="cell" >Task</TableCell>
+                <TableCell class="cell" align="left">Creator</TableCell>
+                <TableCell class="cell" align="left">Status</TableCell>
+                <TableCell class="cell" align="left">Location</TableCell>
+                <TableCell class="cell" align="left">Payment (€)</TableCell>
+                <TableCell class="cell" align="left">Progress</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {showPerformedTasks &&
+                performerTasks
+                  .map((task) => <Row key={task.id} task={task} />)}
+              {showCreatedTasks &&
+                createdTasks
+                  .map((task) => <Row key={task.id} task={task} />)}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <div style={{ position: 'fixed', right: '0', top: '120px', bottom: '0.5px', width: '35%', margin: '0 15px 50px 20px' }} className="col-4">
+          <MyTasksMap />
+        </div>
+      </div>
     </div>
   );
 };
