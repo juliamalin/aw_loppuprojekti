@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useRef } from "react";
 import { GoogleMap, Marker, useLoadScript, Autocomplete } from "@react-google-maps/api";
-import { useGetTasksInProgressQuery, useGetTasksQuery } from "../../main/apiSlice";
+import { useGetCreatedTasksQuery, useGetTasksInProgressQuery, useGetTasksQuery } from "../../main/apiSlice";
 import DraggableDialog from "../tasks/viewTask";
 import { setBounds } from "../../main/mapSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -32,8 +32,10 @@ export const MyTasksMap = () => {
         libraries
     })
     const user = useSelector(state => state.userReducer.user)
-    const { data: tasks = [] } = useGetTasksInProgressQuery(user.id)
+    const { data: tasksInProgress = [] } = useGetTasksInProgressQuery(user.id)
+    const { data: tasksCreated = [] } = useGetCreatedTasksQuery(user.id)
 
+    const tasks = [...tasksCreated, ...tasksInProgress]
     const markers = tasks.map(task => ({ lat: task.latitude, lng: task.longitude }))
 
 

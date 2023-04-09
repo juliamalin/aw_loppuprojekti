@@ -23,15 +23,10 @@ import { useUpdateTaskMutation} from '../../main/apiSlice';
 import { AlertDialogSlide } from './slideAlert'
 
 
-export function Row({task}) {
-    //const [status, setStatus] = useState(task.status)
-    //const [performerId, setPerformerid] = useState(task.status)
-    //console.log(status)
-
-    //const [changeStatus, { isLoading }] = useUpdateTaskMutation()
-    //vaihda oikea get-pyyntö
+export function Row({task},{user}) {
 
     const [open, setOpen] = React.useState(false);
+    console.log(user)
   
     return (
       <React.Fragment>
@@ -49,12 +44,12 @@ export function Row({task}) {
           <TableCell class="lowercell" component="th" scope="row">
             {task.title}
           </TableCell>
-          <TableCell class="lowercell" align="left">{task.cretorId}</TableCell>
+          <TableCell class="lowercell" align="left">{task.creator.username}</TableCell>
           <TableCell class="lowercell" align="left">{task.status.charAt(0).toUpperCase() + task.status.slice(1)}</TableCell>
           <TableCell class="lowercell" align="left">{task.location}</TableCell>
           <TableCell class="lowercell" align="left" >{task.payment}</TableCell>
           <TableCell class="lowercell" align="left" style={{ borderBottom: '1px solid rgba(224, 224, 224, 1)'}} >
-            <AlertDialogSlide task={task}></AlertDialogSlide></TableCell> 
+            <AlertDialogSlide task={task} user={user} ></AlertDialogSlide></TableCell> 
 
         </TableRow>
         <TableRow >
@@ -91,59 +86,3 @@ export function Row({task}) {
     );
   }
   
-  Row.propTypes = {
-    row: PropTypes.shape({
-      calories: PropTypes.number.isRequired,
-      carbs: PropTypes.number.isRequired,
-      fat: PropTypes.number.isRequired,
-      history: PropTypes.arrayOf(
-        PropTypes.shape({
-          amount: PropTypes.number.isRequired,
-          customerId: PropTypes.string.isRequired,
-          date: PropTypes.string.isRequired,
-        }),
-      ).isRequired,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      protein: PropTypes.number.isRequired,
-    }).isRequired,
-  };
-  
-
-//                    {task.history.map((taskRow) => (,                     ))}
-
-
-//status muualle
-
-
-
-/*<Table size="small" aria-label="purchases">
-<TableHead>
-  <TableRow>
-    <TableCell>Date</TableCell>
-    <TableCell>Customer</TableCell>
-    <TableCell align="right">Amount</TableCell>
-    <TableCell align="right">Total price ($)</TableCell>
-  </TableRow>
-</TableHead>
-<TableBody>
-  {row.history.map((historyRow) => (
-    <TableRow key={historyRow.date}>
-      <TableCell component="th" scope="row">
-        {historyRow.date}
-      </TableCell>
-      <TableCell>{historyRow.customerId}</TableCell>
-      <TableCell align="right">{historyRow.amount}</TableCell>
-      <TableCell align="right">
-        {Math.round(historyRow.amount * row.price * 100) / 100}
-      </TableCell>
-    </TableRow>
-  ))}
-</TableBody>
-</Table>*/
-
-
-
-/*{<TableCell align="left" ><Button  variant="contained" onClick={()=>
-  makeChange()} endIcon={<SendIcon />}>
-    Mark as done</Button></TableCell> }*/
