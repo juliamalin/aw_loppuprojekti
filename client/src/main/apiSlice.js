@@ -107,6 +107,9 @@ export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka 
     getProfileById: builder.query({
       query: (profileId) => `/profiles/${profileId}`
     }),
+    getProfileStatistics: builder.query({
+      query: (profileId) => `/tasksAPI/profile/${profileId}/statistics`
+    }),
     getProfileWithTasksById: builder.query({
       query: (profileId) => `/creators/owntasks/${profileId}`
     }),
@@ -149,12 +152,12 @@ export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka 
         ...result.map(({ id }) => ({ type: 'Review', id }))
       ],
     }),
-    getReviewsWithProfiles: builder.query({
-      query: () => '/reviewapi',
-      providesTags: (result = [], error, arg) => [
-        'Review',
-        ...result.map(({ id }) => ({ type: 'Review', id }))
-      ],
+    createReview: builder.mutation({
+      query: (review) => ({
+        url: '/review',
+        method: 'POST',
+        body: review
+      })
     })
 
   }),
@@ -185,13 +188,14 @@ export const {
   useGetProfileWithTasksByIdQuery, // tähän profiilien exportit
   useGetPerformerWithTasksByIdQuery,
   useGetUserQuery,
+  useGetProfileStatisticsQuery,
   useCreateUserMutation,
   useLoginUserMutation,
   useLogoutUserMutation, //tässä login
 
   //Reviewit
   useGetReviewsQuery,
-  useGetReviewsWithProfilesQuery,
+  useCreateReviewMutation,
 }
   = apiSlice;
 
