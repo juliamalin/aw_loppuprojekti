@@ -17,6 +17,7 @@ import { WebSocketClient } from '../websocket/socketPage';
 
 export function Navbar() {
   const user = useSelector(state => state.userReducer.user) || {};
+  let msgs = useSelector((state) => state.userReducer.notifications) || [];
   return <nav className="navbar">
     <div>
       <img src='TaskRabbitLogo.png' height={"50px"} />
@@ -44,13 +45,14 @@ export function Navbar() {
       {user.id &&
         <Link to="/login" className='navbar__button'>Log Out</Link>
       } {user.id &&
-      <Link to="/ws" className='navbar__button'>Notifications</Link>
+      <Link to="/ws" className='navbar__button'>Notifications ({msgs.length})</Link>
       }
     </div>
   </nav>
 }
 
 export function Main() {
+  //Lisää tähän notifications koko, joka annetaan numerona perään, jotta tilan vaikutukset näkee heti
 
   return <main>
     <Routes>

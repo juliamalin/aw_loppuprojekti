@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import Draggable from 'react-draggable';
 import { Alert, Typography } from '@mui/material';
 import { useUpdateTaskMutation, useGetProfileByIdQuery } from '../../main/apiSlice';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react'
 import { id } from 'date-fns/locale';
 import { TaskOutlined } from '@mui/icons-material';
@@ -17,6 +17,8 @@ import * as ReactDOM from "react-dom";
 import { useNavigate } from 'react-router-dom';
 import { TaskAlert } from './TaskAlert'
 import Popup from './Popup'; // assuming Popup is a component that renders the notification pop-up
+import { useContext } from 'react';
+import WebSocketContext from '../../websocket/socket';
 //import { AlertTitle } from '@material-ui/lab';
 
 
@@ -33,12 +35,19 @@ function PaperComponent(props) {
 }
 
 export default function DraggableDialog({ task, open, setOpen}) {
+  let user = useSelector((state) => state.userReducer.user) || {};
   const [status, setStatus] = useState(task.status)
   const [alert, setAlert] = useState(null);
+  let ws = useContext(WebSocketContext);
+
 
   const [changeStatus, { isLoading }] = useUpdateTaskMutation()
 
   const navigate = useNavigate()
+
+  function wsSend() {
+    ws.send(user.id);
+  }
 
 
 
@@ -60,6 +69,7 @@ export default function DraggableDialog({ task, open, setOpen}) {
       creatorId: 1,
       performerId: task.performerId
     })
+    wsSend();
     setOpen(false)
   };
 

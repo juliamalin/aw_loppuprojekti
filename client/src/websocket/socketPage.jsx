@@ -13,14 +13,14 @@ export function WebSocketClient(){
     React.useEffect(() => {
         ws.onmessage = ev => {
             console.log(ev.data);
-            dispatch(addNotification(ev.data));
+            if(user.id===ev.data) dispatch(addNotification(ev.data));
         }
     }, [])
 
     function sendMsg() {
         if (user.id){
             console.log(user.id + ", " + user.username + ", " + 'painoi nappia');
-            ws.send(user.id + ", " + user.username + ", " + 'painoi nappia');
+            ws.send(user.id);
        }
     }
 
