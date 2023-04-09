@@ -18,12 +18,18 @@ import { WebSocketClient } from '../websocket/socket';
 export function Navbar() {
   const user = useSelector(state => state.userReducer.user) || {};
   return <nav className="navbar">
-
+    <div>
+      <img src='TaskRabbitLogo.png' height={"50px"} />
+    </div>
     <div className="navbar__left">
-      <Link to="/" className='navbar__button'><a href="/" className="navbar__title">TaskRabbit</a></Link>
+      <Link to="/">
+        <img src='TaskRabbitSlogan.png' height={"60px"} />
+      </Link>
+
+      {/* <Link to="/" className='navbar__button'><a href="/" className="navbar__title">TaskRabbit</a></Link> */}
     </div>
     <div className="navbar__right">
-
+      <Link to="/" className='navbar__button'>Home</Link>
       {user.id && <div className='navbar__right'>
         <Link to="/mytasks" className='navbar__button'>My Tasks</Link>
         <Link to={"/profile"} className='navbar__button'>Profile</Link>

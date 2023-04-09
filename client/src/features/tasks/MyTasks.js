@@ -1,6 +1,6 @@
 import React from "react";
 import { TaskContainer } from "./taskContainer";
-import { useGetCreatedTasksQuery, useGetTasksInProgressQuery } from "../../main/apiSlice";
+import { useGetCreatedTasksQuery, useGetPerformerTasksQuery, useGetUserQuery } from "../../main/apiSlice";
 import { TimeAgo } from './timeAgo'
 import DraggableDialog from "./viewTask";
 import LinearProgress from '@mui/material/LinearProgress';
@@ -40,7 +40,7 @@ export const MyTasks = () => {
   const [showCreatedTasks, setShowCreatedTasks] = useState(false);
   const [activeButton, setActiveButton] = useState('performed');
 
-
+  console.log(createdTasks)
 
   const handlePerformedTasksClick = () => {
     setShowPerformedTasks(true);
@@ -84,10 +84,12 @@ export const MyTasks = () => {
             <TableBody>
               {showPerformedTasks &&
                 performerTasks
-                  .map((task) => <Row key={task.id} task={task} />)}
+                  .filter((task) => task.performer.id === user.id)
+                  .map((task) => <Row key={task.id} task={task} user={user.id} />)}
               {showCreatedTasks &&
                 createdTasks
-                  .map((task) => <Row key={task.id} task={task} />)}
+                  .filter((task) => task.creator.id === user.id)
+                  .map((task) => <Row key={task.id} task={task} user={user.id} />)}
             </TableBody>
           </Table>
         </TableContainer>
