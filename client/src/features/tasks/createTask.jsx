@@ -98,13 +98,22 @@ export default function FormDialog() {
         const durationinminutes = document.getElementById('duration')?.value;
         const availableFrom = selectedStartDate;
         const availableTo = selectedEndDate;
+        const validateDates = () => {
+            if (selectedStartDate && selectedEndDate && selectedStartDate >= selectedEndDate) {
+              alert('Starting date and time must be before end date and time');
+              return false;
+            }
+            return true;
+          };
 
         // tarkistaa onko kentät tyhjiä
         if (!title || !description || !location || !selectedStartDate || !selectedEndDate || !payment || !availableFrom || !availableTo || !durationinminutes) {
             alert('Täytä kaikki kentät.');
             return;
         }
-
+        if (!validateDates()) {
+            return;
+        }
         const newTask = {
             title,
             description,
@@ -118,10 +127,10 @@ export default function FormDialog() {
             durationinminutes,
             creatorId: 1,
         };
-
         createTask(newTask).unwrap().then(response => console.log(response));
         setOpen(false);
     };
+
 
     return (
         <div>
@@ -185,6 +194,7 @@ export default function FormDialog() {
                                     fullWidth
                                     variant="standard"
                                     textField={(params) => <TextField {...params} />}
+                                    
                                 />
                             </LocalizationProvider>
                         </Grid>
@@ -201,6 +211,7 @@ export default function FormDialog() {
                                     fullWidth
                                     variant="standard"
                                     textField={(params) => <TextField {...params} />}
+                                    
                                 />
                             </LocalizationProvider>
                         </Grid>
