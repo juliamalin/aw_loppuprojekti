@@ -13,7 +13,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { AlertDialogSlide } from './slideAlert'
 
 
-export function Row({task}) {
+export function RowCreated({task}) {
 
     const [open, setOpen] = React.useState(false);
 
@@ -41,16 +41,11 @@ export function Row({task}) {
               {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
           </TableCell>
-          <TableCell class="lowercell" component="th" scope="row">
-            {task.title.charAt(0).toUpperCase() + task.title.slice(1)}
-          </TableCell>
-          <TableCell class="lowercell" align="left">{task.creator.username.charAt(0).toUpperCase()+task.creator.username.slice(1)}</TableCell>
+          <TableCell class="lowercell" component="th" scope="row">{task.title.charAt(0).toUpperCase() + task.title.slice(1)}</TableCell>
+          <TableCell class="lowercell" component="th" scope="row">{task.performer.username.charAt(0).toUpperCase() + task.performer.username.slice(1)}</TableCell>
           <TableCell class="lowercell" align="left">{task.status.charAt(0).toUpperCase() + task.status.slice(1)}</TableCell>
           <TableCell class="lowercell" align="left">{task.location}</TableCell>
           <TableCell class="lowercell" align="left" >{task.payment}</TableCell>
-          <TableCell class="lowercell" align="left" style={{ borderBottom: '1px solid rgba(224, 224, 224, 1)'}} >
-            <AlertDialogSlide task={task} ></AlertDialogSlide></TableCell> 
-
         </TableRow>
         <TableRow >
           <TableCell style={{ paddingBottom: 0, paddingTop: 0, paddingLeft: '115px' }} colSpan={6}>

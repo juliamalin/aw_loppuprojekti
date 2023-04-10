@@ -2,31 +2,28 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { useUpdateTaskMutation,useGetTasksInProgressQuery,useGetPerformerTasksQuery } from '../../main/apiSlice';
 import { useState } from 'react'
+import { useSelector } from "react-redux";
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export function AlertDialogSlide({task},{user}) {
+
+export function AlertDialogSlide({task}) {
   const [open, setOpen] = React.useState(false)
+  const user = useSelector(state => state.userReducer.user)
   const [status, setStatus] = useState('done')
   const [mutate, { isLoading }] = useUpdateTaskMutation()
-  const { data, isLoading: isTasksLoading, refetch: refetchPerformerTasks } = useGetPerformerTasksQuery(3)
-  //const { created, isLoading: isCreatedLoading, refetch: refetchCreatedTasks  } = useGetCreatedTasksQuery(3)
-  console.log({user})
+  const { data, isLoading: isTasksLoading, refetch: refetchPerformerTasks } = useGetTasksInProgressQuery(user?.id)
 
   const handleClickOpen = () => {
     setOpen(true);
   };
-
-  
 
   const makeChange = async () => {
     setStatus('Done')
@@ -77,25 +74,3 @@ export function AlertDialogSlide({task},{user}) {
   );
 }
 
-
-
-
-  /*const makeChange = async () => {
-    setStatus('Done')
-    task.status = 'Done';
-    await mutate({
-      id: task.id,
-      status: 'done',
-      title: task.title,
-      description: task.description,
-      latitude: task.latitude,
-      longitude: task.longitude,
-      location: task.location,
-      availableFrom: task.availableFrom,
-      availableTo: task.availableTo,
-      payment: task.payment,
-      durationinminutes: task.durationinminutes,
-      creatorId: task.creatorId,
-      performerId: task.performerId
-    })
-  };*/
