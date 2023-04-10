@@ -10,13 +10,18 @@ export const userSlice = createSlice({
   reducers: {
     setUser: (state, action) => {state.user = action.payload},
     addNotification: (state, action) => {state.notifications.push(action.payload)},
+    deleteNotification: (state, action) => {
+      let s = action.payload;
+      let index = state.notifications.findIndex(p => p.id == s);
+      state.notifications.splice(index, 1);
+    }
     
   }
 })
 
 
 
-export const { setUser, addNotification } = userSlice.actions
+export const { setUser, addNotification, deleteNotification } = userSlice.actions
 
 export const store = configureStore({ // Määritellään uusi store-muuttuja, joka käyttää configureStore-funktiota Redux Toolkitista
   reducer: {

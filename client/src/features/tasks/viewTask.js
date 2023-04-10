@@ -46,7 +46,7 @@ export default function DraggableDialog({ task, open, setOpen}) {
   const navigate = useNavigate()
 
   function wsSend() {
-    ws.send(user.id);
+    ws.send(user.id + " 11");
   }
 
 
@@ -66,8 +66,8 @@ export default function DraggableDialog({ task, open, setOpen}) {
       availableTo: task.availableTo,
       payment: task.payment,
       durationinminutes: task.durationinminutes,
-      creatorId: 1,
-      performerId: task.performerId
+      creatorId: 11,
+      performerId: user.id
     })
     wsSend();
     setOpen(false)
