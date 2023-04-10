@@ -16,6 +16,7 @@ import { useCreateTaskMutation } from '../../main/apiSlice';
 import { AddMarkerMap } from '../map/AddMarkerMap';
 import { useSelector } from 'react-redux';
 import '../../App.css';
+import InputAdornment from '@mui/material/InputAdornment';
 
 
 export default function FormDialog() {
@@ -41,33 +42,37 @@ export default function FormDialog() {
         const payment = document.getElementById('payment')?.value;
         const durationinminutes = document.getElementById('duration')?.value;
 
+
+
+
         updateTask({
-            title: title,
-            description: description,
+            title,
+            description,
             status: "available",
             latitude: marker.lat,
             longitude: marker.lng,
-            location: location,
-            availableFrom: availableFrom,
-            availableTo: availableTo,
-            payment: payment,
-            durationinminutes: durationinminutes,
-            creatorId: user.id // pitää laittaa se mikä käyttäjä käytössä
+            location,
+            availableFrom,
+            availableTo,
+            payment,
+            durationinminutes,
+            creatorId: user.id,
         });
         setOpen(false);
+
         return {
-            title: title,
-            description: description,
+            title,
+            description,
             status: "available",
             latitude: marker.lat,
             longitude: marker.lng,
-            location: location,
-            availableFrom: availableFrom,
-            availableTo: availableTo,
-            payment: payment,
-            durationinminutes: durationinminutes,
-            creatorId: 1
-        }
+            location,
+            availableFrom,
+            availableTo,
+            payment,
+            durationinminutes,
+            creatorId: user.id,
+        };
     };
 
     const updateTask = (newValue) => {
@@ -85,9 +90,38 @@ export default function FormDialog() {
 
     const onCreateButtonClicked = () => {
 
-        createTask(handleClose()).unwrap().then(response => console.log(response));
+        // kenttien data pitää määritellä, jotta voi käyttää täällä
+        const title = document.getElementById('title')?.value;
+        const description = document.getElementById('description')?.value;
+        const location = document.getElementById('location')?.value;
+        const payment = document.getElementById('payment')?.value;
+        const durationinminutes = document.getElementById('duration')?.value;
+        const availableFrom = selectedStartDate;
+        const availableTo = selectedEndDate;
 
-    }
+        // tarkistaa onko kentät tyhjiä
+        if (!title || !description || !location || !selectedStartDate || !selectedEndDate || !payment || !availableFrom || !availableTo || !durationinminutes) {
+            alert('Täytä kaikki kentät.');
+            return;
+        }
+
+        const newTask = {
+            title,
+            description,
+            status: "available",
+            latitude: marker.lat,
+            longitude: marker.lng,
+            location,
+            availableFrom: selectedStartDate,
+            availableTo: selectedEndDate,
+            payment,
+            durationinminutes,
+            creatorId: 1,
+        };
+
+        createTask(newTask).unwrap().then(response => console.log(response));
+        setOpen(false);
+    };
 
     return (
         <div>
@@ -100,6 +134,7 @@ export default function FormDialog() {
 
                     <TextField
                         autoFocus
+                        required
                         margin="dense"
                         id="title"
                         label="Write a title that describes shortly your task."
@@ -110,7 +145,7 @@ export default function FormDialog() {
                     />
 
                     <TextField
-
+                        required
                         margin="normal"
                         id="description"
                         label="Describe the task in detail."
@@ -123,7 +158,7 @@ export default function FormDialog() {
 
                     />
                     <TextField
-
+                        required
                         margin="normal"
                         id="location"
                         label="Location"
@@ -140,7 +175,8 @@ export default function FormDialog() {
                         <Grid item xs={12} sm={6}>
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <DateTimePicker
-                                    format="dd/MM/yyyy HH:mm"
+                                    required
+                                    format="dd.MM.yyyy HH:mm"
                                     margin="normal"
                                     id="startDateTime"
                                     label="Starting date and time"
@@ -155,7 +191,8 @@ export default function FormDialog() {
                         <Grid item xs={12} sm={6}>
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <DateTimePicker
-                                    format="dd/MM/yyyy HH:mm"
+                                    required
+                                    format="dd.MM.yyyy HH:mm"
                                     margin="normal"
                                     id="endDateTime"
                                     label="Ending date and time"
@@ -173,12 +210,14 @@ export default function FormDialog() {
                                     width: 247
                                 }}
                                 margin="dense"
+                                required
                                 id="duration"
-                                label="Duration in minutes"
+                                label="Duration"
                                 type="number"
                                 fullWidth
                                 variant="outlined"
                                 inputProps={{ pattern: "[0-9]*" }}
+                                InputProps={{ endAdornment: <InputAdornment position="end">minutes</InputAdornment> }}
                             />
                         </Grid>
 
@@ -188,12 +227,14 @@ export default function FormDialog() {
                                     width: 247
                                 }}
                                 margin="dense"
+                                required
                                 id="payment"
-                                label="Payment (€)"
+                                label="Payment"
                                 type="number"
                                 fullWidth
                                 variant="outlined"
-                                inputProps={{ pattern: "[0-9]*" }}
+                                inputProps={{ pattern: "[0-9]*", min: "0" }}
+                                InputProps={{ endAdornment: <InputAdornment position="end">€</InputAdornment> }}
                             />
 
                         </Grid>
@@ -207,10 +248,3 @@ export default function FormDialog() {
         </div>
     );
 }
-
-/*
-<Button onClick={() => {
-    createTask(updateTask()).unwrap().then(response => console.log(response));
-    handleClose();
-}}>Create</Button>
-*/
