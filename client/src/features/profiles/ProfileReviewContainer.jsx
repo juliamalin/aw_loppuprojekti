@@ -31,7 +31,7 @@ export const ProfileReviewContainer = () => {
     const { data: reviews = [], isLoading } = useGetReviewsQuery();
     const user = useSelector(state => state.userReducer.user) || {};
      
-    const filteredReviews = reviews.filter(review => review.performer_id === user.id || review.targetuser_id === user.id); // vain ne reviewit näytetään joissa user-id vastaa performer tai targetuser id:tä
+    const filteredReviews = reviews.filter(review =>  review.targetuser_id === user.id); // vain ne reviewit näytetään joissa user-id vastaa performer tai targetuser id:tä
 
     let content = filteredReviews.map(review => <ReviewExcerpt key={user.id} review={review} />);
 

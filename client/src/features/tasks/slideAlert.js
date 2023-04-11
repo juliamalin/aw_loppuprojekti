@@ -26,13 +26,13 @@ export function AlertDialogSlide({task}) {
   const handleClickOpen = () => {
     setOpen(true);
   };
-
+/*
   const makeChange = async () => {
     setStatus('Done')
     await mutate({...task, status: 'Done', creatorId: task.creator.id, performerId: task.performer.id})
     refetchPerformerTasks();
   };
-
+*/
   const Cancel = async () => {
     setStatus('In progress')
     await mutate({...task, status: 'In progress', creatorId: task.creator.id, performerId: task.performer.id})
@@ -73,7 +73,7 @@ export function AlertDialogSlide({task}) {
           <Button onClick={handleClose3} disabled={isLoading}>Cancel</Button>
         </DialogActions>
       </Dialog>
-      {reviewVisible && <ReviewDialog performerId={task.performer.id} creatorId={task.creator.id} taskId={task.id} />}  {/* tekee reviewistä näkyvän kun agree klikattu*/}
+      {reviewVisible && <ReviewDialog performer_id={user.id} creatorId={task.creator.id} taskId={task.id} />}  {/* tekee reviewistä näkyvän kun agree klikattu*/}
     </div>
   );
 }

@@ -16,7 +16,7 @@ export const ProfileOverview = () => {
         return <div>Loading...</div>
     }
 
-    const filteredReviews = reviews.filter(review => review.performer_id === user.id || review.targetuser_id === user.id);
+    const filteredReviews = reviews.filter(review => review.targetuser_id === user.id);
     const numReviews = filteredReviews.length;
     const totalRating = filteredReviews.reduce((acc, review) => acc + review.value, 0) / numReviews;
     const labels = {
@@ -39,8 +39,12 @@ export const ProfileOverview = () => {
                 <div className="d-flex justify-content-between align-items-center">
                     <div className="mx-auto">
                         <h2 className="text-center">{user.username}</h2>
-                        <Rating name="size-large" defaultValue={totalRating} size="large" readOnly />
-                        <h4 className="nickName">"{labels[Math.round(totalRating)]}"</h4>
+                        {!isNaN(totalRating) && (
+                        <>
+                            <Rating name="size-large" defaultValue={totalRating} size="large" readOnly />
+                            <h4 className="nickName">"{labels[Math.round(totalRating)]}"</h4>
+                        </>
+                    )}
                     </div>
                     <Link className="button muted-button" to={`/profile/edit`}>Edit Profile</Link>
                 </div>
