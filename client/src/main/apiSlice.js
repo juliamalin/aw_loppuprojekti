@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka käyttää createApi-funktiota
   reducerPath: 'api', // määritellään missä kohdassa storea reduceri tälle apille sijoitetaan
   baseQuery: fetchBaseQuery(), //  määritellään oletusmuotoilu käytettäväksi jokaisessa queryssa
-  tagTypes: ['Task', 'Profile', 'Review'],
+  tagTypes: ['Task', 'Profile', 'Review', 'ImageInfo'],
   endpoints: (builder) => ({
 
     // TASKIT
@@ -180,6 +180,35 @@ export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka 
       })
     }),
 
+    //IMAGE INFO
+    getImageInfo: builder.query({
+      query: (profileId) => `/imageinfo/${profileId}`,
+      providesTags: ['ImageInfo']
+    }),
+    createImageInfo: builder.mutation({
+      query: (imageInfo) => ({
+        url: '/imageinfo',
+        method: 'POST',
+        body: imageInfo
+      }),
+      invalidatesTags: ['ImageInfo']
+    }),
+    updateImageInfo: builder.mutation({
+      query: (imageInfo) => ({
+        url: `/imageinfo/${imageInfo.id}`,
+        method: 'PUT',
+        body: imageInfo
+      }),
+      invalidatesTags: ['ImageInfo']
+    }),
+    deleteImageInfo: builder.mutation({
+      query: (imageInfoId) => ({
+        url: `/imageinfo/${imageInfoId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['ImageInfo']
+    })
+
   }),
 })
 
@@ -221,6 +250,12 @@ export const {
 
   //GoogleToken
   useCreateGoogleUserMutation,
+
+  //Imageinfo
+  useGetImageInfoQuery,
+  useCreateImageInfoMutation,
+  useUpdateImageInfoMutation,
+  useDeleteImageInfoMutation
 }
   = apiSlice;
 

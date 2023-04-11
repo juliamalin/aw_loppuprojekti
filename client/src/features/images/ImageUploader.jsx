@@ -1,6 +1,8 @@
 import AWS from 'aws-sdk';
 import { useState } from 'react';
-
+import { useCreateImageInfoMutation, useGetImageInfoQuery, useUpdateImageInfoMutation } from '../../main/apiSlice';
+import { useSelector } from 'react-redux';
+import { width } from '@mui/system';
 
 
 AWS.config.update({
@@ -10,10 +12,19 @@ AWS.config.update({
   signatureVersion: 'v4',
 });
 
-export default function ImageUploader() {
+export default function ImageUploader({ imageType }) {
   const s3 = new AWS.S3();
   const [imageUrl, setImageUrl] = useState(null);
   const [file, setFile] = useState(null);
+  const user = useSelector(state => state.userReducer.user);
+  const [createImageInfo, { isLoading }] = useCreateImageInfoMutation()
+  const [updateImageInfo] = useUpdateImageInfoMutation()
+  const { data: imageInfo, isLoading: isLoadingInfo } = useGetImageInfoQuery(user.id)
+
+
+  if (!isLoadingInfo && !imageInfo && !isLoading) {
+    createImageInfo({ profileId: user.id })
+  }
 
   const handleFileSelect = (e) => {
     setFile(e.target.files[0]);
@@ -29,22 +40,16 @@ export default function ImageUploader() {
     };
     const { Location } = await s3.upload(params).promise();
     console.log('Image at', Location)
+    if (imageType === 'profile') updateImageInfo({ id: imageInfo.id, profileId: imageInfo.profileId, profileImageUrl: Location, headerImageUrl: imageInfo.headerImageUrl }).unwrap().then(response => console.log(response))
+    if (imageType === 'header') updateImageInfo({ id: imageInfo.id, profileId: imageInfo.profileId, profileImageUrl: imageInfo.profileImageUrl, headerImageUrl: Location }).unwrap().then(response => console.log(response))
     setImageUrl(Location);
-    console.log('uploading to s3', Location);
+
   }
 
-  const params2 = {
-    Bucket: 'taskappbucket',
-    MaxKeys: 2
-  }
-  s3.listObjects(params2, function (err, data) {
-    if (err) console.log(err, err.stack)
-    else console.log(data)
-  })
+
 
   return (
-    <div style={{ marginTop: '150px' }}>
-      <h1>Test Image Upload</h1>
+    <div>
       <input type="file" onChange={handleFileSelect} />
       {file && (
         <div style={{ marginTop: '10px' }}>
@@ -52,10 +57,11 @@ export default function ImageUploader() {
         </div>
       )}
       {imageUrl && (
-        <div style={{ marginTop: '10px' }}>
+        <div style={{ marginTop: '10px', width: '200px' }}>
           <img src={imageUrl} alt="uploaded" />
         </div>
       )}
+
     </div>
   );
 }

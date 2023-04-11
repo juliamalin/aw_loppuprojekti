@@ -279,3 +279,13 @@
   bottom: 30px;
   right: 50px;
 }
+
+.bg-image {
+  height: 200px;
+  /* set the fixed height here */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+}

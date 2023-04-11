@@ -31,7 +31,7 @@ export function Login(props) {
             .catch((err) => alert('Bad credentials', err))
         dispatch(setUser(user));
 
-        
+
     }
 
     return <div>

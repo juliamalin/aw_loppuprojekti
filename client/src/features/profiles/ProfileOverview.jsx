@@ -1,20 +1,19 @@
 import { Rating } from "@mui/material"
-import { useGetProfileByIdQuery } from "../../main/apiSlice"
+import { useGetImageInfoQuery, useGetProfileByIdQuery } from "../../main/apiSlice"
 import { Link } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { useGetReviewsQuery } from "../../main/apiSlice"
 import '../../App.css';
+import { CircleImage } from "../images/CircleImage"
 
 
 export const ProfileOverview = () => {
     let user = useSelector(state => state.userReducer.user) || {};
-    const { data: profile, isLoading } = useGetProfileByIdQuery(user.id)
-    const { data: reviews = [] } = useGetReviewsQuery();
-
+    const { data: profile, isLoading: isLoadingProfile } = useGetProfileByIdQuery(user.id)
+    const { data: reviews = [], isLoading: isLoadingReviews } = useGetReviewsQuery();
+    const { data: imageInfo, isLoading: isLoadingInfo } = useGetImageInfoQuery(user.id);
     console.log(profile)
-    if (isLoading) {
-        return <div>Loading...</div>
-    }
+    if (isLoadingInfo || isLoadingProfile || isLoadingReviews) return <p>Loading...</p>
 
     const filteredReviews = reviews.filter(review => review.targetuser_id === user.id);
     const numReviews = filteredReviews.length;
@@ -25,15 +24,15 @@ export const ProfileOverview = () => {
         3: 'Respectable Rabbit',
         4: 'Blessed Bunny',
         5: 'Heroic Hare',
-      };
+    };
 
-    console.log('totalrating:' + totalRating)
+
 
     return (
-        <div className="row bg-image" style={{ backgroundImage: "url('https://i.pinimg.com/originals/70/0e/6a/700e6a06e2dc3c5174178ba09a8b094d.jpg')" }}>
+        <div className="row bg-image" style={{ backgroundImage: `url("${imageInfo?.headerImageUrl}")` }}>
 
-            <div className="col-3 profile-image-container">
-                <img src="EcceHomo.png" alt="Profile image"></img>
+            <div className="col-3">
+                {imageInfo?.profileImageUrl && <CircleImage size={200} imageSrc={imageInfo?.profileImageUrl} />}
             </div>
             <div className="col-9">
                 <div className="d-flex justify-content-between align-items-center">
