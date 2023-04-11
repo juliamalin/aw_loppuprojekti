@@ -13,12 +13,15 @@ import { useSelector } from 'react-redux';
 import { WebSocketClient } from '../websocket/socketPage';
 import ImageUploader from '../features/images/ImageUploader';
 import { AdminView } from './adminView';
+import { useGetImageInfoQuery } from './apiSlice';
+import { CircleImage } from '../features/images/CircleImage';
 
 
 
 
 export function Navbar() {
   const user = useSelector(state => state.userReducer.user) || {};
+  const { data: imageInfo } = useGetImageInfoQuery(user.id)
   let msgs = useSelector((state) => state.userReducer.notifications) || [];
   return <nav className="navbar">
     <div>
@@ -48,6 +51,9 @@ export function Navbar() {
         <Link id='nav-btn-logout' to="/login" className='navbar__button'>Log Out</Link>
       } {user.id &&
         <Link to="/ws" className='navbar__button'>Notifications ({msgs.length})</Link>
+      }
+      {user.id && imageInfo?.profileImageUrl &&
+        <CircleImage size={50} imageSrc={imageInfo.profileImageUrl} />
       }
     </div>
   </nav>

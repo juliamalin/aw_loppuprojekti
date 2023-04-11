@@ -35,11 +35,11 @@ export function Login(props) {
             .catch((err) => alert('Bad credentials', err))
         dispatch(setUser(user));
 
-        
+
     }
 
     function createU() {
-        let u = {username: username, password: password, role: 'user'};
+        let u = { username: username, password: password, role: 'user' };
         createUser(u).unwrap()
             .then((payload) => console.log('Ok', payload))
     }
