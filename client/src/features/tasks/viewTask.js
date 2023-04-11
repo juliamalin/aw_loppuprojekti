@@ -21,7 +21,7 @@ import { TaskAlert } from './TaskAlert'
 
 
 function PaperComponent(props) {
-  console.log(props)
+
   return (
     <Draggable
       handle="#draggable-dialog-title"
@@ -109,7 +109,7 @@ export default function DraggableDialog({ task, open, setOpen }) {
         </DialogContent>
         <DialogActions>
           <Button variant="contained" onClick={onTakeTask}>Take Task</Button>
-          <Button onClick={() => { setOpen(false); console.log(open) }}>
+          <Button onClick={() => { setOpen(false); }}>
             Go Back
           </Button>
         </DialogActions>

@@ -18,7 +18,7 @@ const TaskExcerpt = ({ task }) => {
 
 
     return (
-        <article className="task-excerpt" onClick={() => setOpen(true)}>
+        <article className="task-excerpt" onClick={() => { if (!open) setOpen(true) }}>
             <p>{task.title}</p>
             <div className="task-info">
                 by {task.creator.username}
