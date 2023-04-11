@@ -8,6 +8,9 @@ import { useUpdateTaskMutation,useGetTasksInProgressQuery,useGetPerformerTasksQu
 import { useState } from 'react'
 import { useSelector } from "react-redux";
 import ReviewDialog from '../reviews/reviewCont';
+import { useContext } from 'react';
+import { WebSocketClient } from '../../websocket/socketPage';
+import WebSocketContext from '../../websocket/socket';
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -22,17 +25,18 @@ export function AlertDialogSlide({task}) {
   const [mutate, { isLoading }] = useUpdateTaskMutation()
   const { data, isLoading: isTasksLoading, refetch: refetchPerformerTasks } = useGetTasksInProgressQuery(user?.id);
   const [reviewVisible, setReviewVisible] = React.useState(false) // review aluksi piilossa. Review jutut pitää siirtää oikeaan nappiin kun sellainen tulee task in progressiin;
+  let ws = useContext(WebSocketContext);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
-
+/*
   const makeChange = async () => {
     setStatus('Done')
     await mutate({...task, status: 'Done', creatorId: task.creator.id, performerId: task.performer.id})
     refetchPerformerTasks();
   };
-
+*/
   const Cancel = async () => {
     setStatus('In progress')
     await mutate({...task, status: 'In progress', creatorId: task.creator.id, performerId: task.performer.id})
@@ -42,6 +46,7 @@ export function AlertDialogSlide({task}) {
   const handleClose1 = async () => {
     setOpen(false);
     await mutate({...task, status: 'done', creatorId: task.creator.id, performerId: task.performer.id});
+    ws.send(user.username + " " + task.creator.id);
     setReviewVisible(true);
   };
 
@@ -73,7 +78,7 @@ export function AlertDialogSlide({task}) {
           <Button onClick={handleClose3} disabled={isLoading}>Cancel</Button>
         </DialogActions>
       </Dialog>
-      {reviewVisible && <ReviewDialog performerId={task.performer.id} creatorId={task.creator.id} taskId={task.id} />}  {/* tekee reviewistä näkyvän kun agree klikattu*/}
+      {reviewVisible && <ReviewDialog performer_id={user.id} creatorId={task.creator.id} taskId={task.id} />}  {/* tekee reviewistä näkyvän kun agree klikattu*/}
     </div>
   );
 }

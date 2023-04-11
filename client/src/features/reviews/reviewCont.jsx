@@ -25,7 +25,7 @@ function getLabelText(value) {
   return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`;
 }
 
-export default function ReviewDialog({performerId, creatorId, taskId}) {
+export default function ReviewDialog({performer_id, creatorId, taskId}) {
   const [open, setOpen] = useState(true);
   const [value, setValue] = useState(2);
   const [hover, setHover] = useState(-1);
@@ -41,7 +41,7 @@ export default function ReviewDialog({performerId, creatorId, taskId}) {
       comment: comment,
       value: rating,
       targetuser_id: creatorId,
-      performer_id: performerId,
+      performer_id: performer_id,
       task_id: taskId
     }).unwrap().then(response => console.log(response));
     handleClose();
@@ -89,6 +89,7 @@ export default function ReviewDialog({performerId, creatorId, taskId}) {
               precision={1}
               getLabelText={getLabelText}
               onChange={(event, newValue) => {
+                setValue(newValue);
                 setRating(newValue);
               }}
               onChangeActive={(event, newHover) => {

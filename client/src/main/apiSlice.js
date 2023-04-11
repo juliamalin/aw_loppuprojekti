@@ -16,6 +16,10 @@ export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka 
         ...result.map(({ id }) => ({ type: 'Task', id }))
       ],
     }),
+    getSimpleTasks: builder.query({ // määritellään buildereille molemmat endpointit
+      query: () => '/tasks',
+      providesTags: (result, error, arg) => [{ type: 'Task', id: arg }],
+    }),
     getTaskById: builder.query({
       query: (taskId) => `/tasksAPI/${taskId}`,
       providesTags: (result, error, arg) => [{ type: 'Task', id: arg }],
@@ -159,6 +163,13 @@ export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka 
         body: review
       })
     }),
+    deleteReview: builder.mutation({
+      query: (reviewId) => ({
+        url: `/review/${reviewId}`,
+        method: "DELETE"
+      }),
+      invalidatesTags: ['Review']
+    }),
 
     //GOOGLE TOKEN
     createGoogleUser: builder.mutation({
@@ -180,6 +191,7 @@ export const {
   useCreateTaskMutation,
   useUpdateTaskMutation,
   useDeleteTaskMutation,
+  useGetSimpleTasksQuery,
 
   useGetCreatedTasksQuery,
   useGetPerformerTasksQuery,
@@ -205,6 +217,7 @@ export const {
   //Reviewit
   useGetReviewsQuery,
   useCreateReviewMutation,
+  useDeleteReviewMutation,
 
   //GoogleToken
   useCreateGoogleUserMutation,

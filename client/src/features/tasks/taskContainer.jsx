@@ -13,7 +13,7 @@ import '../../App.css';
 
 
 
-const TaskExcerpt = ({ task}) => {
+const TaskExcerpt = ({ task }) => {
     const [open, setOpen] = React.useState(false)
 
 
@@ -34,7 +34,7 @@ const TaskExcerpt = ({ task}) => {
 
 
 
-export const TaskContainer = ({ws}) => {
+export const TaskContainer = ({ ws }) => {
 
     const [durationRange, setDurationRange] = React.useState('all')
     const [sortBy, setSortBy] = React.useState('all')
@@ -85,7 +85,7 @@ export const TaskContainer = ({ws}) => {
 
     return (
 
-        <section>
+        <section className="task-container">
             <div className="row d-flex ">
                 <div className="col text-end">
                     <select className="form-select" aria-label="Default select example" onChange={ev => setSearchOption(ev.target.value)} >

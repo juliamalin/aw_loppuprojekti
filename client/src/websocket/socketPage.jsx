@@ -15,8 +15,13 @@ export function WebSocketClient(){
         ws.onmessage = ev => {
             console.log(ev.data);
             let data = ev.data.split(" ");
-            console.log(data);
-            let msg = "Käyttäjä " + data[0] + " otti tehtävänne " + data[2] + "!";
+            let msg = null;
+            if (data.length == 2) {
+                msg = data[0] + " suoritti juuri tehtävän!";
+            } else {
+                console.log(data);
+                msg = "Käyttäjä " + data[0] + " otti tehtävänne !";
+            }
             if(user.id==data[1]) dispatch(addNotification(msg));
         }
     }, [])

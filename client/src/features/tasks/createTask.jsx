@@ -125,7 +125,7 @@ export default function FormDialog() {
             availableTo: selectedEndDate,
             payment,
             durationinminutes,
-            creatorId: 1,
+            creatorId: user.id,
         };
         createTask(newTask).unwrap().then(response => console.log(response));
         setOpen(false);
