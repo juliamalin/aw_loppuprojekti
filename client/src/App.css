@@ -270,4 +270,12 @@
   backdrop-filter: blur(2px);
 }
 
+.task-container {
+  position: relative;
+}
 
+.plus-button {
+  position: absolute;
+  bottom: 30px;
+  right: 50px;
+}

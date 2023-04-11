@@ -12,6 +12,7 @@ import { MyTasks } from '../features/tasks/MyTasks';
 import { useSelector } from 'react-redux';
 import { WebSocketClient } from '../websocket/socketPage';
 import ImageUploader from '../features/images/ImageUploader';
+import { AdminView } from './adminView';
 
 
 
@@ -46,7 +47,7 @@ export function Navbar() {
       {user.id &&
         <Link id='nav-btn-logout' to="/login" className='navbar__button'>Log Out</Link>
       } {user.id &&
-      <Link to="/ws" className='navbar__button'>Notifications ({msgs.length})</Link>
+        <Link to="/ws" className='navbar__button'>Notifications ({msgs.length})</Link>
       }
     </div>
   </nav>
@@ -64,6 +65,7 @@ export function Main() {
       <Route path="/login" element={<Login />} />
       <Route path='/ws' element={<WebSocketClient />} />
       <Route path='/iu' element={<ImageUploader />} />
+      <Route path='/admin' element={<AdminView />} />
     </Routes>
   </main>
 }
