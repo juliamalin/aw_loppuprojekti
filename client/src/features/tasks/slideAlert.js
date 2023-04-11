@@ -7,6 +7,7 @@ import Slide from '@mui/material/Slide';
 import { useUpdateTaskMutation,useGetTasksInProgressQuery,useGetPerformerTasksQuery } from '../../main/apiSlice';
 import { useState } from 'react'
 import { useSelector } from "react-redux";
+import ReviewDialog from '../reviews/reviewCont';
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -19,7 +20,8 @@ export function AlertDialogSlide({task}) {
   const user = useSelector(state => state.userReducer.user)
   const [status, setStatus] = useState('done')
   const [mutate, { isLoading }] = useUpdateTaskMutation()
-  const { data, isLoading: isTasksLoading, refetch: refetchPerformerTasks } = useGetTasksInProgressQuery(user?.id)
+  const { data, isLoading: isTasksLoading, refetch: refetchPerformerTasks } = useGetTasksInProgressQuery(user?.id);
+  const [reviewVisible, setReviewVisible] = React.useState(false) // review aluksi piilossa. Review jutut pitää siirtää oikeaan nappiin kun sellainen tulee task in progressiin;
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -37,9 +39,10 @@ export function AlertDialogSlide({task}) {
     refetchPerformerTasks();
   };
 
-  const handleClose1 = () => {
+  const handleClose1 = async () => {
     setOpen(false);
-    makeChange();
+    await mutate({...task, status: 'done', creatorId: task.creator.id, performerId: task.performer.id});
+    setReviewVisible(true);
   };
 
   const handleClose2 = () => {
@@ -70,6 +73,7 @@ export function AlertDialogSlide({task}) {
           <Button onClick={handleClose3} disabled={isLoading}>Cancel</Button>
         </DialogActions>
       </Dialog>
+      {reviewVisible && <ReviewDialog performerId={task.performer.id} creatorId={task.creator.id} taskId={task.id} />}  {/* tekee reviewistä näkyvän kun agree klikattu*/}
     </div>
   );
 }

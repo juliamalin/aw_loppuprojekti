@@ -158,7 +158,7 @@ export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka 
         method: 'POST',
         body: review
       })
-    })
+    }),
 
   }),
 })
