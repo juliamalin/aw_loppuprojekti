@@ -7,6 +7,8 @@ import Slide from '@mui/material/Slide';
 import { useUpdateTaskMutation,useGetTasksInProgressQuery,useGetPerformerTasksQuery } from '../../main/apiSlice';
 import { useState } from 'react'
 import { useSelector } from "react-redux";
+import ReviewDialog from '../reviews/reviewCont';
+
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -20,36 +22,22 @@ export function AlertDialogSlide({task}) {
   const [status, setStatus] = useState('done')
   const [mutate, { isLoading }] = useUpdateTaskMutation()
   const { data, isLoading: isTasksLoading, refetch: refetchPerformerTasks } = useGetTasksInProgressQuery(user?.id)
+  const [reviewVisible, setReviewVisible] = React.useState(false) // review aluksi piilossa. Review jutut pitää siirtää oikeaan nappiin kun sellainen tulee task in progressiin;
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-  const makeChange = async () => {
-    setStatus('Done')
-    await mutate({...task, status: 'Done', creatorId: task.creator.id, performerId: task.performer.id})
-    refetchPerformerTasks();
-  };
-
-  const Cancel = async () => {
-    setStatus('In progress')
-    await mutate({...task, status: 'In progress', creatorId: task.creator.id, performerId: task.performer.id})
-    refetchPerformerTasks();
-  };
-
-  const handleClose1 = () => {
+  const handleClose1 = async () => {
     setOpen(false);
-    makeChange();
+    await mutate({...task, status: 'Done', creatorId: task.creator.id, performerId: task.performer.id});
+    setReviewVisible(true);
   };
 
   const handleClose2 = () => {
     setOpen(false);
   };
 
-  const handleClose3 = () => {
-    setOpen(false);
-    Cancel();
-  };
 
   return (
     <div>
@@ -67,10 +55,31 @@ export function AlertDialogSlide({task}) {
         <DialogActions>
           <Button onClick={handleClose1} disabled={isLoading}>Agree</Button>
           <Button onClick={handleClose2}>Disagree</Button>
-          <Button onClick={handleClose3} disabled={isLoading}>Cancel</Button>
+          {/*<Button onClick={handleClose3} disabled={isLoading}>Cancel</Button>*/}
         </DialogActions>
       </Dialog>
+      {reviewVisible && <ReviewDialog performerId={task.performer.id} creatorId={task.creator.id} taskId={task.id} />}  {/* tekee reviewistä näkyvän kun agree klikattu*/}
     </div>
   );
 }
 
+
+
+
+
+  /*const makeChange = async () => {
+    setStatus('done')
+    await mutate({...task, status: 'done', creatorId: task.creator.id, performerId: task.performer.id})
+    refetchPerformerTasks();
+  };
+
+  const Cancel = async () => {
+    setStatus('Unavailable')
+    await mutate({...task, status: 'Unavailable', creatorId: task.creator.id, performerId: task.performer.id})
+    refetchPerformerTasks();
+  };*/
+  
+  /*const handleClose3 = () => {
+    setOpen(false);
+    Cancel();
+  };*/

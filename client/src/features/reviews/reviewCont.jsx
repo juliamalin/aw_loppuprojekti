@@ -11,6 +11,9 @@ import Box from '@mui/material/Box';
 import StarIcon from '@mui/icons-material/Star';
 import { useCreateReviewMutation } from '../../main/apiSlice';
 import { useSelector } from 'react-redux';
+import { useGetTasksInProgressQuery } from '../../main/apiSlice';
+import { Task } from '@mui/icons-material';
+
 
 const labels = {
   1: 'Rotten Rodent',
@@ -24,7 +27,7 @@ function getLabelText(value) {
   return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`;
 }
 
-export default function ReviewDialog() {
+export default function ReviewDialog({performerId, creatorId, taskId}) {
   const [open, setOpen] = useState(true);
   const [value, setValue] = useState(2);
   const [hover, setHover] = useState(-1);
@@ -33,13 +36,14 @@ export default function ReviewDialog() {
 
   const user = useSelector(state => state.userReducer.user) || {};
 
+  const { data, isLoading: isTasksLoading, refetch: refetchPerformerTasks } = useGetTasksInProgressQuery(user?.id)
 
   const onSendClicked = () => {
     createReview({
       comment: comment,
       rating: value,
-      // targetuser_id:,
-      performer_id: user.id
+      targetuser_id: creatorId,
+      performer_id: user.id,
     }).unwrap().then(response => console.log(response));
     handleClose();
   };
@@ -49,6 +53,11 @@ export default function ReviewDialog() {
   };
 
   const handleClose = () => {
+    setOpen(false);
+    refetchPerformerTasks();
+  };
+
+  const handleCloseCancel = () => {
     setOpen(false);
   };
 
@@ -99,7 +108,7 @@ export default function ReviewDialog() {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button> 
+          <Button onClick={handleCloseCancel}>Cancel</Button> 
           <Button onClick={onSendClicked}>Send review</Button>
         </DialogActions>
       </Dialog>

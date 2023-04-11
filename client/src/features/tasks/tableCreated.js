@@ -10,7 +10,6 @@ import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { AlertDialogSlide } from './slideAlert'
 
 
 export function RowCreated({task}) {
@@ -27,7 +26,8 @@ export function RowCreated({task}) {
     const dateAvailableTo = task.availableTo ? new Date(task.availableTo) : null;
     const formattedAvailableToDate = dateAvailableTo ? dateAvailableTo.toLocaleString('en-US', {year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit'}) : null;
 
-  
+    console.log(task)
+
     return (
       <React.Fragment>
         <TableRow style={{ position: 'relative'}}>
@@ -42,7 +42,7 @@ export function RowCreated({task}) {
             </IconButton>
           </TableCell>
           <TableCell class="lowercell" component="th" scope="row">{task.title.charAt(0).toUpperCase() + task.title.slice(1)}</TableCell>
-          <TableCell class="lowercell" component="th" scope="row">{task.performer.username.charAt(0).toUpperCase() + task.performer.username.slice(1)}</TableCell>
+          <TableCell class="lowercell" component="th" scope="row">{task.performer?.username.charAt(0).toUpperCase() + task.performer?.username.slice(1)}</TableCell>
           <TableCell class="lowercell" align="left">{task.status.charAt(0).toUpperCase() + task.status.slice(1)}</TableCell>
           <TableCell class="lowercell" align="left">{task.location}</TableCell>
           <TableCell class="lowercell" align="left" >{task.payment}</TableCell>
