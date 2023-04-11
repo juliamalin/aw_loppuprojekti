@@ -1,22 +1,33 @@
 import React from 'react';
 import jwt_decode from "jwt-decode";
 import { useState } from 'react';
+import { useCreateGoogleUserMutation } from '../main/apiSlice';
 
 export function GoogleLogin() {
-  const [ user, setUser ] = useState({});
+  let [ user, setUser ] = useState("");
+  let [ token, setToken] = useState("");
+  const [createUser] = useCreateGoogleUserMutation();
 
   function signOut() {
-    setUser({});
+    setUser("");
     document.getElementById("signInDiv").hidden = false;
   }
+
+  /*function create() {
+    let u = {token: token};
+    createUser(u).unwrap()
+      .then((payload) =>
+  }*/
 
   //Saa kirjautuessaan käyttäjän tiedot, VAIN TESTIYMPÄRISTÖSSÄ LISÄTYT EMAILIT TOIMII
   function handleCallBackResponse(response) {
     console.log("Encoded JWT ID token: " + response.credential);
     let userObject = jwt_decode(response.credential);
     console.log(userObject);
-    console.log(userObject.sub)
-    setUser(userObject);
+    setUser(userObject.name);
+    setToken(userObject.sub);
+    console.log(user);
+    console.log(token);
     document.getElementById("signInDiv").hidden = true;
   }
 
@@ -42,8 +53,7 @@ export function GoogleLogin() {
         }
         {user &&
         <div>
-          <img src={user.picture}></img>
-          <h3>{user.name}</h3>
+          <h3>{user}</h3>
         </div>
         }
       </div>

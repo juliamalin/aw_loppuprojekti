@@ -14,19 +14,12 @@ export function WebSocketClient(){
         console.log(msgs);
         ws.onmessage = ev => {
             console.log(ev.data);
-            let creator = ev.data.split(" ");
-            console.log(creator);
-            let msg = "Käyttäjä " + creator[0] + " otti tehtävänne!";
-            if(user.id==creator[1]) dispatch(addNotification(msg));
+            let data = ev.data.split(" ");
+            console.log(data);
+            let msg = "Käyttäjä " + data[0] + " otti tehtävänne " + data[2] + "!";
+            if(user.id==data[1]) dispatch(addNotification(msg));
         }
     }, [])
-
-    function sendMsg() {
-        if (user.id){
-            console.log(user.id + ", " + user.username + ", " + 'painoi nappia');
-            ws.send(user.id);
-       }
-    }
 
     function dltNotification(id) {
         console.log(id);
@@ -38,8 +31,7 @@ export function WebSocketClient(){
     </p>) //tämä viesti ominaisuutena näkyviin
 
     return <div className="web-socket">
-        <h2>WebSocket client</h2>
-        <input type="button" value='Lähetä' onClick={sendMsg} />
+        <h2>Ilmoitukset</h2>
         {rows}
     </div>
 }

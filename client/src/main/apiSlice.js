@@ -160,6 +160,15 @@ export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka 
       })
     }),
 
+    //GOOGLE TOKEN
+    createGoogleUser: builder.mutation({
+      query: (user) => ({
+        url: '/token',
+        method: 'POST',
+        body: user
+      })
+    }),
+
   }),
 })
 
@@ -196,6 +205,9 @@ export const {
   //Reviewit
   useGetReviewsQuery,
   useCreateReviewMutation,
+
+  //GoogleToken
+  useCreateGoogleUserMutation,
 }
   = apiSlice;
 

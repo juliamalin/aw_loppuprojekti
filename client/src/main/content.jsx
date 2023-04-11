@@ -12,6 +12,7 @@ import { MyTasks } from '../features/tasks/MyTasks';
 import { useSelector } from 'react-redux';
 import { WebSocketClient } from '../websocket/socketPage';
 import ImageUploader from '../features/images/ImageUploader';
+import { SignUp } from '../login/signup';
 
 
 
@@ -40,7 +41,7 @@ export function Navbar() {
       {!user.id &&
         <div className='navbar__right'>
           <Link id='nav-btn-login' to="/login" className='navbar__button'>Log in</Link>
-          <Link id='nav-btn-signup' to="/" className='navbar__button'>Sign up</Link>
+          <Link id='nav-btn-signup' to="/signup" className='navbar__button'>Sign up</Link>
         </div>
       }
       {user.id &&
@@ -62,6 +63,7 @@ export function Main() {
       <Route path="/profile" element={<ProfilePage />} />
       <Route path="/profile/edit" element={<EditProfile />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<SignUp />} />
       <Route path='/ws' element={<WebSocketClient />} />
       <Route path='/iu' element={<ImageUploader />} />
     </Routes>
