@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -16,9 +16,8 @@ import { TaskOutlined } from '@mui/icons-material';
 import * as ReactDOM from "react-dom";
 import { useNavigate } from 'react-router-dom';
 import { TaskAlert } from './TaskAlert'
-import Popup from './Popup'; // assuming Popup is a component that renders the notification pop-up
-import { useContext } from 'react';
 import WebSocketContext from '../../websocket/socket';
+//import Popup from './Popup'; // assuming Popup is a component that renders the notification pop-up
 //import { AlertTitle } from '@material-ui/lab';
 
 
