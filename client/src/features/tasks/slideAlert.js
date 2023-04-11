@@ -10,11 +10,9 @@ import { useSelector } from "react-redux";
 import ReviewDialog from '../reviews/reviewCont';
 
 
-
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-
 
 export function AlertDialogSlide({task}) {
   const [open, setOpen] = React.useState(false)
@@ -37,7 +35,6 @@ export function AlertDialogSlide({task}) {
   const handleClose2 = () => {
     setOpen(false);
   };
-
 
   return (
     <div>

@@ -88,7 +88,7 @@ public class TaskWithProfilesController {
 		for (Object[] row : rankings) {
 			index++;
 		   if (row[0] == null) continue;
-		   if (row[0] == profile.getId()) taskRabbitRank = index -1;
+		   if (row[0] == profile.getId()) taskRabbitRank = index;
 		}
 	    
 	    

@@ -10,13 +10,16 @@ import { EditProfile } from '../features/profiles/EditProfile';
 import { Login } from '../login/login';
 import { MyTasks } from '../features/tasks/MyTasks';
 import { useSelector } from 'react-redux';
-import { WebSocketClient } from '../websocket/socket';
+import { WebSocketClient } from '../websocket/socketPage';
+import ImageUploader from '../features/images/ImageUploader';
+import { AdminView } from './adminView';
 
 
 
 
 export function Navbar() {
   const user = useSelector(state => state.userReducer.user) || {};
+  let msgs = useSelector((state) => state.userReducer.notifications) || [];
   return <nav className="navbar">
     <div>
       <img src='TaskRabbitLogo.png' height={"50px"} />
@@ -31,25 +34,27 @@ export function Navbar() {
     <div className="navbar__right">
       <Link to="/" className='navbar__button'>Home</Link>
       {user.id && <div className='navbar__right'>
-        <Link to="/mytasks" className='navbar__button'>My Tasks</Link>
-        <Link to={"/profile"} className='navbar__button'>Profile</Link>
+        <Link id='nav-btn-myTasks' to="/mytasks" className='navbar__button'>My Tasks</Link>
+        <Link id='nav-btn-profile' to={"/profile"} className='navbar__button'>Profile</Link>
       </div>
       }
       {!user.id &&
         <div className='navbar__right'>
-          <Link to="/login" className='navbar__button'>Log in</Link>
-          <Link to="/" className='navbar__button'>Sign up</Link>
+          <Link id='nav-btn-login' to="/login" className='navbar__button'>Log in</Link>
+          <Link id='nav-btn-signup' to="/" className='navbar__button'>Sign up</Link>
         </div>
       }
       {user.id &&
-        <Link to="/login" className='navbar__button'>Log Out</Link>
+        <Link id='nav-btn-logout' to="/login" className='navbar__button'>Log Out</Link>
+      } {user.id &&
+        <Link to="/ws" className='navbar__button'>Notifications ({msgs.length})</Link>
       }
-      <Link to="/ws" className='navbar__button'>Socket</Link>
     </div>
   </nav>
 }
 
 export function Main() {
+  //Lisää tähän notifications koko, joka annetaan numerona perään, jotta tilan vaikutukset näkee heti
 
   return <main>
     <Routes>
@@ -59,6 +64,8 @@ export function Main() {
       <Route path="/profile/edit" element={<EditProfile />} />
       <Route path="/login" element={<Login />} />
       <Route path='/ws' element={<WebSocketClient />} />
+      <Route path='/iu' element={<ImageUploader />} />
+      <Route path='/admin' element={<AdminView />} />
     </Routes>
   </main>
 }

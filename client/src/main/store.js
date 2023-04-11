@@ -2,17 +2,26 @@ import { configureStore, createSlice } from '@reduxjs/toolkit';
 import { apiSlice } from './apiSlice';
 import { mapSlice } from './mapSlice';
 
-const initialState = { user: {} };
+const initialState = {user: {}, notifications: []};
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUser: (state, action) => { state.user = action.payload },
+    setUser: (state, action) => {state.user = action.payload},
+    addNotification: (state, action) => {state.notifications.push(action.payload)},
+    deleteNotification: (state, action) => {
+      let s = action.payload;
+      let index = state.notifications.findIndex(p => p.id == s);
+      state.notifications.splice(index, 1);
+    }
+    
   }
 })
 
-export const { setUser } = userSlice.actions
+
+
+export const { setUser, addNotification, deleteNotification } = userSlice.actions
 
 export const store = configureStore({ // Määritellään uusi store-muuttuja, joka käyttää configureStore-funktiota Redux Toolkitista
   reducer: {

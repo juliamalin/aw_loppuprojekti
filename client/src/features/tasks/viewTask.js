@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -9,19 +9,20 @@ import Paper from '@mui/material/Paper';
 import Draggable from 'react-draggable';
 import { Alert, Typography } from '@mui/material';
 import { useUpdateTaskMutation, useGetProfileByIdQuery } from '../../main/apiSlice';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react'
 import { id } from 'date-fns/locale';
 import { TaskOutlined } from '@mui/icons-material';
 import * as ReactDOM from "react-dom";
 import { useNavigate } from 'react-router-dom';
 import { TaskAlert } from './TaskAlert'
+import WebSocketContext from '../../websocket/socket';
 //import Popup from './Popup'; // assuming Popup is a component that renders the notification pop-up
 //import { AlertTitle } from '@material-ui/lab';
 
 
 function PaperComponent(props) {
-  console.log(props)
+
   return (
     <Draggable
       handle="#draggable-dialog-title"
@@ -32,13 +33,21 @@ function PaperComponent(props) {
   );
 }
 
-export default function DraggableDialog({ task, open, setOpen }) {
+export default function DraggableDialog({ task, open, setOpen}) {
+  let user = useSelector((state) => state.userReducer.user) || {};
   const [status, setStatus] = useState(task.status)
   const [alert, setAlert] = useState(null);
+  let ws = useContext(WebSocketContext);
+
 
   const [changeStatus, { isLoading }] = useUpdateTaskMutation()
 
   const navigate = useNavigate()
+
+  function wsSend() {
+    ws.send(user.id + " 11");
+  }
+
 
 
 
@@ -56,9 +65,10 @@ export default function DraggableDialog({ task, open, setOpen }) {
       availableTo: task.availableTo,
       payment: task.payment,
       durationinminutes: task.durationinminutes,
-      creatorId: 1,
-      performerId: task.performerId
+      creatorId: 11,
+      performerId: user.id
     })
+    wsSend();
     setOpen(false)
   };
 
@@ -109,7 +119,7 @@ export default function DraggableDialog({ task, open, setOpen }) {
         </DialogContent>
         <DialogActions>
           <Button variant="contained" onClick={onTakeTask}>Take Task</Button>
-          <Button onClick={() => { setOpen(false); console.log(open) }}>
+          <Button onClick={() => { setOpen(false); }}>
             Go Back
           </Button>
         </DialogActions>

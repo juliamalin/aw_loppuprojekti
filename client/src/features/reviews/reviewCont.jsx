@@ -15,6 +15,7 @@ import { useGetTasksInProgressQuery } from '../../main/apiSlice';
 import { Task } from '@mui/icons-material';
 
 
+
 const labels = {
   1: 'Rotten Rodent',
   2: 'Hasty Hopper',
@@ -33,6 +34,7 @@ export default function ReviewDialog({performerId, creatorId, taskId}) {
   const [hover, setHover] = useState(-1);
   const [createReview] = useCreateReviewMutation();
   const [comment, setComment] = useState('');
+  const [rating, setRating] = useState();
 
   const user = useSelector(state => state.userReducer.user) || {};
 
@@ -95,7 +97,7 @@ export default function ReviewDialog({performerId, creatorId, taskId}) {
               precision={1}
               getLabelText={getLabelText}
               onChange={(event, newValue) => {
-                setValue(newValue);
+                setRating(newValue);
               }}
               onChangeActive={(event, newHover) => {
                 setHover(newHover);

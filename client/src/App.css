@@ -244,3 +244,38 @@
 .dialog-container p {
   margin-right: 20px;
 }
+
+.reviewList {
+  overflow-y: auto;
+  height: 10%;
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid black;
+  position: relative;
+}
+
+.reviewi {
+  border-radius: 10px;
+  border: 1px solid black;
+  margin: 20px;
+}
+
+.nickName {
+  margin-top: 10px;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-size: 24px;
+  color: rgb(0, 0, 0);
+  transform: rotate(5deg);
+  text-shadow: 0.5px 0.5px 0.5px rgba(253, 253, 253, 0.8);
+  backdrop-filter: blur(2px);
+}
+
+.task-container {
+  position: relative;
+}
+
+.plus-button {
+  position: absolute;
+  bottom: 30px;
+  right: 50px;
+}

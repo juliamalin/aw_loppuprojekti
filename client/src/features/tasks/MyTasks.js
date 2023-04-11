@@ -24,13 +24,18 @@ export const MyTasks = () => {
   const { data: createdTasks = [], isLoading: isLoadingCreatedTasks } = useGetCreatedTasksQuery(user?.id);
   const { data: performerTasks = [], isLoading: isLoadingPerformerTasks } = useGetTasksInProgressQuery(user?.id);
 
+  const filteredCreatedTasks = createdTasks.filter(task => task.status === "available" || task.status === "unavailable");
+
+
   //tulee päivittää tieto statuksen muutoksesta saman tien
 
   const [showPerformedTasks, setShowPerformedTasks] = useState(true);
   const [showCreatedTasks, setShowCreatedTasks] = useState(false);
   const [activeButton, setActiveButton] = useState('performed');
 
-  console.log(createdTasks)
+  //console.log(createdTasks)
+  console.log(performerTasks)
+
 
   const handlePerformedTasksClick = () => {
     setShowPerformedTasks(true);
@@ -63,8 +68,8 @@ return (
             {showPerformedTasks && <TableRow >
               <TableCell class="cell" />
               <TableCell class="cell" >Task</TableCell>
-              <TableCell class="cell" align="left">Creator</TableCell>
-              <TableCell class="cell" align="left">Status</TableCell>
+              <TableCell class="cell" align="left" >Creator</TableCell>
+              <TableCell class="cell" align="left">Time left</TableCell>
               <TableCell class="cell" align="left">Location</TableCell>
               <TableCell class="cell" align="left">Payment (€)</TableCell>
               <TableCell class="cell" align="left">Progress</TableCell>
@@ -84,7 +89,7 @@ return (
                   .filter((task) => task.performer.id === user.id)
                   .map((task) => <Row key={task.id} task={task}/>)}
               {showCreatedTasks &&
-                createdTasks
+                filteredCreatedTasks
                   .filter((task) => task.creator.id === user.id)
                   .map((task) => <RowCreated key={task.id} task={task}/>)}
             </TableBody>

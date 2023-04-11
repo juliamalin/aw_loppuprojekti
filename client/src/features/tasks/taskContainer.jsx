@@ -18,7 +18,7 @@ const TaskExcerpt = ({ task }) => {
 
 
     return (
-        <article className="task-excerpt" onClick={() => setOpen(true)}>
+        <article className="task-excerpt" onClick={() => { if (!open) setOpen(true) }}>
             <p>{task.title}</p>
             <div className="task-info">
                 by {task.creator.username}
@@ -34,7 +34,7 @@ const TaskExcerpt = ({ task }) => {
 
 
 
-export const TaskContainer = () => {
+export const TaskContainer = ({ ws }) => {
 
     const [durationRange, setDurationRange] = React.useState('all')
     const [sortBy, setSortBy] = React.useState('all')
@@ -81,11 +81,11 @@ export const TaskContainer = () => {
     // if (sortBy === 'distance') //Implement later
     if (sortBy === 'price') sortedTasks.sort((a, b) => b.payment > a.payment ? 1 : -1)
 
-    let content = sortedTasks.map(task => <TaskExcerpt key={task.id} task={task} />)
+    let content = sortedTasks.map(task => <TaskExcerpt key={task.id} task={task} ws={ws} />)
 
     return (
 
-        <section>
+        <section className="task-container">
             <div className="row d-flex ">
                 <div className="col text-end">
                     <select className="form-select" aria-label="Default select example" onChange={ev => setSearchOption(ev.target.value)} >
