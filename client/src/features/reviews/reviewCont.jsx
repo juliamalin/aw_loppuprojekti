@@ -28,13 +28,13 @@ function getLabelText(value) {
   return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`;
 }
 
-export default function ReviewDialog({performer_id, creatorId, taskId}) {
+export default function ReviewDialog({performer_id, targetuser_id, taskId}) {
   const [open, setOpen] = useState(true);
   const [value, setValue] = useState(2);
   const [hover, setHover] = useState(-1);
   const [createReview] = useCreateReviewMutation();
   const [comment, setComment] = useState('');
-  const [rating, setRating] = useState();
+  // const [rating, setRating] = useState();
 
   const user = useSelector(state => state.userReducer.user) || {};
 
@@ -43,8 +43,8 @@ export default function ReviewDialog({performer_id, creatorId, taskId}) {
   const onSendClicked = () => {
     createReview({
       comment: comment,
-      rating: value,
-      targetuser_id: creatorId,
+      value: value,
+      targetuser_id: targetuser_id, // katso että kaikkialla
       performer_id: performer_id,
       task_id: taskId
     }).unwrap().then(response => console.log(response));
@@ -99,7 +99,9 @@ export default function ReviewDialog({performer_id, creatorId, taskId}) {
               getLabelText={getLabelText}
               onChange={(event, newValue) => {
                 setValue(newValue);
-                setRating(newValue);
+                console.log(newValue);
+
+                
               }}
               onChangeActive={(event, newHover) => {
                 setHover(newHover);

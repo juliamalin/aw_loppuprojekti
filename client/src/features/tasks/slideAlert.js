@@ -60,7 +60,7 @@ export function AlertDialogSlide({task}) {
           {/*<Button onClick={handleClose3} disabled={isLoading}>Cancel</Button>*/}
         </DialogActions>
       </Dialog>
-      {reviewVisible && <ReviewDialog performer_id={user.id} creatorId={task.creator.id} taskId={task.id} />}  {/* tekee reviewistä näkyvän kun agree klikattu*/}
+      {reviewVisible && <ReviewDialog performer_id={user.id} targetuser_id={task.creator.id} taskId={task.id} />}  {/* tekee reviewistä näkyvän kun agree klikattu*/}
     </div>
   );
 }

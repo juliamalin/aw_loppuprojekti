@@ -14,6 +14,7 @@ import { AlertDialogSlide } from './slideAlert'
 import ReviewDialog from '../reviews/reviewCont';
 import { useSelector } from 'react-redux';
 import RateReviewIcon from '@mui/icons-material/RateReview';
+import Button from '@mui/material/Button';
 
 
 
@@ -21,7 +22,12 @@ export function RowCreated({ task }) {
 
   const [open, setOpen] = React.useState(false);
   let user = useSelector((state) => state.userReducer.user) || {};
+  // let task = useSelector((state) => state.userReducer.task) || {};
+  
   const [reviewVisible, setReviewVisible] = React.useState(false);
+ 
+ 
+  console.log("performer id" , task.performer.id)
 
 
   //päivämäärämuotoilut
@@ -34,37 +40,46 @@ export function RowCreated({ task }) {
   const dateAvailableTo = task.availableTo ? new Date(task.availableTo) : null;
   const formattedAvailableToDate = dateAvailableTo ? dateAvailableTo.toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) : null;
 
+  
 
-    console.log(task)
+  console.log(task)
 
-    return (
-      <React.Fragment>
-        <TableRow style={{ position: 'relative'}}>
-          <TableCell  style={{ borderBottom: 'none' }}>
-            <IconButton 
-              aria-label="expand row"
-              size="small"
-              onClick={() => setOpen(!open)}
-              style={{ color: 'violet' }}
-            >
-              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </IconButton>
+  return (
+    <React.Fragment>
+      <TableRow style={{ position: 'relative' }}>
+        <TableCell style={{ borderBottom: 'none' }}>
+          <IconButton
+            aria-label="expand row"
+            size="small"
+            onClick={() => setOpen(!open)}
+            style={{ color: 'violet' }}
+          >
+            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          </IconButton>
+        </TableCell>
+        <TableCell class="lowercell" component="th" scope="row">{task.title.charAt(0).toUpperCase() + task.title.slice(1)}</TableCell>
+        <TableCell class="lowercell" component="th" scope="row">{task.performer?.username.charAt(0).toUpperCase() + task.performer?.username.slice(1)}</TableCell>
+        <TableCell class="lowercell" align="left">{task.status.charAt(0).toUpperCase() + task.status.slice(1)}</TableCell>
+        <TableCell class="lowercell" align="left">{task.location}</TableCell>
+        <TableCell class="lowercell" align="left" >{task.payment}</TableCell>
+        {task.status === "done" && (
+          <TableCell align="left">
+            <Button onClick={() => setReviewVisible(true)} variant="contained" color="primary" size="small">
+              Feedback!
+            </Button>
+            {reviewVisible && <ReviewDialog performer_id={user.id} targetuser_id={task.performer.id} taskId={task.id} />}  {/* tekee reviewistä näkyvän kun agree klikattu*/}
           </TableCell>
-          <TableCell class="lowercell" component="th" scope="row">{task.title.charAt(0).toUpperCase() + task.title.slice(1)}</TableCell>
-          <TableCell class="lowercell" component="th" scope="row">{task.performer?.username.charAt(0).toUpperCase() + task.performer?.username.slice(1)}</TableCell>
-          <TableCell class="lowercell" align="left">{task.status.charAt(0).toUpperCase() + task.status.slice(1)}</TableCell>
-          <TableCell class="lowercell" align="left">{task.location}</TableCell>
-          <TableCell class="lowercell" align="left" >{task.payment}</TableCell>
-        </TableRow>
-        <TableRow >
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0, paddingLeft: '115px' }} colSpan={6}>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-              <Box sx={{ margin: 1 }}>
-                <Typography class="lowertitle" variant="h6" gutterBottom component="div">
-                </Typography>
-                <Table size="small" aria-label="purchases">
-                  <TableHead>
-                    <TableRow style={{ backgroundColor: '#E5E5E5' }}>
+        )}
+      </TableRow>
+      <TableRow >
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0, paddingLeft: '115px' }} colSpan={6}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <Box sx={{ margin: 1 }}>
+              <Typography class="lowertitle" variant="h6" gutterBottom component="div">
+              </Typography>
+              <Table size="small" aria-label="purchases">
+                <TableHead>
+                  <TableRow style={{ backgroundColor: '#E5E5E5' }}>
                     <TableCell class="lowertext">Created</TableCell>
                     <TableCell class="lowertext" align="left">Start Date</TableCell>
                     <TableCell class="lowertext" align="left">End Date</TableCell>

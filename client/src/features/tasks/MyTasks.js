@@ -15,6 +15,7 @@ import './mytasksstyles.css';
 import { useState } from 'react'
 import { useSelector } from "react-redux";
 import { MyTasksMap } from "../map/MyTasksMap";
+import ReviewDialog from "../reviews/reviewCont";
 
 
 export const MyTasks = () => {
@@ -24,7 +25,7 @@ export const MyTasks = () => {
   const { data: createdTasks = [], isLoading: isLoadingCreatedTasks } = useGetCreatedTasksQuery(user?.id);
   const { data: performerTasks = [], isLoading: isLoadingPerformerTasks } = useGetTasksInProgressQuery(user?.id);
 
-  const filteredCreatedTasks = createdTasks.filter(task => task.status === "available" || task.status === "unavailable");
+  const filteredCreatedTasks = createdTasks.filter(task => task.status === "available" || task.status === "unavailable" || task.status === "done");
 
 
   //tulee päivittää tieto statuksen muutoksesta saman tien
@@ -60,6 +61,7 @@ return (
         <Button variant={activeButton === 'created' ? 'contained' : 'outlined'} onClick={handleCreatedTasksClick}>Created Tasks</Button>
         <Button variant={activeButton === 'performed' ? 'contained' : 'outlined'} onClick={handlePerformedTasksClick}>Tasks In Progress</Button>
       </ButtonGroup>
+      
     </div>
     <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gridColumnGap: '20px', gridRowGap: '20px' }} >
       <TableContainer class="txtb" component={Paper}>
@@ -81,6 +83,7 @@ return (
               <TableCell class="cell" align="left">Status</TableCell>
               <TableCell class="cell" align="left">Location</TableCell>
               <TableCell class="cell" align="left">Payment (€)</TableCell>
+              <TableCell class="cell" align="left"></TableCell>
             </TableRow>}
           </TableHead>
             <TableBody>
@@ -91,7 +94,8 @@ return (
               {showCreatedTasks &&
                 filteredCreatedTasks
                   .filter((task) => task.creator.id === user.id)
-                  .map((task) => <RowCreated key={task.id} task={task}/>)}
+                  .map((task) => <RowCreated key={task.id} task={task}/> )}
+                  
             </TableBody>
         </Table>
       </TableContainer>
