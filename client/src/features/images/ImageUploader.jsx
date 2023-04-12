@@ -17,14 +17,12 @@ export default function ImageUploader({ imageType }) {
   const [imageUrl, setImageUrl] = useState(null);
   const [file, setFile] = useState(null);
   const user = useSelector(state => state.userReducer.user);
-  const [createImageInfo, { isLoading }] = useCreateImageInfoMutation()
+  const [createImageInfo] = useCreateImageInfoMutation()
   const [updateImageInfo] = useUpdateImageInfoMutation()
   const { data: imageInfo, isLoading: isLoadingInfo } = useGetImageInfoQuery(user.id)
 
 
-  if (!isLoadingInfo && !imageInfo && !isLoading) {
-    createImageInfo({ profileId: user.id })
-  }
+
 
   const handleFileSelect = (e) => {
     setFile(e.target.files[0]);
@@ -40,8 +38,16 @@ export default function ImageUploader({ imageType }) {
     };
     const { Location } = await s3.upload(params).promise();
     console.log('Image at', Location)
-    if (imageType === 'profile') updateImageInfo({ id: imageInfo.id, profileId: imageInfo.profileId, profileImageUrl: Location, headerImageUrl: imageInfo.headerImageUrl }).unwrap().then(response => console.log(response))
-    if (imageType === 'header') updateImageInfo({ id: imageInfo.id, profileId: imageInfo.profileId, profileImageUrl: imageInfo.profileImageUrl, headerImageUrl: Location }).unwrap().then(response => console.log(response))
+    console.log('ImageInfo', imageInfo)
+    if (imageInfo == null) {
+      if (imageType === 'profile') createImageInfo({ profileId: user.id, profileImageUrl: Location }).unwrap().then(response => console.log(response))
+      if (imageType === 'header') createImageInfo({ profileId: user.id, headerImageUrl: Location }).unwrap().then(response => console.log(response))
+
+    } else {
+      if (imageType === 'profile') updateImageInfo({ id: imageInfo.id, profileId: user.id, profileImageUrl: Location, headerImageUrl: imageInfo?.headerImageUrl }).unwrap().then(response => console.log(response))
+      if (imageType === 'header') updateImageInfo({ id: imageInfo.id, profileId: user.id, profileImageUrl: imageInfo?.profileImageUrl, headerImageUrl: Location }).unwrap().then(response => console.log(response))
+
+    }
     setImageUrl(Location);
 
   }

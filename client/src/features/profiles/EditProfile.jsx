@@ -9,6 +9,7 @@ export const EditProfile = () => {
     const [confirmPassword, setConfirmPassword] = React.useState('')
     const [error, setError] = React.useState(false)
 
+
     const handleNewPassWordChange = (event) => {
         setNewPassword(event.target.value)
         setError(false)
