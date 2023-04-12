@@ -19,7 +19,7 @@ const TaskExcerpt = ({ task }) => {
 
     return (
         <article className="task-excerpt" onClick={() => { if (!open) setOpen(true) }}>
-            <p className="task-info">{task.title}</p>
+            <p className="task-info"><strong>{task.title}</strong></p>
             <div className="task-info">
                 by {task.creator.username}
                 <TimeAgo timestamp={task.created} />
