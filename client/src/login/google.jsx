@@ -1,33 +1,47 @@
 import React from 'react';
 import jwt_decode from "jwt-decode";
 import { useState } from 'react';
-import { useCreateGoogleUserMutation } from '../main/apiSlice';
+import {  useCreateUserMutation, useLoginUserMutation } from '../main/apiSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from '../main/store';
 
 export function GoogleLogin() {
-  let [ user, setUser ] = useState("");
-  let [ token, setToken] = useState("");
-  const [createUser] = useCreateGoogleUserMutation();
+  const [create] = useCreateUserMutation();
+  const [login] = useLoginUserMutation();
+  let user = useSelector(state => state.userReducer.user) || {};
+
+  const dispatch = useDispatch();
+
+  console.log(user);
 
   function signOut() {
-    setUser("");
+    dispatch(setUser({}))
     document.getElementById("signInDiv").hidden = false;
   }
 
-  /*function create() {
-    let u = {token: token};
-    createUser(u).unwrap()
-      .then((payload) =>
-  }*/
+  function createUser(user, token) {
+    let u = {username: user, password: token, role: 'user'};
+    create(u).unwrap()
+      .then((payload) => console.log('Ok', console.log(payload)))
+  }
+
+  function logIn(user, token) {
+    let u = {username: user, password: token};
+    console.log(u);
+    login(u).unwrap()
+            .then((payload) => console.log('Ok', dispatch(setUser(payload))))
+            .catch((err) => createUser(user, token));
+        //dispatch(setUser(user));
+  }
 
   //Saa kirjautuessaan käyttäjän tiedot, VAIN TESTIYMPÄRISTÖSSÄ LISÄTYT EMAILIT TOIMII
   function handleCallBackResponse(response) {
     console.log("Encoded JWT ID token: " + response.credential);
     let userObject = jwt_decode(response.credential);
     console.log(userObject);
-    setUser(userObject.name);
-    setToken(userObject.sub);
-    console.log(user);
-    console.log(token);
+    let user = userObject.name;
+    let token = userObject.sub;
+    logIn(user, token);
     document.getElementById("signInDiv").hidden = true;
   }
 
@@ -48,12 +62,12 @@ export function GoogleLogin() {
     return (
       <div>
         <div id="signInDiv"></div>
-        {Object.keys(user).length != 0 &&
+        {user.id &&
           <button onClick={() => signOut()} >Kirjaudu ulos</button>
         }
-        {user &&
+        {user.id &&
         <div>
-          <h3>{user}</h3>
+          <h3>{user.username}</h3>
         </div>
         }
       </div>
