@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { addNotification, deleteNotification } from "../main/store";
 import { useContext } from "react";
 import WebSocketContext from "./socket";
+import ReviewDialog from "../features/reviews/reviewCont";
 
 export function WebSocketClient(){
     let user = useSelector((state) => state.userReducer.user) || {};
     let msgs = useSelector((state) => state.userReducer.notifications) || [];
     let ws = useContext(WebSocketContext); //tätä voi käyttää missä vain WebSockettina
     let dispatch = useDispatch();
+    
 
     React.useEffect(() => {
         console.log(msgs);
