@@ -24,14 +24,18 @@ export const MyTasks = () => {
   const { data: createdTasks = [], isLoading: isLoadingCreatedTasks } = useGetCreatedTasksQuery(user?.id);
   const { data: performerTasks = [], isLoading: isLoadingPerformerTasks } = useGetTasksInProgressQuery(user?.id);
 
-  //tulee päivittää tieto statuksen muutoksesta saman tien
+  const filteredCreatedTasks = createdTasks.filter(task => task.status === "available" || task.status === "unavailable");
 
+
+  //tulee päivittää tieto statuksen muutoksesta saman tien
 
   const [showPerformedTasks, setShowPerformedTasks] = useState(true);
   const [showCreatedTasks, setShowCreatedTasks] = useState(false);
   const [activeButton, setActiveButton] = useState('performed');
 
-  console.log(createdTasks)
+  //console.log(createdTasks)
+  console.log(performerTasks)
+
 
   const handlePerformedTasksClick = () => {
     setShowPerformedTasks(true);
@@ -64,8 +68,8 @@ return (
             {showPerformedTasks && <TableRow >
               <TableCell class="cell" />
               <TableCell class="cell" >Task</TableCell>
-              <TableCell class="cell" align="left">Creator</TableCell>
-              <TableCell class="cell" align="left">Status</TableCell>
+              <TableCell class="cell" align="left" >Creator</TableCell>
+              <TableCell class="cell" align="left">Time left</TableCell>
               <TableCell class="cell" align="left">Location</TableCell>
               <TableCell class="cell" align="left">Payment (€)</TableCell>
               <TableCell class="cell" align="left">Progress</TableCell>
@@ -85,7 +89,7 @@ return (
                   .filter((task) => task.performer.id === user.id)
                   .map((task) => <Row key={task.id} task={task}/>)}
               {showCreatedTasks &&
-                createdTasks
+                filteredCreatedTasks
                   .filter((task) => task.creator.id === user.id)
                   .map((task) => <RowCreated key={task.id} task={task}/>)}
             </TableBody>
@@ -98,51 +102,3 @@ return (
   </div>
 );
 };
-
-
-// vanha return, voi poistaa jos ylempi ok
-
-  {/*return (
-    <div >
-      <h1 className="my-tasks-heading" style={{ marginBottom: '20px', marginLeft: '10px' }}>My Tasks</h1>
-      <div>
-        <ButtonGroup class="buttongroup" color="secondary" style={{ marginBottom: '20px', marginLeft: '10px' }}>
-          <Button variant={activeButton === 'created' ? 'contained' : 'outlined'} onClick={handleCreatedTasksClick}>Created Tasks</Button>
-          <Button variant={activeButton === 'performed' ? 'contained' : 'outlined'} onClick={handlePerformedTasksClick}>Tasks In Progress</Button>
-        </ButtonGroup>
-      </div>
-
-
-      <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gridColumnGap: '20px', gridRowGap: '20px' }} >
-        <TableContainer class="txtb" component={Paper}>
-          <Table aria-label="collapsible table">
-            <TableHead>
-              <TableRow >
-                <TableCell class="cell" />
-                <TableCell class="cell" >Task</TableCell>
-                <TableCell class="cell" align="left">Creator</TableCell>
-                <TableCell class="cell" align="left">Status</TableCell>
-                <TableCell class="cell" align="left">Location</TableCell>
-                <TableCell class="cell" align="left">Payment (€)</TableCell>
-                <TableCell class="cell" align="left">Progress</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {showPerformedTasks &&
-                performerTasks
-                  .filter((task) => task.performer.id === user.id)
-                  .map((task) => <Row key={task.id} task={task} user={user.id} />)}
-              {showCreatedTasks &&
-                createdTasks
-                  .filter((task) => task.creator.id === user.id)
-                  .map((task) => <RowCreated key={task.id} task={task} user={user.id} />)}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <div style={{ position: 'fixed', right: '0', top: '120px', bottom: '0.5px', width: '35%', margin: '0 15px 50px 20px' }} className="col-4">
-          <MyTasksMap />
-        </div>
-      </div>
-    </div>
-  );
-};*/}

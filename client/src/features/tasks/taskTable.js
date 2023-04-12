@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { AlertDialogSlide } from './slideAlert'
+import { TimeAgoInProgress } from './timeAgoInProgress'
 
 
 export function Row({task}) {
@@ -45,7 +46,7 @@ export function Row({task}) {
             {task.title.charAt(0).toUpperCase() + task.title.slice(1)}
           </TableCell>
           <TableCell class="lowercell" align="left">{task.creator.username.charAt(0).toUpperCase()+task.creator.username.slice(1)}</TableCell>
-          <TableCell class="lowercell" align="left">{task.status.charAt(0).toUpperCase() + task.status.slice(1)}</TableCell>
+          <TableCell class="lowercell" align="left"><TimeAgoInProgress timestamp={task.availableTo}/></TableCell>
           <TableCell class="lowercell" align="left">{task.location}</TableCell>
           <TableCell class="lowercell" align="left" >{task.payment}</TableCell>
           <TableCell class="lowercell" align="left" style={{ borderBottom: '1px solid rgba(224, 224, 224, 1)'}} >
@@ -53,7 +54,7 @@ export function Row({task}) {
 
         </TableRow>
         <TableRow >
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0, paddingLeft: '115px' }} colSpan={6}>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0, paddingLeft: '70px' }} colSpan={6}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1 }}>
                 <Typography class="lowertitle" variant="h6" gutterBottom component="div">
@@ -61,21 +62,11 @@ export function Row({task}) {
                 <Table size="small" aria-label="purchases">
                   <TableHead>
                     <TableRow style={{ backgroundColor: '#E5E5E5' }}>
-                    <TableCell class="lowertext">Created</TableCell>
-                      <TableCell class="lowertext" align="left">Start Date</TableCell>
-                      <TableCell class="lowertext" align="left">End Date</TableCell>
                       <TableCell class="lowertext" align="left">Description</TableCell>
-                      <TableCell class="lowertext" align="left">Duration (min)</TableCell>
                     </TableRow>
                   </TableHead>
-                  <TableBody style={{ backgroundColor: '#f5e6fa' }}>
-                      <TableRow key={task.created}>
-                        <TableCell class="lowercell" component="th" scope="row">{formattedDateCreated}</TableCell>
-                        <TableCell class="lowercell" >{formattedAvailableFromDate}</TableCell>
-                        <TableCell class="lowercell" >{formattedAvailableToDate}</TableCell>
+                  <TableBody style={{ backgroundColor: '#f5e6fa' }}>                 
                         <TableCell class="lowercell" >{task.description}</TableCell>
-                        <TableCell class="lowercell" >{task.durationinminutes}</TableCell>
-                      </TableRow>
                   </TableBody>
                   </Table>
               </Box>
@@ -86,3 +77,20 @@ export function Row({task}) {
     );
   }
   
+ {/*} <TableCell class="lowertext">Created</TableCell>
+  <TableRow key={task.created}>
+</TableRow>
+
+     <TableCell class="lowertext" align="left">Start Date</TableCell>
+                      <TableCell class="lowertext" align="left">End Date</TableCell>
+                          <TableCell class="lowertext" align="left">Duration (min)</TableCell>
+
+                          <TableCell class="lowercell" component="th" scope="row">{formattedDateCreated}</TableCell>
+                        <TableCell class="lowercell" >{formattedAvailableFromDate}</TableCell>
+                        <TableCell class="lowercell" >{formattedAvailableToDate}</TableCell>
+
+                                                <TableCell class="lowercell" >{task.durationinminutes}</TableCell>
+
+                    */}
+
+
