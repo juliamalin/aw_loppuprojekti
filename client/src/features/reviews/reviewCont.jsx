@@ -67,9 +67,9 @@ export default function ReviewDialog({performer_id, creatorId, taskId}) {
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Feedback</DialogTitle>
+        <DialogTitle class="cell2" style={{marginLeft:'20px', marginTop:'20px'}}>Feedback</DialogTitle>
         <DialogContent>
-          <DialogContentText>
+          <DialogContentText class="cell">
             Write honest feedback about the performance of the person performing the task. The evaluation will be visible to everyone.
           </DialogContentText>
           <TextField
@@ -84,6 +84,7 @@ export default function ReviewDialog({performer_id, creatorId, taskId}) {
             rows={4}
             value={comment}
             onChange={handleCommentChange}
+            color="secondary" 
           />
           <Box
             sx={{
@@ -112,8 +113,8 @@ export default function ReviewDialog({performer_id, creatorId, taskId}) {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseCancel}>Cancel</Button> 
-          <Button onClick={onSendClicked}>Send review</Button>
+          <Button color="secondary"  onClick={handleCloseCancel}>Cancel</Button> 
+          <Button color="secondary"  onClick={onSendClicked}>Send review</Button>
         </DialogActions>
       </Dialog>
     </div>

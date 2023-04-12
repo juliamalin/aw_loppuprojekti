@@ -11,6 +11,8 @@ import ReviewDialog from '../reviews/reviewCont';
 import { useContext } from 'react';
 import { WebSocketClient } from '../../websocket/socketPage';
 import WebSocketContext from '../../websocket/socket';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -52,12 +54,18 @@ export function AlertDialogSlide({task}) {
         keepMounted
         onClose={handleClose2}
         aria-describedby="alert-dialog-slide-description"
+      
       >
-        <DialogTitle>{"Do you want to mark task completed?"}</DialogTitle>
+        <DialogTitle style={{ marginTop: '10px' }}>{"Have you completed the task?"}</DialogTitle>
+        <DialogContent >
+          <DialogContentText id="alert-dialog-slide-description" class="cell" style={{ marginTop: '20px' }}>
+            Do you want to mark task completed? The owner of the task will receive a notification 
+            when you have marked the task as complete🐰
+          </DialogContentText>
+        </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose1} disabled={isLoading}>Agree</Button>
-          <Button onClick={handleClose2}>Disagree</Button>
-          {/*<Button onClick={handleClose3} disabled={isLoading}>Cancel</Button>*/}
+          <Button color="secondary" onClick={handleClose1} disabled={isLoading}>Agree</Button>
+          <Button color="secondary" onClick={handleClose2}>Go back</Button>
         </DialogActions>
       </Dialog>
       {reviewVisible && <ReviewDialog performer_id={user.id} creatorId={task.creator.id} taskId={task.id} />}  {/* tekee reviewistä näkyvän kun agree klikattu*/}
@@ -66,22 +74,3 @@ export function AlertDialogSlide({task}) {
 }
 
 
-
-
-
-  /*const makeChange = async () => {
-    setStatus('done')
-    await mutate({...task, status: 'done', creatorId: task.creator.id, performerId: task.performer.id})
-    refetchPerformerTasks();
-  };
-
-  const Cancel = async () => {
-    setStatus('Unavailable')
-    await mutate({...task, status: 'Unavailable', creatorId: task.creator.id, performerId: task.performer.id})
-    refetchPerformerTasks();
-  };*/
-  
-  /*const handleClose3 = () => {
-    setOpen(false);
-    Cancel();
-  };*/

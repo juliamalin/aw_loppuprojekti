@@ -40,6 +40,13 @@ export default function DraggableDialog({ task, open, setOpen}) {
   let ws = useContext(WebSocketContext);
 
 
+  const dateAvailableFrom  = task.availableFrom ? new Date(task.availableFrom) : null;
+  const formattedAvailableFromDate = dateAvailableFrom ? dateAvailableFrom.toLocaleString('en-US', {year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit'}) : null;
+
+  const dateAvailableTo = task.availableTo ? new Date(task.availableTo) : null;
+  const formattedAvailableToDate = dateAvailableTo ? dateAvailableTo.toLocaleString('en-US', {year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit'}) : null;
+
+
   const [changeStatus, { isLoading }] = useUpdateTaskMutation()
 
   const navigate = useNavigate()
@@ -47,8 +54,6 @@ export default function DraggableDialog({ task, open, setOpen}) {
   function wsSend() {
     ws.send(user.username + " " + task.creator.id + " " + task.title);
   }
-
-
 
 
   const onTakeTask = async () => {
@@ -72,22 +77,6 @@ export default function DraggableDialog({ task, open, setOpen}) {
     setOpen(false)
   };
 
-  /*const raisePopup = () => {
-    return (
-      <div className="popup">
-        <div className="popup-content">
-        <Alert severity="success">
-        Your task has been taken!
-        </Alert>
-          <button>Close</button>
-        </div>
-      </div>
-    );
-  };*/
-  //sivun päivitys???
-  //creatorid???
-
-
   return (
     <div>
       <Dialog
@@ -98,35 +87,32 @@ export default function DraggableDialog({ task, open, setOpen}) {
       >
         <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
         </DialogTitle>
-        <DialogContent>
-
-          <Typography variant="body1">
-            Description: {task.description}
+        <DialogContent >
+          <Typography class="cell2" variant="body1">
+          <strong> Description: </strong> {task.description}
           </Typography>
-          <Typography variant="body1">
-            Location: {task.location}
+          <Typography class="cell2" variant="body1">
+          <strong> Location:  </strong> {task.location}
           </Typography>
-          <Typography variant="body1">
-            Payment: {task.payment} €
+          <Typography class="cell2" variant="body1">
+          <strong>  Payment:  </strong> {task.payment} €
           </Typography>
-          <Typography variant="body1">
-            Between: {task.availableFrom} to {task.availableTo}
+          <Typography class="cell2" variant="body1">
+          <strong>  Available from:  </strong> {formattedAvailableFromDate}
           </Typography>
-          <Typography variant="body1">
-            Duration:{task.duration}
+          <Typography class="cell2" variant="body1">
+          <strong>  Available to:  </strong> {formattedAvailableToDate}
           </Typography>
 
         </DialogContent>
         <DialogActions>
-          <Button variant="contained" onClick={onTakeTask}>Take Task</Button>
-          <Button onClick={() => { setOpen(false); }}>
+          <Button color="secondary" variant="contained" onClick={onTakeTask}>Take Task</Button>
+          <Button color="secondary" onClick={() => { setOpen(false); }}>
             Go Back
-          </Button>
+          </Button >
         </DialogActions>
         <TaskAlert task={task} />
       </Dialog>
     </div>
   );
 }
-
-//          <Button variant="contained" onClick={onTakeTask} onClick={}>Take Task
