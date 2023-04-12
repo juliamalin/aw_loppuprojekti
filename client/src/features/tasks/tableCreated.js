@@ -15,6 +15,7 @@ import ReviewDialog from '../reviews/reviewCont';
 import { useSelector } from 'react-redux';
 import RateReviewIcon from '@mui/icons-material/RateReview';
 import Button from '@mui/material/Button';
+import { useGetReviewForTaskQuery } from '../../main/apiSlice';
 
 
 
@@ -40,9 +41,21 @@ export function RowCreated({ task }) {
   const dateAvailableTo = task.availableTo ? new Date(task.availableTo) : null;
   const formattedAvailableToDate = dateAvailableTo ? dateAvailableTo.toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) : null;
 
+ 
+  const { data: taskwithReview = [], isLoading } = useGetReviewForTaskQuery(task.id);
+  
+  console.log("Done task reviews",  taskwithReview);
   
 
-  console.log(task)
+  let hideTask = false;
+  if (taskwithReview.length > 0 && taskwithReview[0].performer_id === user.id) {
+    hideTask = true;
+  }
+  
+  if (hideTask) {
+    return null;
+  }
+  
 
   return (
     <React.Fragment>
