@@ -219,9 +219,6 @@
   padding: 0.8rem 0.25rem;
   border: 1px solid rgb(177, 174, 174);
   border-radius: 7px;
-  font-size: 0.9em;
-  font-style: normal;
-
 }
 
 .task-info {
@@ -231,19 +228,8 @@
   margin-right: 0px;
   margin-top: 5px;
   margin-bottom: 5px;
-  width: 1200px;
-  src:url(https://fonts.googleapis.com/css?family=Open+Sans&display=swap')
-
-}
-
-.dialog-container {
-  align-items: left;
-
-  display: fixed;
-  justify-content: flex-end;
-  position: absolute;
-  right: 5%;
   font-family: 'Open Sans', sans-serif;
+  width: 900px;
 
 }
 
@@ -269,6 +255,16 @@
 
 
 
+.dialog-container {
+  display: fixed;
+  justify-content: flex-end;
+  position: absolute;
+  right: 10%;
+  font-family: 'Open Sans', sans-serif;
+
+
+}
+
 .dialog-container p {
   margin-right: 20px;
 }
@@ -286,7 +282,7 @@
   border-radius: 10px;
   border: 1px solid black;
   margin: 20px;
-  
+
 }
 
 .nickName {

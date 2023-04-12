@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useGetCreatedTasksQuery, useGetImageInfoQuery, useGetTasksDoneQuery, useGetTasksInAreaQuery, useGetTasksQuery } from "../../main/apiSlice";
 import { TimeAgo } from './timeAgo'
 import InputLabel from '@mui/material/InputLabel';
@@ -12,6 +12,7 @@ import FormDialog from "./createTask";
 import DraggableDialog from "./viewTask";
 import '../../App.css';
 import { CircleImage } from "../images/CircleImage";
+import { setTasks } from "../../main/mapSlice";
 
 
 
@@ -41,7 +42,7 @@ export const TaskContainer = ({ ws }) => {
     const [sortBy, setSortBy] = React.useState('all')
     const [searchText, setSearchText] = React.useState('')
     const [searchOption, setSearchOption] = React.useState('task')
-
+    const dispatch = useDispatch()
 
     const [showAll, setShowAll] = React.useState(false)
     const [showOnlyAvailable, setShowOnlyAvailable] = React.useState(false)
@@ -60,6 +61,10 @@ export const TaskContainer = ({ ws }) => {
     let filteredTasks = [...tasks]
     if (showAll) filteredTasks = [...allTasks]
 
+    //take out done tasks
+    filteredTasks = filteredTasks.filter(task => {
+        return task.status !== 'done'
+    })
 
     //filter based on search results
     if (searchOption === 'task') filteredTasks = filteredTasks.filter(task => {
@@ -92,6 +97,9 @@ export const TaskContainer = ({ ws }) => {
     const sortedTasks = [...filteredTasks]
     if (sortBy === 'time') sortedTasks.sort((a, b) => b.created.localeCompare(a.created))
     if (sortBy === 'price') sortedTasks.sort((a, b) => b.payment > a.payment ? 1 : -1)
+
+
+    dispatch(setTasks(sortedTasks))
 
     let content = sortedTasks.map(task => <TaskExcerpt key={task.id} task={task} ws={ws} />)
 
