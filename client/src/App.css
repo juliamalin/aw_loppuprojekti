@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
+
 .App {
   text-align: center;
 }
@@ -53,11 +56,6 @@
 
 /* Task container */
 
-.task-excerpt {
-  padding: 0.8rem 0.25rem;
-  border: 1px solid rgb(177, 174, 174);
-  border-radius: 7px;
-}
 
 .task-excerpt:hover {
   box-shadow: 0 0 15px #845EC2;
@@ -71,6 +69,7 @@
   margin: 0;
   font-size: 1.5rem;
   font-style: initial;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .button {
@@ -80,7 +79,7 @@
   color: green;
   cursor: pointer;
   display: inline-block;
-  font-family: CerebriSans-Regular, -apple-system, system-ui, Roboto, sans-serif;
+  font-family: 'Open Sans', sans-serif;
   padding: 7px 20px;
   text-align: center;
   text-decoration: none;
@@ -216,15 +215,23 @@
   align-items: left;
   margin-left: 1%;
   margin-right: 5%;
+  font-family: 'Open Sans', sans-serif;
+  padding: 0.8rem 0.25rem;
+  border: 1px solid rgb(177, 174, 174);
+  border-radius: 7px;
 }
 
 .task-info {
   display: flex;
   align-items: left;
-  margin-left: 40px;
-  margin-right: 40px;
-}
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-family: 'Open Sans', sans-serif;
+  width: 900px;
 
+}
 
 .profile-image-container {
   width: 100%;
@@ -246,17 +253,15 @@
   object-fit: cover;
 }
 
-.task-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+
 
 .dialog-container {
-  display: flex;
+  display: fixed;
   justify-content: flex-end;
   position: absolute;
   right: 10%;
+  font-family: 'Open Sans', sans-serif;
+
 
 }
 

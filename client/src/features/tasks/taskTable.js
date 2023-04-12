@@ -77,20 +77,5 @@ export function Row({task}) {
     );
   }
   
- {/*} <TableCell class="lowertext">Created</TableCell>
-  <TableRow key={task.created}>
-</TableRow>
-
-     <TableCell class="lowertext" align="left">Start Date</TableCell>
-                      <TableCell class="lowertext" align="left">End Date</TableCell>
-                          <TableCell class="lowertext" align="left">Duration (min)</TableCell>
-
-                          <TableCell class="lowercell" component="th" scope="row">{formattedDateCreated}</TableCell>
-                        <TableCell class="lowercell" >{formattedAvailableFromDate}</TableCell>
-                        <TableCell class="lowercell" >{formattedAvailableToDate}</TableCell>
-
-                                                <TableCell class="lowercell" >{task.durationinminutes}</TableCell>
-
-                    */}
 
 

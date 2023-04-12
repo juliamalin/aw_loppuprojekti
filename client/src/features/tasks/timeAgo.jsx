@@ -10,7 +10,7 @@ export const TimeAgo = ({ timestamp }) => {
   }
 
   return (
-    <span title={timestamp}>
+    <span className='task.info' title={timestamp}>
       &nbsp; <i>{timeAgo}</i>
     </span>
   )
