@@ -28,6 +28,13 @@ export function RowCreated({ task }) {
   const dateCreated = task.created ? new Date(task.created) : null;
   const formattedDateCreated = dateCreated ? dateCreated.toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) : null;
 
+  const dateAvailableFrom = task.availableFrom ? new Date(task.availableFrom) : null;
+  const formattedAvailableFromDate = dateAvailableFrom ? dateAvailableFrom.toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) : null;
+
+  const dateAvailableTo = task.availableTo ? new Date(task.availableTo) : null;
+  const formattedAvailableToDate = dateAvailableTo ? dateAvailableTo.toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) : null;
+
+
     console.log(task)
 
     return (
