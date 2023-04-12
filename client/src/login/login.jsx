@@ -29,7 +29,6 @@ export function Login(props) {
         loginUser(u).unwrap()
             .then((payload) => console.log('Ok', dispatch(setUser(payload))))
             .catch((err) => alert('Bad credentials', err))
-        dispatch(setUser(user));
 
 
     }
@@ -45,11 +44,11 @@ export function Login(props) {
         {user.role &&
             <div>
                 <p>{user.username}</p>
-                <button onClick={() => logout()}>Kirjaudu ulos</button>
+                <button className="button1 muted-button" onClick={() => logout()}>Kirjaudu ulos</button>
             </div>
         } {user.id == null &&
             <div>
-                <input id='btn-login' type='button' value='Kirjaudu sisään' onClick={() => login()} />
+                <input id='btn-login' className="button muted-button" type='button' value='Kirjaudu sisään' onClick={() => login()} />
                 <GoogleLogin />
             </div>
         }

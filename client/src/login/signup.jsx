@@ -22,7 +22,7 @@ export function SignUp() {
             <div>
             </div>
             <div>
-                <input type='button' value='Luo käyttäjä' onClick={() => createU()} />
+                <input type='button' className="button muted-button" value='Luo käyttäjä' onClick={() => createU()} />
                 <GoogleLogin />
             </div>
     </div>
