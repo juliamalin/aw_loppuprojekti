@@ -1,10 +1,11 @@
 import React, { useCallback, useMemo, useRef } from "react";
 import { GoogleMap, Marker, useLoadScript, Autocomplete } from "@react-google-maps/api";
-import { useGetTasksQuery } from "../../main/apiSlice";
+import { useGetProfileLocationsQuery, useGetTasksQuery } from "../../main/apiSlice";
 import DraggableDialog from "../tasks/viewTask";
 import { setBounds } from "../../main/mapSlice";
 import { useDispatch } from "react-redux";
 import { MarkerIcons } from "./MarkerIcons";
+import Checkbox from '@mui/material/Checkbox';
 const libraries = ["places"]
 
 const getUserLocation = () => {
@@ -35,11 +36,13 @@ export const MapContainer = () => {
     const [selectedPlace, setSelectedPlace] = React.useState(null)
     const autoCompleteRef = useRef(null);
 
+    const [showUsers, setShowUsers] = React.useState(true)
 
 
     const { data: tasks = [] } = useGetTasksQuery()
+    const { data: profileLocations = [] } = useGetProfileLocationsQuery()
     const markers = tasks.map(task => ({ lat: task.latitude, lng: task.longitude }))
-
+    const profileMarkers = profileLocations.map(loc => ({ lat: loc.latitude, lng: loc.longitude }))
     const mapRef = useRef();
     const onMapLoad = useCallback((map) => {
         mapRef.current = map;
@@ -88,10 +91,17 @@ export const MapContainer = () => {
         mapRef.current.panTo({ lat, lng });
     }, []);
 
+    function getMarkerIcon(index, list) {
+        const icons = list;
+        const iconIndex = index % icons.length;
+        return icons[iconIndex];
+    }
+
     if (!isLoaded) return <div>Loading...</div>
     return (<div>
-        <div className="row d-flex">
-            <div className="col">
+        <div className="row d-flex align-middle" style={{ height: "40px" }}>
+            <div className="col-3">
+                Search For Location
                 <Autocomplete
                     onLoad={(autoComplete) => autoCompleteRef.current = autoComplete}
                     onPlaceChanged={() => onPlaceSelect(autoCompleteRef.current.getPlace())}
@@ -101,6 +111,19 @@ export const MapContainer = () => {
                         placeholder="Enter an address"
                     />
                 </Autocomplete>
+
+            </div>
+            <div className="col-3">
+
+            </div>
+            <div className="col-2">
+                <a>Show Users</a>
+                <Checkbox checked={showUsers} onChange={event => setShowUsers(!showUsers)} inputProps={{ 'aria-label': 'Show Users' }} />
+
+            </div>
+
+            <div className="col-1">
+
             </div>
         </div>
         <GoogleMap
@@ -111,7 +134,9 @@ export const MapContainer = () => {
             mapContainerClassName="map-container"
             onBoundsChanged={onBoundsChanged}
         >
-            {markers.map((marker, index) => (<Marker key={index} position={marker} onClick={() => onMarkerClick(index)} icon={MarkerIcons.color3} />))}
+            {markers.map((marker, index) => (<Marker key={index} position={marker} onClick={() => onMarkerClick(index)} icon={getMarkerIcon(index, MarkerIcons.carrotList)} />))}
+            {showUsers && profileMarkers.map((marker, index) => (<Marker key={index} position={marker} onClick={() => console.log(index)} icon={getMarkerIcon(index, MarkerIcons.rabbitList)} />))}
+
         </GoogleMap>
         <DraggableDialog task={selectedTask} open={open} setOpen={setOpen} />
     </div>)

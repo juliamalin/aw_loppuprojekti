@@ -156,12 +156,17 @@ export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka 
         ...result.map(({ id }) => ({ type: 'Review', id }))
       ],
     }),
+    getReviewForTask: builder.query({
+      query: (taskId) => `/review/task/${taskId}`,
+      providesTags: ['Review']
+    }),
     createReview: builder.mutation({
       query: (review) => ({
         url: '/review',
         method: 'POST',
         body: review
-      })
+      }),
+      invalidatesTags: ['Review']
     }),
     deleteReview: builder.mutation({
       query: (reviewId) => ({
@@ -171,6 +176,7 @@ export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka 
       invalidatesTags: ['Review']
     }),
 
+
     //GOOGLE TOKEN
     createGoogleUser: builder.mutation({
       query: (user) => ({
@@ -179,6 +185,7 @@ export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka 
         body: user
       })
     }),
+
 
     //IMAGE INFO
     getImageInfo: builder.query({
@@ -207,6 +214,10 @@ export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka 
         method: 'DELETE',
       }),
       invalidatesTags: ['ImageInfo']
+    }),
+
+    getProfileLocations: builder.query({
+      query: () => '/location'
     })
 
   }),
@@ -243,6 +254,8 @@ export const {
   useLoginUserMutation,
   useLogoutUserMutation, //tässä login
 
+
+  useGetProfileLocationsQuery,
   //Reviewit
   useGetReviewsQuery,
   useCreateReviewMutation,
