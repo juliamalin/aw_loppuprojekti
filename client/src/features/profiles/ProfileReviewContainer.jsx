@@ -1,18 +1,21 @@
 import React from "react";
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
-import { useGetReviewsQuery } from "../../main/apiSlice";
+import { useGetImageInfoQuery, useGetReviewsQuery } from "../../main/apiSlice";
 import ReviewDialog from "../reviews/reviewCont";
 import { useSelector } from "react-redux";
 import '../../App.css';
+import { CircleImage } from "../images/CircleImage";
 
 
 const ReviewExcerpt = ({ review }) => {
     const user = useSelector(state => state.userReducer.user) || {};
-
+    console.log(review)
+    const { data: imageInfo } = useGetImageInfoQuery(review.performer_id)
     return (
         <div >
             <div key={user.id} className="reviewi" >
+                {imageInfo?.profileImageUrl && <CircleImage size={40} imageSrc={imageInfo.profileImageUrl} />}
                 <Box
                     sx={{
                         '& > legend': { mt: 2 },
@@ -30,8 +33,8 @@ const ReviewExcerpt = ({ review }) => {
 export const ProfileReviewContainer = () => {
     const { data: reviews = [], isLoading } = useGetReviewsQuery();
     const user = useSelector(state => state.userReducer.user) || {};
-     
-    const filteredReviews = reviews.filter(review =>  review.targetuser_id === user.id); // vain ne reviewit näytetään joissa user-id vastaa performer tai targetuser id:tä
+
+    const filteredReviews = reviews.filter(review => review.targetuser_id === user.id); // vain ne reviewit näytetään joissa user-id vastaa performer tai targetuser id:tä
 
     let content = filteredReviews.map(review => <ReviewExcerpt key={user.id} review={review} />);
 
