@@ -258,6 +258,7 @@ export const {
   useGetProfileLocationsQuery,
   //Reviewit
   useGetReviewsQuery,
+  useGetReviewForTaskQuery,
   useCreateReviewMutation,
   useDeleteReviewMutation,
 
