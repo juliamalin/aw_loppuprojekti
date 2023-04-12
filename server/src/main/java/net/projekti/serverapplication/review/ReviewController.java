@@ -51,4 +51,11 @@ public class ReviewController {
 		repo.deleteById(id);
 		return new RequestInfo("Delete succesful");
 	}
+	
+	@GetMapping("/task/{taskId}")
+	public List<Review> getTaskReviw(@PathVariable int taskId) {
+		return repo.findByTaskId(taskId);
+		
+	}
+	
 	}
