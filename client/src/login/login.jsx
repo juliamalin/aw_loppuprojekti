@@ -37,7 +37,7 @@ export function Login(props) {
         {user.id == null &&
             <div>
                 <input id='txt-username' value={user.username} onChange={ev => changeUsername(ev.target.value)} placeholder='Username' />
-                <input id='txt-password' value={user.password} onChange={ev => changePassword(ev.target.value)} type=' password' placeholder='Password' />
+                <input id='txt-password' value={user.password} onChange={ev => changePassword(ev.target.value)} type='password' placeholder='Password' />
             </div>
         }
 

@@ -28,8 +28,6 @@ export function RowCreated({ task }) {
   const [reviewVisible, setReviewVisible] = React.useState(false);
  
  
-  console.log("performer id" , task.performer.id)
-
 
   //päivämäärämuotoilut
   const dateCreated = task.created ? new Date(task.created) : null;

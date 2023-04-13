@@ -1,8 +1,7 @@
-import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { setSocket, store } from './main/store';
 import { Provider, useDispatch } from "react-redux";
 import Navbar, { Header } from './main/content'
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { TaskContainer } from './features/tasks/taskContainer';
 import { Profile } from './features/profiles/ProfilePage';
 import { Main } from './main/content';
@@ -11,6 +10,7 @@ import { Login } from './login/login';
 import React from 'react';
 import { addNotification } from './main/store';
 import WebSocketContext from './websocket/socket';
+import './App.css';
 
 
 function App() {
