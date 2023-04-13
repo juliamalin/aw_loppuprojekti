@@ -35,7 +35,7 @@ export function AlertDialogSlide({task}) {
   const handleClose1 = async () => {
     setOpen(false);
     await mutate({...task, status: 'done', creatorId: task.creator.id, performerId: task.performer.id});
-    ws.send(user.id + " " + task.creator.id);
+    ws.send(user.username + " " + task.creator.id);
     setReviewVisible(true);
   };
 
