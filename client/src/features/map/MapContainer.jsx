@@ -158,7 +158,7 @@ export const MapContainer = () => {
 
 
             >
-                <div>
+                <div onClick={() => setShowProfile(false)}>
                     <CircleImage size={50} imageSrc={imageInfo.find(info => info.profileId === selectedProfile.profileId)?.profileImageUrl} />
                 </div>
             </InfoBox>}

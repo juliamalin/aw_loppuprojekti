@@ -45,7 +45,7 @@ export const TaskContainer = ({ ws }) => {
     const dispatch = useDispatch()
 
     const [showAll, setShowAll] = React.useState(false)
-    const [showOnlyAvailable, setShowOnlyAvailable] = React.useState(false)
+    const [showOnlyAvailable, setShowOnlyAvailable] = React.useState(true)
     const bounds = useSelector(state => state.mapReducer.bounds)
     const {
         data: tasks = [],
