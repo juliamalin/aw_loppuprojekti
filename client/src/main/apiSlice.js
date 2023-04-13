@@ -19,6 +19,7 @@ export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka 
     getSimpleTasks: builder.query({ // määritellään buildereille molemmat endpointit
       query: () => '/tasks',
       providesTags: (result, error, arg) => [{ type: 'Task', id: arg }],
+
     }),
     getTaskById: builder.query({
       query: (taskId) => `/tasksAPI/${taskId}`,
@@ -166,7 +167,7 @@ export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka 
         method: 'POST',
         body: review
       }),
-      invalidatesTags: ['Review']
+      invalidatesTags: ['Review','Task', 'Profile']
     }),
     deleteReview: builder.mutation({
       query: (reviewId) => ({

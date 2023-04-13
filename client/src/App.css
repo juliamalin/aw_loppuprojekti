@@ -231,8 +231,19 @@
   margin-right: 0px;
   margin-top: 5px;
   margin-bottom: 5px;
-  width: 1200px;
+  width: 800px;
   src:url(https://fonts.googleapis.com/css?family=Open+Sans&display=swap')
+
+}
+
+.task-title {
+  display: flex;
+  align-items: left;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 600px;
 
 }
 
@@ -246,6 +257,7 @@
   font-family: 'Open Sans', sans-serif;
 
 }
+
 
 .profile-image-container {
   width: 100%;
@@ -301,6 +313,9 @@
 
 .task-container {
   position: relative;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.9em;
+
 }
 
 .plus-button {
