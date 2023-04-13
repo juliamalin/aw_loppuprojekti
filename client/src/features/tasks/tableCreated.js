@@ -24,7 +24,7 @@ export function RowCreated({ task }) {
   const [open, setOpen] = React.useState(false);
   let user = useSelector((state) => state.userReducer.user) || {};
   // let task = useSelector((state) => state.userReducer.task) || {};
-  
+
   const [reviewVisible, setReviewVisible] = React.useState(false);
  
  
@@ -39,21 +39,21 @@ export function RowCreated({ task }) {
   const dateAvailableTo = task.availableTo ? new Date(task.availableTo) : null;
   const formattedAvailableToDate = dateAvailableTo ? dateAvailableTo.toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) : null;
 
- 
+
   const { data: taskwithReview = [], isLoading } = useGetReviewForTaskQuery(task.id);
-  
-  console.log("Done task reviews",  taskwithReview);
-  
+
+  console.log("Done task reviews", taskwithReview);
+
 
   let hideTask = false;
   if (taskwithReview.length > 0 && taskwithReview[0].performer_id === user.id) {
     hideTask = true;
   }
-  
+
   if (hideTask) {
     return null;
   }
-  
+
 
   return (
     <React.Fragment>

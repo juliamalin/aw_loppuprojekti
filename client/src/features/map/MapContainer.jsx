@@ -1,11 +1,13 @@
 import React, { useCallback, useMemo, useRef } from "react";
-import { GoogleMap, Marker, useLoadScript, Autocomplete } from "@react-google-maps/api";
-import { useGetProfileLocationsQuery, useGetTasksQuery } from "../../main/apiSlice";
+import { GoogleMap, Marker, useLoadScript, Autocomplete, InfoBox } from "@react-google-maps/api";
+import { useGetProfileLocationsQuery, useGetTasksQuery, useReadAllImageInfoQuery } from "../../main/apiSlice";
 import DraggableDialog from "../tasks/viewTask";
 import { setBounds } from "../../main/mapSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { MarkerIcons } from "./MarkerIcons";
 import Checkbox from '@mui/material/Checkbox';
+import { CircleImage } from "../images/CircleImage";
+
 const libraries = ["places"]
 
 const getUserLocation = () => {
@@ -28,6 +30,8 @@ const getUserLocation = () => {
 export const MapContainer = () => {
     const [open, setOpen] = React.useState(false)
     const [selectedTask, setSelectedTask] = React.useState({})
+    const [selectedProfile, setSelectedProfile] = React.useState({})
+
     const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey: "AIzaSyBWdAmavWXVzoZlEhuGBlyek4EfhS7i78A",
         libraries: libraries,
@@ -37,12 +41,14 @@ export const MapContainer = () => {
     const autoCompleteRef = useRef(null);
 
     const [showUsers, setShowUsers] = React.useState(true)
+    const [showProfile, setShowProfile] = React.useState(false)
 
-
-    const { data: tasks = [] } = useGetTasksQuery()
+    //const { data: tasks = [] } = useGetTasksQuery()
+    const tasks = useSelector(state => state.mapReducer.tasks)
     const { data: profileLocations = [] } = useGetProfileLocationsQuery()
-    const markers = tasks.map(task => ({ lat: task.latitude, lng: task.longitude }))
-    const profileMarkers = profileLocations.map(loc => ({ lat: loc.latitude, lng: loc.longitude }))
+
+    const { data: imageInfo = [] } = useReadAllImageInfoQuery()
+
     const mapRef = useRef();
     const onMapLoad = useCallback((map) => {
         mapRef.current = map;
@@ -98,6 +104,7 @@ export const MapContainer = () => {
     }
 
     if (!isLoaded) return <div>Loading...</div>
+
     return (<div>
         <div className="row d-flex align-middle" style={{ height: "40px" }}>
             <div className="col-3">
@@ -134,9 +141,27 @@ export const MapContainer = () => {
             mapContainerClassName="map-container"
             onBoundsChanged={onBoundsChanged}
         >
-            {markers.map((marker, index) => (<Marker key={index} position={marker} onClick={() => onMarkerClick(index)} icon={getMarkerIcon(index, MarkerIcons.carrotList)} />))}
-            {showUsers && profileMarkers.map((marker, index) => (<Marker key={index} position={marker} onClick={() => console.log(index)} icon={getMarkerIcon(index, MarkerIcons.rabbitList)} />))}
+            {tasks.map((task, index) => {
+                let icon
+                task.status === 'available' ? icon = MarkerIcons.color3 : icon = MarkerIcons.color1
+                return (<Marker key={index} position={{ lat: task.latitude, lng: task.longitude }} onClick={() => onMarkerClick(index)} icon={icon} />)
+            })}
+            {showUsers && profileLocations.map((location, index) => (<Marker key={index} position={{ lat: location.latitude, lng: location.longitude }} onClick={() => { setSelectedProfile(location); setShowProfile(true) }} icon={getMarkerIcon(index, MarkerIcons.rabbitList)} />))}
+            {showUsers && showProfile && <InfoBox
+                position={{ lat: selectedProfile.latitude + 0.0009, lng: selectedProfile.longitude }}
+                options={{
+                    boxStyle: {
+                        width: '80px',
+                        height: '80px',
+                    },
+                }}
 
+
+            >
+                <div onClick={() => setShowProfile(false)}>
+                    <CircleImage size={50} imageSrc={imageInfo.find(info => info.profileId === selectedProfile.profileId)?.profileImageUrl} />
+                </div>
+            </InfoBox>}
         </GoogleMap>
         <DraggableDialog task={selectedTask} open={open} setOpen={setOpen} />
     </div>)

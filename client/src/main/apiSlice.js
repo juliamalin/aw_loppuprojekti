@@ -189,6 +189,11 @@ export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka 
 
 
     //IMAGE INFO
+
+    readAllImageInfo: builder.query({
+      query: () => `/imageinfo`,
+      providesTags: ['ImageInfo']
+    }),
     getImageInfo: builder.query({
       query: (profileId) => `/imageinfo/${profileId}`,
       providesTags: ['ImageInfo']
@@ -268,6 +273,7 @@ export const {
 
   //Imageinfo
   useGetImageInfoQuery,
+  useReadAllImageInfoQuery,
   useCreateImageInfoMutation,
   useUpdateImageInfoMutation,
   useDeleteImageInfoMutation

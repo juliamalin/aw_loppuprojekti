@@ -1,6 +1,6 @@
 import { CircleImage } from "../images/CircleImage"
 import MapIconCarrot from "./MapIcons/MapIconCarrot.png"
-import MapIconCarrotColor1 from "./MapIcons/MapIconCarrotColor1.png"
+import MapIconCarrotColor1 from "./MapIcons/MapIconCarrotColorGrey.png"
 import MapIconCarrotColor2 from "./MapIcons/MapIconCarrotColor2.png"
 import MapIconCarrotColor3 from "./MapIcons/MapIconCarrotColor3.png"
 import MapIconCarrotColor4 from "./MapIcons/MapIconCarrotColor4.png"
