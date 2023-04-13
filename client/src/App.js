@@ -11,6 +11,7 @@ import React from 'react';
 import { addNotification } from './main/store';
 import WebSocketContext from './websocket/socket';
 import './App.css';
+import './features/profiles/ProfileStyles.css'
 
 
 function App() {

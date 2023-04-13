@@ -6,6 +6,7 @@ import ReviewDialog from "../reviews/reviewCont";
 import { useSelector } from "react-redux";
 import '../../App.css';
 import { CircleImage } from "../images/CircleImage";
+import './ProfileStyles.css';
 
 
 const ReviewExcerpt = ({ review }) => {
@@ -15,7 +16,7 @@ const ReviewExcerpt = ({ review }) => {
     return (
         <div >
             <div key={user.id} className="reviewi"  >
-                {imageInfo?.profileImageUrl && <CircleImage size={40} imageSrc={imageInfo.profileImageUrl} className="pallo" />}
+                {imageInfo?.profileImageUrl && <div className="pallo"><CircleImage size={40} imageSrc={imageInfo.profileImageUrl}/></div>}
                 <Box
                     sx={{
                         '& > legend': { mt: 2 },

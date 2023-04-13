@@ -124,9 +124,9 @@
   margin-top: 20px;
 }
 
-body {
+/*body {
   background-color: #4285F4;
-}
+}*/
 
 .marker-map-autocomplete-input {
   box-sizing: border-box;
@@ -314,7 +314,8 @@ body {
 
 .nickName {
   margin-top: 10px;
-  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-family: 'Open Sans', cursive, sans-serif;
+  font-weight: bold;
   font-size: 24px;
   color: rgb(0, 0, 0);
   transform: rotate(5deg);

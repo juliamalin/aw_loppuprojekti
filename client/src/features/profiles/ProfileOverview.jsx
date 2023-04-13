@@ -5,6 +5,7 @@ import { useSelector } from "react-redux"
 import { useGetReviewsQuery } from "../../main/apiSlice"
 import '../../App.css';
 import { CircleImage } from "../images/CircleImage"
+import './ProfileStyles.css';
 
 
 export const ProfileOverview = () => {
@@ -30,9 +31,8 @@ export const ProfileOverview = () => {
 
     return (
         <div className="row bg-image" style={{ backgroundImage: `url("${imageInfo?.headerImageUrl}")` }}>
-
             <div className="col-3">
-                {imageInfo?.profileImageUrl && <CircleImage size={200} imageSrc={imageInfo?.profileImageUrl} />}
+                {imageInfo?.profileImageUrl && <div><CircleImage size={190} imageSrc={imageInfo?.profileImageUrl} /></div>}
             </div>
             <div className="col-9">
                 <div className="d-flex justify-content-between align-items-center">
@@ -47,10 +47,6 @@ export const ProfileOverview = () => {
                     </div>
                     <Link className="button muted-button" to={`/profile/edit`}>Edit Profile</Link>
                 </div>
-
-
-
-
             </div>
         </div>
 

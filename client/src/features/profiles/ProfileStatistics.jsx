@@ -6,16 +6,16 @@ import DirectionsRunRoundedIcon from '@mui/icons-material/DirectionsRunRounded';
 import AddReactionRoundedIcon from '@mui/icons-material/AddReactionRounded';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+
 export const ProfileStatistics = () => {
     const user = useSelector(state => state.userReducer.user)
     const { data: statistics, isLoading } = useGetProfileStatisticsQuery(user.id)
 
 
-
     console.log(statistics)
     if (isLoading || !statistics) return <p> Loading...</p>
     return (
-        <div>
+        <div className="text-style">
             <h2>Overview</h2>
             <Grid container spacing={0} alignItems="center" justifyContent="center" style={{ textAlign: "center" }} columns={6}>
                 <Grid item xs={2}>
@@ -47,7 +47,6 @@ export const ProfileStatistics = () => {
                 <Grid item xs={2}>
                     <Typography>{statistics.tasksCreatedCount}</Typography>
                 </Grid>
-
                 <Grid item xs={2}>
                     <Diversity1RoundedIcon />
                 </Grid>
