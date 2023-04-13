@@ -14,8 +14,8 @@ const ReviewExcerpt = ({ review }) => {
     const { data: imageInfo } = useGetImageInfoQuery(review.performer_id)
     return (
         <div >
-            <div key={user.id} className="reviewi" >
-                {imageInfo?.profileImageUrl && <CircleImage size={40} imageSrc={imageInfo.profileImageUrl} />}
+            <div key={user.id} className="reviewi"  >
+                {imageInfo?.profileImageUrl && <CircleImage size={40} imageSrc={imageInfo.profileImageUrl} className="pallo" />}
                 <Box
                     sx={{
                         '& > legend': { mt: 2 },
