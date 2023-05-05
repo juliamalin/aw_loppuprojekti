@@ -33,7 +33,7 @@ export const MapContainer = () => {
     const [selectedProfile, setSelectedProfile] = React.useState({})
 
     const { isLoaded, loadError } = useLoadScript({
-        googleMapsApiKey: "AIzaSyBWdAmavWXVzoZlEhuGBlyek4EfhS7i78A",
+        googleMapsApiKey: "AIzaSyA4XnK0QJJU6msxgE5uLSm1ppQAvltjdWM",
         libraries: libraries,
     })
 

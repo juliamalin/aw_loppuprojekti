@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -47,6 +48,7 @@ public class LoginController {
 	@Autowired
 	BCryptPasswordEncoder encoder;
 	
+
 	@PostMapping
 	//@Secured("admin")  // Remove this for first few users....
 	public User createUser(@RequestBody User user) {
@@ -71,6 +73,7 @@ public class LoginController {
 		User userRet = null;
 		try {
 			Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+			System.out.println(auth);
 			SecurityContext sc = SecurityContextHolder.getContext();
 			sc.setAuthentication(auth);
 			HttpSession session = req.getSession(true);		

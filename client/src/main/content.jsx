@@ -11,7 +11,7 @@ import { Login } from '../login/login';
 import { MyTasks } from '../features/tasks/MyTasks';
 import { useSelector } from 'react-redux';
 import { WebSocketClient } from '../websocket/socketPage';
-import ImageUploader from '../features/images/ImageUploader';
+//import ImageUploader from '../features/images/ImageUploader';
 import { SignUp } from '../login/signup';
 import { AdminView } from './adminView';
 import { useGetImageInfoQuery } from './apiSlice';
@@ -21,9 +21,7 @@ import { CircleImage } from '../features/images/CircleImage';
 
 
 export function Navbar() {
-  const user = useSelector(state => state.userReducer.user) || {};
-  const { data: imageInfo } = useGetImageInfoQuery(user.id)
-  let msgs = useSelector((state) => state.userReducer.notifications) || [];
+
   return <nav className="navbar">
     <div>
       <img src='TaskRabbitLogo.png' height={"50px"} />
@@ -37,12 +35,12 @@ export function Navbar() {
     </div>
     <div className="navbar__right">
       <Link to="/" className='navbar__button'>Home</Link>
-      {user.id && <div className='navbar__right'>
+      {<div className='navbar__right'>
         <Link id='nav-btn-myTasks' to="/mytasks" className='navbar__button'>My Tasks</Link>
         <Link id='nav-btn-profile' to={"/profile"} className='navbar__button'>Profile</Link>
       </div>
       }
-      {!user.id &&
+      {/*{!user.id &&
         <div className='navbar__right'>
           <Link id='nav-btn-login' to="/login" className='navbar__button'>Log in</Link>
           <Link id='nav-btn-signup' to="/signup" className='navbar__button'>Sign up</Link>
@@ -55,7 +53,7 @@ export function Navbar() {
       }
       {user.id && imageInfo?.profileImageUrl &&
         <CircleImage size={50} imageSrc={imageInfo.profileImageUrl} />
-      }
+      }*/}
     </div>
   </nav>
 }
@@ -69,11 +67,11 @@ export function Main() {
       <Route path="/" element={<TaskPage />} />
       <Route path="/profile" element={<ProfilePage />} />
       <Route path="/profile/edit" element={<EditProfile />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<SignUp />} />
-      <Route path='/ws' element={<WebSocketClient />} />
-      <Route path='/iu' element={<ImageUploader />} />
-      <Route path='/admin' element={<AdminView />} />
+      {/*<Route path="/login" element={<Login />} />*/}
+      {/*<Route path="/signup" element={<SignUp />} />*/}
+      {/*<Route path='/ws' element={<WebSocketClient />} />*/}
+      {/*<Route path='/iu' element={<ImageUploader />} />*/}
+      {/*<Route path='/admin' element={<AdminView />} />*/}
     </Routes>
   </main>
 }

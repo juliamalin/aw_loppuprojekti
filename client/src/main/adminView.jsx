@@ -5,10 +5,6 @@ import { useGetProfilesQuery, useGetReviewsQuery, useGetSimpleTasksQuery, useDel
 
 
 
-
-
-
-
 export const AdminView = () => {
 
 
