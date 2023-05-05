@@ -5,61 +5,50 @@ import { useSelector } from 'react-redux';
 import { width } from '@mui/system';
 
 
-/*AWS.config.update({
-  accessKeyId: 'AKIA5T564YYYPJWIH6AU',
-  secretAccessKey: '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',
-  region: 'eu-north-1',
-  signatureVersion: 'v4',
-});
 
 export default function ImageUploader({ imageType }) {
-  const s3 = new AWS.S3();
   const [imageUrl, setImageUrl] = useState(null);
-  const [file, setFile] = useState(null);
   const user = useSelector(state => state.userReducer.user);
   const [createImageInfo] = useCreateImageInfoMutation()
   const [updateImageInfo] = useUpdateImageInfoMutation()
   const { data: imageInfo, isLoading: isLoadingInfo } = useGetImageInfoQuery(user.id)
 
-
+  const [image, setImage] = useState(null);
 
 
   const handleFileSelect = (e) => {
-    setFile(e.target.files[0]);
+    setImage(e.target.files[0]);
   }
-  const uploadToS3 = async () => {
-    if (!file) {
+
+  const handleUpload = async () => {
+    if (!image) {
       return;
     }
-    const params = {
-      Bucket: 'taskappbucket',
-      Key: `${Date.now()}.${file.name}`,
-      Body: file
-    };
-    const { Location } = await s3.upload(params).promise();
-    console.log('Image at', Location)
-    console.log('ImageInfo', imageInfo)
+
+  const formData = new FormData();
+  formData.append('profile', image);
+
+  console.log('Uploading image:', image);
+
     if (imageInfo == null) {
-      if (imageType === 'profile') createImageInfo({ profileId: user.id, profileImageUrl: Location }).unwrap().then(response => console.log(response))
-      if (imageType === 'header') createImageInfo({ profileId: user.id, headerImageUrl: Location }).unwrap().then(response => console.log(response))
+      if (imageType === 'profile') createImageInfo({ profileId: user.id, profileImageUrl: imageUrl  }).unwrap().then(response => console.log(response))
+      if (imageType === 'header') createImageInfo({ profileId: user.id, headerImageUrl: imageUrl }).unwrap().then(response => console.log(response))
 
     } else {
-      if (imageType === 'profile') updateImageInfo({ id: imageInfo.id, profileId: user.id, profileImageUrl: Location, headerImageUrl: imageInfo?.headerImageUrl }).unwrap().then(response => console.log(response))
-      if (imageType === 'header') updateImageInfo({ id: imageInfo.id, profileId: user.id, profileImageUrl: imageInfo?.profileImageUrl, headerImageUrl: Location }).unwrap().then(response => console.log(response))
+      if (imageType === 'profile') updateImageInfo({ id: imageInfo.id, profileId: user.id, profileImageUrl: imageUrl , headerImageUrl: imageInfo?.headerImageUrl }).unwrap().then(response => console.log(response))
+      if (imageType === 'header') updateImageInfo({ id: imageInfo.id, profileId: user.id, profileImageUrl: imageInfo?.profileImageUrl, headerImageUrl: imageUrl  }).unwrap().then(response => console.log(response))
 
     }
-    setImageUrl(Location);
+    setImageUrl(URL.createObjectURL(image));
 
   }
-
-
 
   return (
     <div>
-      <input type="file" onChange={handleFileSelect} />
-      {file && (
+      <input type="file"  accept="image/*" onChange={handleFileSelect} />
+      {image && (
         <div style={{ marginTop: '10px' }}>
-          <button onClick={uploadToS3}>Upload</button>
+          <button onClick={handleUpload}>Upload</button>
         </div>
       )}
       {imageUrl && (
@@ -70,4 +59,4 @@ export default function ImageUploader({ imageType }) {
 
     </div>
   );
-}*/
+}

@@ -27,7 +27,7 @@ public class SecurityConfiguration {
 			.requestMatchers(HttpMethod.DELETE,"/login").permitAll()
 			.requestMatchers(HttpMethod.POST,"/login").permitAll() // Uses method permissions at LoginController
 			.requestMatchers(HttpMethod.GET,"/login").permitAll()
-			.requestMatchers("/api/users").hasAuthority("user")
+			.requestMatchers("/api/users").hasAuthority("admin")
 			.requestMatchers("/api/*").authenticated()
 			.anyRequest().permitAll()
 		);
