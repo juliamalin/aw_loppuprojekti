@@ -1,6 +1,6 @@
 import { Box, Button, FormHelperText, TextField } from "@mui/material"
 import React from "react"
-import ImageUploader from "../images/ImageUploader"
+//import ImageUploader from "../images/ImageUploader"
 
 
 
@@ -77,14 +77,12 @@ export const EditProfile = () => {
                     <Button variant="contained" onClick={onOkButtonClicked}>OK</Button>
                 </Box>
 
-
-
             </div>
             <div>
                 <h2>Change Profile Picture</h2>
-                <ImageUploader imageType={"profile"} />
+                {/* <ImageUploader imageType={"profile"} /> */}
                 <h2>Change Header Image</h2>
-                <ImageUploader imageType={"header"} />
+               {/*  <ImageUploader imageType={"header"} />*/}
             </div>
         </div>
 

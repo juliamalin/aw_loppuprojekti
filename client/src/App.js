@@ -16,16 +16,15 @@ import WebSocketContext from './websocket/socket';
 function App() {
 
   
-  const ws = new WebSocket('ws://localhost:8080/my/uri');
+  //const ws = new WebSocket('ws://localhost:8080/my/uri');
 
   return (
     //Avaa websocketin koko sovelluksen auetessa
-    <WebSocketContext.Provider value={ws}>
     <div className="App">
       <Navbar />
       <Main/>
     </div>
-    </WebSocketContext.Provider>
+  
 
   );
 }
