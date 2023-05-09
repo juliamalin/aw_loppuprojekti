@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import net.projekti.serverapplication.profile.Profile;
 import net.projekti.serverapplication.task.RequestInfo;
 
 @RestController

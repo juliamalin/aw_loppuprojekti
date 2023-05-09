@@ -1,3 +1,4 @@
+
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const apiSlice = createApi({ // Määritellään uusi api-muuttuja, joka käyttää createApi-funktiota
@@ -279,7 +280,6 @@ export const {
   useDeleteImageInfoMutation
 }
   = apiSlice;
-
 
 // käsittelee task ja profile taulukoita
 // tänne loput CRUDIT

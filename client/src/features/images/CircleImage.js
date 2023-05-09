@@ -2,6 +2,7 @@ import React from 'react';
 
 
 export const CircleImage = ({ size, imageSrc }) => {
+    console.log(imageSrc)
     const imageStyle = {
         width: `${size}px`,
         height: `${size}px`,

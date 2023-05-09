@@ -88,7 +88,7 @@ export default function DraggableDialog({ task, open, setOpen}) {
         <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
         </DialogTitle>
         <DialogContent >
-          <Typography className="cell2" variant="body1">
+          <Typography class="cell2" variant="body1">
           <strong> Description: </strong> {task.description}
           </Typography>
           <Typography class="cell2" variant="body1">

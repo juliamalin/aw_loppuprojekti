@@ -64,7 +64,17 @@ export const MyTasksMap = () => {
             center={center}
             mapContainerClassName="map-container"
         >
-            {markers.map((marker, index) => (<Marker key={index} position={marker} onClick={() => onMarkerClick(index)} icon={MarkerIcons.color2} />))}
+            {tasks.map((task, index) => {
+                let icon
+                if (task.status === 'available') icon = MarkerIcons.green
+                if (task.status === 'unavailable') icon = MarkerIcons.yellow
+                if (task.status === 'done') icon = MarkerIcons.color1
+
+
+
+
+                return (<Marker key={index} position={{ lat: task.latitude, lng: task.longitude }} onClick={() => onMarkerClick(index)} icon={icon} />)
+            })}
             {userLocation ? <Marker icon={{
                 fillColor: `#4285F4`,
                 fillOpacity: 1,

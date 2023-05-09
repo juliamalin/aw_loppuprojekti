@@ -18,6 +18,7 @@ export default function ImageUploader({ imageType }) {
 
   const handleFileSelect = (e) => {
     setImage(e.target.files[0]);
+    
   }
 
   const handleUpload = async () => {

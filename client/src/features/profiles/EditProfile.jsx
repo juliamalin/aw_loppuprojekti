@@ -33,6 +33,10 @@ export const EditProfile = () => {
         <div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 
+
+
+
+
                 <Box
                     component="form"
                     sx={{
@@ -73,10 +77,12 @@ export const EditProfile = () => {
                     <Button variant="contained" onClick={onOkButtonClicked}>OK</Button>
                 </Box>
 
+
+
             </div>
             <div>
                 <h2>Change Profile Picture</h2>
-                 <ImageUploader imageType={"profile"} /> 
+                <ImageUploader imageType={"profile"} />
                 <h2>Change Header Image</h2>
                 <ImageUploader imageType={"header"} />
             </div>

@@ -17,3 +17,23 @@ h2{
     padding-top: 15px;
 
 }
+
+.reviewList {
+    overflow-y: auto;
+    height: 400px;
+    width: 100%;
+    border-radius: 10px;
+    border: 3px solid #845EC2;
+    position: relative;
+    background-image: url("file:///C:/training/awloppuprojekti/client/public/carrotBG.png"); 
+
+  }
+
+  .reviewi {
+    border-radius: 10px;
+    border: 1px solid black;
+    margin: 20px;
+    background-color: rgb(255, 255, 255);
+    
+  
+  }

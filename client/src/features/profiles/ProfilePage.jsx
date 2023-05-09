@@ -1,10 +1,10 @@
+
 import { ProfileOverview } from "./ProfileOverview";
 import { ProfileReviewContainer } from "./ProfileReviewContainer";
 import { useSelector } from "react-redux";
 import { ProfileStatistics } from "./ProfileStatistics";
 
 export function ProfilePage() {
-  let user = useSelector(state => state.userReducer.user) || {};
 
   return (
     <div>
@@ -21,4 +21,3 @@ export function ProfilePage() {
     </div>
   );
 }
-

@@ -16,13 +16,14 @@ import { SignUp } from '../login/signup';
 import { AdminView } from './adminView';
 import { useGetImageInfoQuery } from './apiSlice';
 import { CircleImage } from '../features/images/CircleImage';
-//import { ProfileList } from '../features/profiles/ProfileList';
+import { ProfileList } from '../features/profiles/ProfileList';
 
 
 
 
 export function Navbar() {
   const user = useSelector(state => state.userReducer.user) || {};
+  console.log(user.id)
   const { data: imageInfo } = useGetImageInfoQuery(user.id)
   let msgs = useSelector((state) => state.userReducer.notifications) || [];
   return <nav className="navbar">
@@ -73,7 +74,7 @@ export function Main() {
       <Route path="/mytasks" element={<MyTasks />} />
       <Route path="/" element={<TaskPage />} />
       <Route path="/profile" element={<ProfilePage />} />
-      {/*<Route path="/profiles" element={<ProfileList />} />*/}
+      <Route path="/profiles" element={<ProfileList />} />
       <Route path="/profile/edit" element={<EditProfile />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />

@@ -13,22 +13,58 @@ import DraggableDialog from "./viewTask";
 import '../../App.css';
 import { CircleImage } from "../images/CircleImage";
 import { setTasks } from "../../main/mapSlice";
+import { useGetProfilesQuery, useGetReviewsQuery, useReadAllImageInfoQuery } from "../../main/apiSlice";
+import { Rating } from "@mui/material"
 
+const ProfileSummary = ({ profile, reviews }) => {
+    
+    const filteredReviews = reviews.filter(review => review.targetuser_id === profile.id);
+    const numReviews = filteredReviews.length;
+    const totalRating = filteredReviews.reduce((acc, review) => acc + review.value, 0) / numReviews;
+  
+    return (
+      <Rating className="starRatingHome" name="size-large" defaultValue={totalRating} size="medium" readOnly />
+    )
+  }
+
+export const ProfileList = () => {
+
+    const { data: profiles = [], isLoading: isLoadingProfiles } = useGetProfilesQuery()
+    const { data: imageInfo = [], isLoading: isLoadingInfo } = useReadAllImageInfoQuery()
+    const { data: reviews = [], isLoading: isLoadingReviews } = useGetReviewsQuery()
+
+    const profileIds = imageInfo.map(info => info.profileId)
+    const profileList = profiles.filter(profile => profileIds.includes(profile.id))
+
+
+
+    if (isLoadingInfo || isLoadingProfiles || isLoadingReviews) return <p>Loading...</p>
+
+    return (
+        <div>
+            {profileList.map(profile => <ProfileSummary key={profile.id} profile={profile} imageInfo={imageInfo} reviews={reviews} />)}
+        </div>
+    )
+}
 
 
 const TaskExcerpt = ({ task }) => {
     const [open, setOpen] = React.useState(false)
     const { data: imageInfo } = useGetImageInfoQuery(task.creator.id)
+    const { data: reviews } = useGetReviewsQuery({ targetUserId: task.creator.id })
+    console.log(task.creator.id)
+    console.log(imageInfo)
 
     return (
         <article className="task-excerpt" onClick={() => { if (!open) setOpen(true) }}>
-            {imageInfo?.profileImageUrl && <CircleImage size={50} imageSrc={imageInfo.profileImageUrl} />}
+            {imageInfo?.profileImageUrl && <CircleImage className="circleIMG" size={50} imageSrc={imageInfo.profileImageUrl} />}
+            {reviews && <ProfileSummary profile={task.creator} imageInfo={imageInfo} reviews={reviews} />}
             <p className="task-title"><strong>{task.title}</strong></p>
             <div className="task-info">
                 by {task.creator.username}
-                <TimeAgo timestamp={task.created} />
+                <TimeAgo className="timeago" timestamp={task.created} />
+                <p className="taskstatus">{task.status}</p>
                 <div className="dialog-container">
-                    <p>{task.status}</p>
                     <DraggableDialog task={task} open={open} setOpen={setOpen} />
                 </div>
             </div>
@@ -136,8 +172,8 @@ export const TaskContainer = ({ ws }) => {
                     </select>
                 </div>
 
-                <div className="col-2 ">
-                    <a>Available</a>
+                <div className="col-2">
+                    <a className="SortAvailabl">Available</a>
                     <Checkbox checked={showOnlyAvailable} onChange={event => setShowOnlyAvailable(!showOnlyAvailable)} inputProps={{ 'aria-label': 'Show Available' }} />
                 </div>
                 <div className="col-1 ">

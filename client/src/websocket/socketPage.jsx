@@ -1,9 +1,20 @@
+
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addNotification, deleteNotification } from "../main/store";
 import { useContext } from "react";
 import WebSocketContext from "./socket";
-import ReviewDialog from "../features/reviews/reviewCont";
+import Box from '@mui/material/Box';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
+import InboxIcon from '@mui/icons-material/Inbox';
+import DraftsIcon from '@mui/icons-material/Drafts';
+import SendIcon from '@mui/icons-material/Send';
+
 
 export function WebSocketClient(){
     let user = useSelector((state) => state.userReducer.user) || {};
@@ -33,9 +44,20 @@ export function WebSocketClient(){
         dispatch(deleteNotification(id));
     }
 
-    let rows = msgs.map(m => <p key={m.id} >{m}
-        <input type="button" value='Poista' onClick={() => dltNotification(m)}/>
-    </p>) //tämä viesti ominaisuutena näkyviin
+    let rows = msgs.map(m => <nav aria-label="main mailbox folders">
+        <ListItem key={m.id} disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <SendIcon />
+            </ListItemIcon>
+              <ListItemText primary={m} onClick={() => dltNotification(m)} />
+          </ListItemButton>
+        </ListItem>
+    </nav>)
+
+
+
+
 
     return <div className="web-socket">
         <h2>Ilmoitukset</h2>
