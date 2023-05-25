@@ -15,7 +15,7 @@ const findUser = new Promise((resolve, reject) => {
 
 export const AddMarkerMap = ({ marker, setMarker }) => {
     const { isLoaded, loadError } = useLoadScript({
-        googleMapsApiKey: "AIzaSyA4XnK0QJJU6msxgE5uLSm1ppQAvltjdWM",
+        googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
         libraries: libraries,
     })
     // const [marker, setMarker] = React.useState({})
